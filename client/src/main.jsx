@@ -6,9 +6,9 @@ import AuthProvider from './context/auth-context'
 
 createRoot(document.getElementById('root')).render(
   <BrowserRouter>
-  <AuthProvider>
-  <App />
-  </AuthProvider>
-   </BrowserRouter>
-    
+    <AuthProvider>
+      <App />
+    </AuthProvider>
+  </BrowserRouter>
+
 )

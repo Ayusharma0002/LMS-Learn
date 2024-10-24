@@ -36,14 +36,14 @@ export const signUpFormControls = [
     },
     {
       name: "designation",
-      label: "Designation",
+      label: "Designation (optional)",
       placeholder: "Enter your designation",
       type: "text",
       componentType: "input",
     },
     {
       name: "organization",
-      label: "Organization",
+      label: "Organization (optional)",
       placeholder: "Enter your organization",
       type: "text",
       componentType: "input",
@@ -74,16 +74,22 @@ export const signUpFormControls = [
     },
   ];
   
-//   export const initialSignInFormData = {
-//     userEmail: "",
-//     password: "",
-//   };
+  export const initialSignInFormData = {
+    userEmail: "",
+    password: "",
+  };
   
-//   export const initialSignUpFormData = {
-//     userName: "",
-//     userEmail: "",
-//     password: "",
-//   };
+  export const initialSignUpFormData = {
+    userName: "",
+    dateOfBirth: "",
+    address: "",
+    userEmail: "",
+    phone: "",
+    designation: "",
+    organization: "",
+    password: "",
+  };
+  
   
 //   export const languageOptions = [
 //     { id: "english", label: "English" },

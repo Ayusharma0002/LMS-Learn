@@ -85,7 +85,8 @@ import { Textarea } from "../ui/textarea";
 function FormControls({ formControls = [], formData, setFormData }) {
   function renderComponentByType(getControlItem) {
     let element = null;
-//     const currentControlItemValue = formData[getControlItem.name] || "";
+
+    const currentControlItemValue = formData[getControlItem.name] || "";
 
     switch (getControlItem.componentType) {
       case "input":
@@ -95,26 +96,26 @@ function FormControls({ formControls = [], formData, setFormData }) {
             name={getControlItem.name}
             placeholder={getControlItem.placeholder}
             type={getControlItem.type}
-            // value={currentControlItemValue}
-            // onChange={(event) =>
-            //   setFormData({
-            //     ...formData,
-            //     [getControlItem.name]: event.target.value,
-            //   })
-            // }
+            value={currentControlItemValue}
+            onChange={(event) =>
+              setFormData({
+                ...formData,
+                [getControlItem.name]: event.target.value,
+              })
+            }
           />
         );
         break;
       case "select":
         element = (
           <Select
-            // onValueChange={(value) =>
-            //   setFormData({
-            //     ...formData,
-            //     [getControlItem.name]: value,
-            //   })
-            // }
-            // value={currentControlItemValue}
+            onValueChange={(value) =>
+              setFormData({
+                ...formData,
+                [getControlItem.name]: value,
+              })
+            }
+            value={currentControlItemValue}
           >
             <SelectTrigger className="w-full">
               <SelectValue placeholder={getControlItem.label} />
@@ -137,13 +138,13 @@ function FormControls({ formControls = [], formData, setFormData }) {
             id={getControlItem.name}
             name={getControlItem.name}
             placeholder={getControlItem.placeholder}
-            // value={currentControlItemValue}
-        //     onChange={(event) =>
-        //       setFormData({
-        //         ...formData,
-        //         [getControlItem.name]: event.target.value,
-        //       })
-        //     }
+            value={currentControlItemValue}
+            onChange={(event) =>
+              setFormData({
+                ...formData,
+                [getControlItem.name]: event.target.value,
+              })
+            }
           />
         );
         break;
@@ -155,13 +156,13 @@ function FormControls({ formControls = [], formData, setFormData }) {
             name={getControlItem.name}
             placeholder={getControlItem.placeholder}
             type={getControlItem.type}
-            // value={currentControlItemValue}
-            // onChange={(event) =>
-            //   setFormData({
-            //     ...formData,
-            //     [getControlItem.name]: event.target.value,
-            //   })
-            // }
+            value={currentControlItemValue}
+            onChange={(event) =>
+              setFormData({
+                ...formData,
+                [getControlItem.name]: event.target.value,
+              })
+            }
           />
         );
         break;

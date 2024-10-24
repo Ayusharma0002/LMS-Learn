@@ -8,45 +8,51 @@ import {
 import CommonForm from "@/components/common-form";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { signInFormControls, signUpFormControls } from "@/config";
-// import { signInFormControls, signUpFormControls } from "@/config";
-// import { AuthContext } from "@/context/auth-context";
+import { AuthContext } from "@/context/auth-context";
 import { GraduationCap } from "lucide-react";
 import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 
 function AuthPage() {
   const [activeTab, setActiveTab] = useState("signin");
-//   const {
-//     signInFormData,
-//     setSignInFormData,
-//     signUpFormData,
-//     setSignUpFormData,
-//     handleRegisterUser,
-//     handleLoginUser,
-//   } = useContext(AuthContext);
+    const {
+      signInFormData,
+      setSignInFormData,
+      signUpFormData,
+      setSignUpFormData,
+      // handleRegisterUser,
+      // handleLoginUser,
+    } = useContext(AuthContext);
 
   function handleTabChange(value) {
     setActiveTab(value);
   }
 
-//   function checkIfSignInFormIsValid() {
-//     return (
-//       signInFormData &&
-//       signInFormData.userEmail !== "" &&
-//       signInFormData.password !== ""
-//     );
-//   }
+    function checkIfSignInFormIsValid() {
+      return (
+        signInFormData &&
+        signInFormData.userEmail !== "" &&
+        signInFormData.password !== ""
+      );
+    }
 
-//   function checkIfSignUpFormIsValid() {
-//     return (
-//       signUpFormData &&
-//       signUpFormData.userName !== "" &&
-//       signUpFormData.userEmail !== "" &&
-//       signUpFormData.password !== ""
-//     );
-//   }
+    function checkIfSignUpFormIsValid() {
+      return (
+        signUpFormData &&
+        signUpFormData.userName !== "" &&
+        signUpFormData.dateOfBirth !== "" &&
+        signUpFormData.address !== "" &&
+        signUpFormData.userEmail !== "" &&
+        signUpFormData.phone !== "" &&
+        // signUpFormData.designation !== "" &&
+        // signUpFormData.organization !== "" &&
+        signUpFormData.password !== ""
+      );
+    }
+    
 
-//   console.log(signInFormData);
+    console.log("Sign In  :",signInFormData);
+    console.log("Sign Up  :",signUpFormData);
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -67,7 +73,7 @@ function AuthPage() {
             <TabsTrigger value="signin">Sign In</TabsTrigger>
             <TabsTrigger value="signup">Sign Up</TabsTrigger>
           </TabsList>
-          <TabsContent value="signin"> 
+          <TabsContent value="signin">
             <Card className="p-6 space-y-4">
               <CardHeader>
                 <CardTitle>Sign in to your account</CardTitle>
@@ -77,12 +83,11 @@ function AuthPage() {
               </CardHeader>
               <CardContent className="space-y-2">
                 <CommonForm
-                //   formControls={signInFormControls}
                   formControls={signInFormControls}
-                //   buttonText={"Sign In"}
-                //   formData={signInFormData}
-                //   setFormData={setSignInFormData}
-                //   isButtonDisabled={!checkIfSignInFormIsValid()}
+                  buttonText={"Sign In"}
+                  formData={signInFormData}
+                  setFormData={setSignInFormData}
+                  isButtonDisabled={!checkIfSignInFormIsValid()}
                 //   handleSubmit={handleLoginUser}
                 />
               </CardContent>
@@ -99,15 +104,15 @@ function AuthPage() {
               <CardContent className="space-y-2">
                 <CommonForm
                   formControls={signUpFormControls}
-                //   buttonText={"Sign Up"}
-                //   formData={signUpFormData}
-                //   setFormData={setSignUpFormData}
-                //   isButtonDisabled={!checkIfSignUpFormIsValid()}
+                  buttonText={"Sign Up"}
+                  formData={signUpFormData}
+                  setFormData={setSignUpFormData}
+                  isButtonDisabled={!checkIfSignUpFormIsValid()}
                 //   handleSubmit={handleRegisterUser}
                 />
               </CardContent>
             </Card>
-            
+
           </TabsContent>
         </Tabs>
       </div>
@@ -117,4 +122,3 @@ function AuthPage() {
 
 export default AuthPage;
 
-  
