@@ -3,6 +3,7 @@ require("dotenv").config();
 const express=require("express");
 const cors=require("cors");
 const mongoose = require("mongoose");
+const authRoutes = require('./routes/auth-routes')
 
 const app=express();
 const PORT=process.env.PORT || 5000; 
@@ -29,6 +30,8 @@ mongoose.connect('mongodb://localhost:27017/lmsportal', {
     console.error('MongoDB connection error:', err);
 });
 
+
+app.use('/auth',authRoutes)
 
 
 app.use((err, req, res, next) => {
