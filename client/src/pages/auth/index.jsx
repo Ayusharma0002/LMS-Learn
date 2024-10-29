@@ -15,54 +15,52 @@ import { Link } from "react-router-dom";
 
 function AuthPage() {
   const [activeTab, setActiveTab] = useState("signin");
-    const {
-      signInFormData,
-      setSignInFormData,
-      signUpFormData,
-      setSignUpFormData,
-      handleRegisterUser,
-      handleLoginUser,
-    } = useContext(AuthContext);
+  const {
+    signInFormData,
+    setSignInFormData,
+    signUpFormData,
+    setSignUpFormData,
+    handleRegisterUser,
+    handleLoginUser,
+  } = useContext(AuthContext);
 
   function handleTabChange(value) {
     setActiveTab(value);
   }
 
-    function checkIfSignInFormIsValid() {
-      return (
-        signInFormData &&
-        signInFormData.userEmail !== "" &&
-        signInFormData.password !== ""
-      );
-    }
+  function checkIfSignInFormIsValid() {
+    return (
+      signInFormData &&
+      signInFormData.userEmail !== "" &&
+      signInFormData.password !== ""
+    );
+  }
 
-    function checkIfSignUpFormIsValid() {
-      return (
-        signUpFormData &&
-        signUpFormData.userName !== "" &&
-        signUpFormData.dateOfBirth !== "" &&
-        signUpFormData.address !== "" &&
-        signUpFormData.userEmail !== "" &&
-        signUpFormData.phone !== "" &&
-        // signUpFormData.designation !== "" &&
-        // signUpFormData.organization !== "" &&
-        signUpFormData.password !== ""
-      );
-    }
-    
-
-    console.log("Sign In  :",signInFormData);
-    // console.log("Sign Up  :",signUpFormData);
+  function checkIfSignUpFormIsValid() {
+    return (
+      signUpFormData &&
+      signUpFormData.userName !== "" &&
+      signUpFormData.userEmail !== "" &&
+      signUpFormData.password !== ""
+    );
+  }
 
   return (
     <div className="flex flex-col min-h-screen">
       <header className="px-4 lg:px-6 h-14 flex items-center border-b">
         <Link to={"/"} className="flex items-center justify-center">
-          <GraduationCap className="h-8 w-8 mr-4" />
-          <span className="font-extrabold text-xl">LMS LEARN</span>
+          <GraduationCap className="h-10 w-8 mr-4" />
+          <img className="font-extrabold text-xl h-10 w-full" src="/logo.png"></img>
         </Link>
       </header>
-      <div className="flex items-center justify-center min-h-screen bg-background">
+      <div className="flex items-center justify-center  bg-background"
+        style={{
+          minHeight: "calc(100vh - 3.5rem)",
+          backgroundImage: "url('/login-bg.png')",
+          backgroundPosition:'center',
+          backgroundSize: 'cover',
+          backgroundRepeat: 'no-repeat',
+        }}>
         <Tabs
           value={activeTab}
           defaultValue="signin"
@@ -112,7 +110,6 @@ function AuthPage() {
                 />
               </CardContent>
             </Card>
-
           </TabsContent>
         </Tabs>
       </div>
@@ -121,4 +118,3 @@ function AuthPage() {
 }
 
 export default AuthPage;
-

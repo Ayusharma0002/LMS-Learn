@@ -7,20 +7,6 @@ export const signUpFormControls = [
       componentType: "input",
     },
     {
-      name: "dateOfBirth",
-      label: "Date of Birth",
-      placeholder: "Enter your date of birth",
-      type: "date",
-      componentType: "input",
-    },
-    {
-      name: "address",
-      label: "Address",
-      placeholder: "Enter your address",
-      type: "text",
-      componentType: "input",
-    },
-    {
       name: "userEmail",
       label: "User Email",
       placeholder: "Enter your user email",
@@ -28,29 +14,22 @@ export const signUpFormControls = [
       componentType: "input",
     },
     {
-      name: "phone",
-      label: "Phone",
-      placeholder: "Enter your phone",
-      type: "tel",
+      name: "OTP",
+      label: "OTP",
+      placeholder: "Enter your otp",
+      type: "password",
       componentType: "input",
     },
-    {
-      name: "designation",
-      label: "Designation (optional)",
-      placeholder: "Enter your designation",
-      type: "text",
-      componentType: "input",
-    },
-    {
-      name: "organization",
-      label: "Organization (optional)",
-      placeholder: "Enter your organization",
-      type: "text",
-      componentType: "input",
-    },
+    // {
+    //   name: "phone",
+    //   label: "Phone",
+    //   placeholder: "Enter your phone",
+    //   type: "tel",
+    //   componentType: "input",
+    // },
     {
       name: "password",
-      label: "Password",
+      label: "Create Password",
       placeholder: "Enter your password",
       type: "password",
       componentType: "input",
@@ -81,13 +60,9 @@ export const signUpFormControls = [
   
   export const initialSignUpFormData = {
     userName: "",
-    dateOfBirth: "",
-    address: "",
     userEmail: "",
-    phone: "",
-    designation: "",
-    organization: "",
     password: "",
+    OTP:""
   };
   
   

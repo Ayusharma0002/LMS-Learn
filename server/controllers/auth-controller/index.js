@@ -1,18 +1,11 @@
-const User = require('../../models/User')
-const bcrypt = require('bcryptjs')
-const jwt = require('jsonwebtoken')
+const User = require('../../models/User');
+const Otp = require("../../models/Otp");
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+
 const registerUser = async (req, res) => {
-    const {
-        userName,
-        dateOfBirth,
-        address,
-        userEmail,
-        phone,
-        designation,
-        organization,
-        password,
-        role
-    } = req.body;
+    console.log("Registration data:", req.body);
+    const { userName, userEmail, password, role, OTP } = req.body;
 
     // Check if a user with the same userName or userEmail already exists
     const existingUser = await User.findOne({
@@ -22,22 +15,27 @@ const registerUser = async (req, res) => {
     if (existingUser) {
         return res.status(400).json({
             success: false,
-            message: "User name or user email already exists"
+            message: "Username or email already exists"
+        });
+    }
+
+    // Verify the OTP
+    const otpRecord = await Otp.findOneAndDelete({ email: userEmail, otp: OTP });
+
+    if (!otpRecord) {
+        return res.status(400).json({
+            success: false,
+            message: "Invalid or expired OTP"
         });
     }
 
     // Hash the password
     const hashPassword = await bcrypt.hash(password, 10);
 
-    // Create a new user with all the provided fields
+    // Create a new user with the provided fields
     const newUser = new User({
         userName,
-        dateOfBirth,
-        address,
         userEmail,
-        phone,
-        designation,
-        organization,
         role,
         password: hashPassword
     });
@@ -48,10 +46,11 @@ const registerUser = async (req, res) => {
     // Respond with success
     res.status(201).json({
         success: true,
-        message: "User Registered Successfully"
+        message: "User registered successfully"
     });
 };
 
+module.exports = { registerUser };
 
 const loginUser = async (req, res) => {
     const { userEmail, password } = req.body;

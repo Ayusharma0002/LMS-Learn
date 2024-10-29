@@ -15,6 +15,7 @@ function CommonForm({
       <FormControls
         formControls={formControls}
         formData={formData}
+        buttonText={buttonText}
         setFormData={setFormData}
       />
       <Button

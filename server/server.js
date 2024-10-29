@@ -4,7 +4,7 @@ const express=require("express");
 const cors=require("cors");
 const mongoose = require("mongoose");
 const authRoutes = require('./routes/auth-routes')
-
+const otpRoutes = require("./routes/otp-routes");
 const app=express();
 const PORT=process.env.PORT || 5000; 
 
@@ -31,8 +31,8 @@ mongoose.connect('mongodb://localhost:27017/lmsportal', {
 });
 
 
-app.use('/auth',authRoutes)
-
+app.use("/otp", otpRoutes); 
+app.use('/auth',authRoutes);
 
 app.use((err, req, res, next) => {
     console.log(err.stack);
