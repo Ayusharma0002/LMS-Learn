@@ -64,7 +64,28 @@ export const signUpFormControls = [
     password: "",
     OTP:""
   };
+  export const otpFormControls = [
+    {
+      name: "userEmail",
+      label: "User Email",
+      placeholder: "Enter your user email",
+      type: "email",
+      componentType: "input",
+    },
+    {
+      name: "otp",
+      label: "OTP",
+      placeholder: "Enter your OTP",
+      type: "text",
+      componentType: "input",
+    },
+  ];
   
+  // Initial data for the OTP form
+  export const initialOtpFormData = {
+    userEmail: "",
+    otp: "",
+  }; 
   
 //   export const languageOptions = [
 //     { id: "english", label: "English" },

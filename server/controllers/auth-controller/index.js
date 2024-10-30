@@ -50,9 +50,8 @@ const registerUser = async (req, res) => {
     });
 };
 
-module.exports = { registerUser };
-
 const loginUser = async (req, res) => {
+    console.log("Pass login req",req.body);
     const { userEmail, password } = req.body;
     const checkUser = await User.findOne({ userEmail });
     // console.log("User: ",userEmail,checkUser);
@@ -85,6 +84,36 @@ const loginUser = async (req, res) => {
         }
     })
 }
+const loginWithOtp = async (req, res) => {
+
+    console.log("Otp login req",req.body);
+    
+    const { userEmail, otp } = req.body;
+
+    // Check and delete OTP after verifying
+    const otpRecord = await Otp.findOneAndDelete({ email: userEmail, otp });
+    if (!otpRecord) {
+        return res.status(400).json({ success: false, message: "Invalid or expired OTP" });
+    }
+
+    // Find the user by email
+    const user = await User.findOne({ userEmail });
+    if (!user) {
+        return res.status(404).json({ success: false, message: "User not found" });
+    }
+
+    // Generate a JWT token upon successful OTP verification
+    const accessToken = jwt.sign(
+        { _id: user._id, userName: user.userName, userEmail: user.userEmail, role: user.role },
+        'JWT_SECRET', { expiresIn: '120m' }
+    );
+
+    res.status(200).json({
+        success: true,
+        message: "Logged in successfully with OTP",
+        data: { accessToken, user: { _id: user._id, userName: user.userName, userEmail: user.userEmail, role: user.role } }
+    });
+};
 
 
-module.exports = { registerUser, loginUser }
+module.exports = { registerUser, loginUser,loginWithOtp }

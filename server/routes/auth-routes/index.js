@@ -1,5 +1,5 @@
 const express = require('express')
-const { registerUser, loginUser } = require('../../controllers/auth-controller')
+const { registerUser, loginUser,loginWithOtp } = require('../../controllers/auth-controller')
 
 
 const authenticateMiddleware = require('../../middleware/auth-middleware')
@@ -7,7 +7,7 @@ const router = express.Router();
 
 router.post('/register', registerUser)
 router.post('/login', loginUser)
-
+router.post('/login-with-otp',loginWithOtp);
 router.get('/check-auth', authenticateMiddleware, (req, res) => {
     const user = req.user
 
