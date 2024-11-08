@@ -1,10 +1,6 @@
-import React from 'react'
-
-const InstructorDashboard = () => {
+function InstructorDashboard(){
   return (
-    <div>
-      InstructorDashboard
-    </div>
+    <div>InstructorDashboard</div>
   )
 }
 

@@ -90,6 +90,12 @@ export default function AuthProvider({ children }) {
       console.error("Error verifying OTP:", error);
     }
   }
+  function resetCredentials() {
+    setAuth({
+      authenticate: false,
+      user: null,
+    });
+  }
 
   async function checkAuthUser() {
     try {
@@ -135,7 +141,8 @@ export default function AuthProvider({ children }) {
       setOtp,
       otpSent,
       isVerified,
-      auth
+      auth,
+      resetCredentials,
     }}>
       {loading ? <Skeleton /> : children}
     </AuthContext.Provider>

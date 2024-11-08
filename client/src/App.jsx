@@ -7,6 +7,7 @@ import StudentHomePage from "./pages/student";
 import StudentViewCommonLayout from "./components/student-view/common-layout";
 import NotFoundPage from "./pages/not-found";
 import InstructorDashboardPage from "./pages/instructor";
+import AddNewCoursePage from "./pages/instructor/add-new-course";
 function App() {
   const { auth } = useContext(AuthContext);
 
@@ -32,7 +33,7 @@ function App() {
           />
         }
       />
-      {/* <Route
+      <Route
         path="/instructor/create-new-course"
         element={
           <RouteGuard
@@ -41,7 +42,7 @@ function App() {
             user={auth?.user}
           />
         }
-      /> */}
+      />
       {/* <Route
         path="/instructor/edit-course/:courseId"
         element={
