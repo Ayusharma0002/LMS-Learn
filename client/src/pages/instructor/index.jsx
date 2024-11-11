@@ -5,7 +5,7 @@ import { Tabs, TabsContent } from "@/components/ui/tabs";
 import { AuthContext } from "@/context/auth-context";
 import { InstructorContext } from "@/context/instructor-context";
 import { fetchInstructorCourseListService } from "@/services";
-// // import { InstructorContext } from "@/context/instructor-context";
+// import { InstructorContext } from "@/context/instructor-context";
 // // import { fetchInstructorCourseListService } from "@/services";
 import { BarChart, Book, LogOut } from "lucide-react";
 import { useContext, useEffect, useState } from "react";
@@ -19,7 +19,7 @@ export default function InstructorDashboardpage() {
   async function fetchAllCourses() {
     const response = await fetchInstructorCourseListService();
 
-    console.log(response,"index.jsx hoon mai src-pages-instructor-index.js");
+    console.log(response, "index.jsx hoon mai src-pages-instructor-index.js");
     if (response?.success) setInstructorCoursesList(response?.data);
   }
 
@@ -32,17 +32,17 @@ export default function InstructorDashboardpage() {
       icon: BarChart,
       label: "Dashboard",
       value: "dashboard",
-      component: <InstructorDashboard 
+      component: <InstructorDashboard
       // listOfCourses={instructorCoursesList}
-       />,
+      />,
     },
     {
       icon: Book,
       label: "Courses",
       value: "courses",
       component: <InstructorCourses
-       listOfCourses={instructorCoursesList}
-       />,
+        listOfCourses={instructorCoursesList}
+      />,
     },
     {
       icon: LogOut,
@@ -57,7 +57,7 @@ export default function InstructorDashboardpage() {
     sessionStorage.clear();
   }
 
-//   // console.log(instructorCoursesList, "instructorCoursesList");
+  //   // console.log(instructorCoursesList, "instructorCoursesList");
 
   return (
     <div className="flex h-full min-h-screen bg-gray-100">
@@ -87,12 +87,12 @@ export default function InstructorDashboardpage() {
         <div className="max-w-7xl mx-auto">
           <h1 className="text-3xl font-bold mb-8">Dashboard</h1>
           <Tabs value={activeTab} onValueChange={setActiveTab}>
-  {menuItems.map((menuItem) => (
-    <TabsContent key={menuItem.value} value={menuItem.value}>
-      {menuItem.component !== null ? menuItem.component : null}
-    </TabsContent>
-  ))}
-</Tabs>
+            {menuItems.map((menuItem) => (
+              <TabsContent key={menuItem.value} value={menuItem.value}>
+                {menuItem.component !== null ? menuItem.component : null}
+              </TabsContent>
+            ))}
+          </Tabs>
         </div>
       </main>
     </div>

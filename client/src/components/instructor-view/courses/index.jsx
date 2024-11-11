@@ -380,27 +380,30 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useNavigate } from 'react-router-dom';
+import { InstructorContext } from '@/context/instructor-context';
+import { useContext } from 'react';
+import { courseCurriculumInitialFormData, courseLandingInitialFormData } from '@/config';
 
 const InstructorCourses = ({ listOfCourses }) => {
 
   const navigate = useNavigate();
-  // const {
-  //   setCurrentEditedCourseId,
-  //   setCourseLandingFormData,
-  //   setCourseCurriculumFormData,
-  // } = useContext(InstructorContext);
+  const {
+    setCurrentEditedCourseId,
+    setCourseLandingFormData,
+    setCourseCurriculumFormData,
+  } = useContext(InstructorContext);
 
   return (
     <Card>
       <CardHeader className="flex justify-between flex-row items-center">
-        <CardTitle className="text-3xl font-extrabold">
+        <CardTitle className="sm:text-xl md:text-3xl font-extrabold">
           All Courses
         </CardTitle>
         <Button
           onClick={() => {
-            // setCurrentEditedCourseId(null);
-            // setCourseLandingFormData(courseLandingInitialFormData);
-            // setCourseCurriculumFormData(courseCurriculumInitialFormData);
+            setCurrentEditedCourseId(null);
+            setCourseLandingFormData(courseLandingInitialFormData);
+            setCourseCurriculumFormData(courseCurriculumInitialFormData);
             navigate("/instructor/create-new-course");
           }}
           className="p-6"
@@ -438,9 +441,9 @@ const InstructorCourses = ({ listOfCourses }) => {
                       </TableCell>
                       <TableCell className="text-right">
                         <Button
-                          // onClick={() => {
-                          //   navigate(`/instructor/edit-course/${course?._id}`);
-                          // }}
+                          onClick={() => {
+                            navigate(`/instructor/edit-course/${course?._id}`);
+                          }}
                           variant="ghost"
                           size="sm"
                           className="mr-2" // Margin-right for spacing

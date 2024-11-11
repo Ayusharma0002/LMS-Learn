@@ -359,9 +359,9 @@ import CourseSettings from "@/components/instructor-view/courses/add-new-course/
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@radix-ui/react-tabs";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { addNewCourseService } from "@/services";
+import { addNewCourseService,fetchInstructorCourseDetailsService, updateCourseByIdService } from "@/services";
 import { AuthContext } from "@/context/auth-context";
 import { courseCurriculumInitialFormData, courseLandingInitialFormData } from "@/config";
 
@@ -371,14 +371,14 @@ export default function AddNewCoursePage() {
     courseCurriculumFormData,
     setCourseLandingFormData,
     setCourseCurriculumFormData,
-    // currentEditedCourseId,
-    // setCurrentEditedCourseId,
+    currentEditedCourseId,
+    setCurrentEditedCourseId,
   } = useContext(InstructorContext);
 
   // Assuming `auth` is needed, uncomment this context to get user info
   const { auth } = useContext(AuthContext); 
   const navigate = useNavigate();
-  // const params = useParams();
+  const params = useParams();
 
   function isEmpty(value) {
     if (Array.isArray(value)) {
@@ -425,48 +425,49 @@ export default function AddNewCoursePage() {
     };
 
     const response =
-      // currentEditedCourseId !== null
-      //   ? await updateCourseByIdService(
-      //       currentEditedCourseId,
-      //       courseFinalFormData
-      //     )
-      //   :
+      currentEditedCourseId !== null
+        ? await updateCourseByIdService(
+            currentEditedCourseId,
+            courseFinalFormData
+          )
+        :
          await addNewCourseService(courseFinalFormData);
 
     if (response?.success) {
       setCourseLandingFormData(courseLandingInitialFormData);
       setCourseCurriculumFormData(courseCurriculumInitialFormData);
       navigate(-1); // to go to the previous one
-      // setCurrentEditedCourseId(null); // Ensure you reset state for editing
+      setCurrentEditedCourseId(null); // Ensure you reset state for editing
     }
   }
 
   // Uncomment and use this if you need to fetch existing course details (for editing)
-  // async function fetchCurrentCourseDetails() {
-  //   const response = await fetchInstructorCourseDetailsService(
-  //     currentEditedCourseId
-  //   );
-  //   if (response?.success) {
-  //     const setCourseFormData = Object.keys(
-  //       courseLandingInitialFormData
-  //     ).reduce((acc, key) => {
-  //       acc[key] = response?.data[key] || courseLandingInitialFormData[key];
-  //       return acc;
-  //     }, {});
-  //     setCourseLandingFormData(setCourseFormData);
-  //     setCourseCurriculumFormData(response?.data?.curriculum);
-  //   }
-  // }
+  async function fetchCurrentCourseDetails() {
+    const response = await fetchInstructorCourseDetailsService(
+      currentEditedCourseId
+    );
+    if (response?.success) {
+      const setCourseFormData = Object.keys(
+        courseLandingInitialFormData
+      ).reduce((acc, key) => {
+        acc[key] = response?.data[key] || courseLandingInitialFormData[key];
+        return acc;
+      }, {});
+      setCourseLandingFormData(setCourseFormData);
+      setCourseCurriculumFormData(response?.data?.curriculum);
+    }
+  }
 
   // Uncomment to fetch course details when `currentEditedCourseId` changes
-  // useEffect(() => {
-  //   if (currentEditedCourseId !== null) fetchCurrentCourseDetails();
-  // }, [currentEditedCourseId]);
+  useEffect(() => {
+    if (currentEditedCourseId !== null) 
+      fetchCurrentCourseDetails();
+  }, [currentEditedCourseId]);
 
   // Ensure to handle `currentEditedCourseId` properly in `useEffect` for editing courses
-  // useEffect(() => {
-  //   if (params?.courseId) setCurrentEditedCourseId(params?.courseId);
-  // }, [params?.courseId]);
+  useEffect(() => {
+    if (params?.courseId) setCurrentEditedCourseId(params?.courseId);
+  }, [params?.courseId]);
 
   return (
     <div className="container mx-auto p-4">

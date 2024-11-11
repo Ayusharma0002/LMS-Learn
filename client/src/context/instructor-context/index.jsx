@@ -1,12 +1,3 @@
-// import { createContext } from "react";
-
-
-
-// export const InstructorContext=createContext(null);
-
-
-
-
 import {
     courseCurriculumInitialFormData,
     courseLandingInitialFormData,
@@ -28,7 +19,7 @@ import { createContext, useState } from "react";
     const [mediaUploadProgressPercentage, setMediaUploadProgressPercentage] =
       useState(0);
     const [instructorCoursesList, setInstructorCoursesList] = useState([]);
-    // const [currentEditedCourseId, setCurrentEditedCourseId] = useState(null);
+    const [currentEditedCourseId, setCurrentEditedCourseId] = useState(null);
   
     return (
       <InstructorContext.Provider
@@ -43,8 +34,8 @@ import { createContext, useState } from "react";
           setMediaUploadProgressPercentage,
           instructorCoursesList,
           setInstructorCoursesList,
-    //       currentEditedCourseId,
-    //       setCurrentEditedCourseId,
+          currentEditedCourseId,
+          setCurrentEditedCourseId,
         }}
       >
         {children}

@@ -43,7 +43,7 @@ function App() {
           />
         }
       />
-      {/* <Route
+      <Route
         path="/instructor/edit-course/:courseId"
         element={
           <RouteGuard
@@ -52,7 +52,7 @@ function App() {
             user={auth?.user}
           />
         }
-      /> */}
+      />
       <Route
         path="/"
         element={
