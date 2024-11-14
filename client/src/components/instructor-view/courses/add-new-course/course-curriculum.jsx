@@ -255,6 +255,22 @@ function CourseCurriculum() {
 
   }
 
+  async function handleDeleteLecture(currentIndex) {
+    let cpyCourseCurriculumFormData = [...courseCurriculumFormData];
+    const getCurrentSelectedVideoPublicId =
+      cpyCourseCurriculumFormData[currentIndex].public_id;
+
+    const response = await mediaDeleteService(getCurrentSelectedVideoPublicId);
+
+    if (response?.success) {
+      cpyCourseCurriculumFormData = cpyCourseCurriculumFormData.filter(
+        (_, index) => index !== currentIndex
+      );
+
+      setCourseCurriculumFormData(cpyCourseCurriculumFormData);
+    }
+  }
+
   console.log(courseCurriculumFormData);
 
   return (
@@ -335,7 +351,7 @@ function CourseCurriculum() {
                       Replace Video
                     </Button>
                     <Button
-                      // onClick={() => handleDeleteLecture(index)}
+                      onClick={() => handleDeleteLecture(index)}
                       className="bg-red-900"
                     >
                       Delete Lecture

@@ -92,6 +92,39 @@ export async function mediaUploadService(formData
   }
 
 
+  export async function fetchStudentViewCourseListService(query) {
+    const { data } = await axiosInstance.get(`/student/course/get?${query}`);
+  
+    return data;
+  }
+  // export async function fetchStudentViewCourseListService() {
+  //   const { data } = await axiosInstance.get(`/student/course/get`);
+  
+  //   return data;
+  // }
+
+  export async function fetchStudentViewCourseDetailsService(courseId) {
+    const { data } = await axiosInstance.get(
+      `/student/course/get/details/${courseId}`
+    );
+  
+    return data;
+  }
+
+  // export async function mediaBulkUploadService(formData, onProgressCallback) {
+  //   const { data } = await axiosInstance.post("/media/bulk-upload", formData, {
+  //     onUploadProgress: (progressEvent) => {
+  //       const percentCompleted = Math.round(
+  //         (progressEvent.loaded * 100) / progressEvent.total
+  //       );
+  //       onProgressCallback(percentCompleted);
+  //     },
+  //   });
+  
+  //   return data;
+  // }
+
+
 
 export async function sendOtpService(email) {
     console.log("Sending otp to email service", email);
