@@ -14,11 +14,11 @@ import { AuthContext } from "@/context/auth-context";
 import { StudentContext } from "@/context/student-context";
 import { fetchStudentViewCourseDetailsService } from "@/services";
 import { CheckCircle, Globe, Lock, PlayCircle } from "lucide-react";
-// import {
-//   checkCoursePurchaseInfoService,
-//   createPaymentService,
-//   fetchStudentViewCourseDetailsService,
-// } from "@/services";
+import {
+  // checkCoursePurchaseInfoService,
+  createPaymentService,
+  // fetchStudentViewCourseDetailsService,
+} from "@/services";
 // import { CheckCircle, Globe, Lock, PlayCircle } from "lucide-react";
 import { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
@@ -33,12 +33,12 @@ function StudentViewCourseDetailsPage() {
     setLoadingState,
   } = useContext(StudentContext);
 
-//   const { auth } = useContext(AuthContext);
+  const { auth } = useContext(AuthContext);
 
   const [displayCurrentVideoFreePreview, setDisplayCurrentVideoFreePreview] =
     useState(null);
   const [showFreePreviewDialog, setShowFreePreviewDialog] = useState(false);
-//   const [approvalUrl, setApprovalUrl] = useState("");
+  const [approvalUrl, setApprovalUrl] = useState("");
 //   const navigate = useNavigate();
   const { id } = useParams();
   const location = useLocation();
@@ -76,36 +76,36 @@ async function fetchStudentViewCourseDetails() {
     setDisplayCurrentVideoFreePreview(getCurrentVideoInfo?.videoUrl);
   }
 
-//   async function handleCreatePayment() {
-//     const paymentPayload = {
-//       userId: auth?.user?._id,
-//       userName: auth?.user?.userName,
-//       userEmail: auth?.user?.userEmail,
-//       orderStatus: "pending",
-//       paymentMethod: "paypal",
-//       paymentStatus: "initiated",
-//       orderDate: new Date(),
-//       paymentId: "",
-//       payerId: "",
-//       instructorId: studentViewCourseDetails?.instructorId,
-//       instructorName: studentViewCourseDetails?.instructorName,
-//       courseImage: studentViewCourseDetails?.image,
-//       courseTitle: studentViewCourseDetails?.title,
-//       courseId: studentViewCourseDetails?._id,
-//       coursePricing: studentViewCourseDetails?.pricing,
-//     };
+  async function handleCreatePayment() {
+    const paymentPayload = {
+      userId: auth?.user?._id,
+      userName: auth?.user?.userName,
+      userEmail: auth?.user?.userEmail,
+      orderStatus: "pending",
+      paymentMethod: "paypal",
+      paymentStatus: "initiated",
+      orderDate: new Date(),
+      paymentId: "",
+      payerId: "",
+      instructorId: studentViewCourseDetails?.instructorId,
+      instructorName: studentViewCourseDetails?.instructorName,
+      courseImage: studentViewCourseDetails?.image,
+      courseTitle: studentViewCourseDetails?.title,
+      courseId: studentViewCourseDetails?._id,
+      coursePricing: studentViewCourseDetails?.pricing,
+    };
 
-//     console.log(paymentPayload, "paymentPayload");
-//     const response = await createPaymentService(paymentPayload);
+    console.log(paymentPayload, "paymentPayload");
+    const response = await createPaymentService(paymentPayload);
 
-//     if (response.success) {
-//       sessionStorage.setItem(
-//         "currentOrderId",
-//         JSON.stringify(response?.data?.orderId)
-//       );
-//       setApprovalUrl(response?.data?.approveUrl);
-//     }
-//   }
+    if (response.success) {
+      sessionStorage.setItem(
+        "currentOrderId",
+        JSON.stringify(response?.data?.orderId)
+      );
+      setApprovalUrl(response?.data?.approveUrl);
+    }
+  }
 
   useEffect(() => {
     if (displayCurrentVideoFreePreview !== null) setShowFreePreviewDialog(true);
@@ -129,9 +129,9 @@ useEffect(() => {
 
   if (loadingState) return <Skeleton />;
 
-//   if (approvalUrl !== "") {
-//     window.location.href = approvalUrl;
-//   }
+  if (approvalUrl !== "") {
+    window.location.href = approvalUrl;
+  }
 
   const getIndexOfFreePreviewUrl =
     studentViewCourseDetails !== null
@@ -241,7 +241,7 @@ useEffect(() => {
                 </span>
               </div>
               <Button 
-            //   onClick={handleCreatePayment}
+              onClick={handleCreatePayment}
                className="w-full">
                 Buy Now
               </Button>
