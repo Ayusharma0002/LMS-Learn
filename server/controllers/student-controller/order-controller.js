@@ -2,7 +2,6 @@ const paypal = require("../../helpers/paypal");
 const Order = require("../../models/Order");
 const Course = require("../../models/Course");
 const StudentCourses = require("../../models/StudentCourses");
-
 const createOrder = async (req, res) => {
   try {
     const {
@@ -62,6 +61,8 @@ const createOrder = async (req, res) => {
           message: "Error while creating paypal payment!",
         });
       } else {
+        console.log("Info :", paymentInfo);
+        
         const newlyCreatedCourseOrder = new Order({
           userId,
           userName,
