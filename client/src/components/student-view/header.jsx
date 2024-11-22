@@ -25,12 +25,12 @@ function StudentViewCommonHeader() {
         <div className="flex items-center space-x-1">
           <Button
             variant="ghost"
-            // onClick={() => {
-            //   location.pathname.includes("/courses")
-            //     ? null
-            //     : navigate("/courses");
-            // }}
-            onClick={() => navigate("/courses")}
+            onClick={() => {
+              location.pathname.includes("/courses")
+                ? null
+                : navigate("/courses");
+            }}
+            // onClick={() => navigate("/courses")}
             className="text-[14px] md:text-[16px] font-medium"
           >
             Explore Courses
@@ -40,7 +40,7 @@ function StudentViewCommonHeader() {
       <div className="flex items-center space-x-4">
         <div className="flex gap-4 items-center">
           <div
-            // onClick={() => navigate("/student-courses")}
+            onClick={() => navigate("/student-courses")}
             className="flex cursor-pointer items-center gap-3"
           >
             <span className="font-extrabold md:text-xl text-[14px]">

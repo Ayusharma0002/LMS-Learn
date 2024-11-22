@@ -22,7 +22,8 @@ function PaypalPaymentReturnPage() {
           payerId,
           orderId
         );
-
+        
+        console.log(response,"yo paypal payent return page");
         if (response?.success) {
           sessionStorage.removeItem("currentOrderId");
           window.location.href = "/student-courses";

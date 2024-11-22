@@ -9,8 +9,8 @@ function VideoPlayer(
   width = "100%",
   height = "100%",
   url,
-  // onProgressUpdate,
-  // progressData,
+  onProgressUpdate,
+  progressData,
 }
 ) 
 {
@@ -122,14 +122,14 @@ function VideoPlayer(
     };
   }, []);
 
-  // useEffect(() => {
-  //   if (played === 1) {
-  //     onProgressUpdate({
-  //       ...progressData,
-  //       progressValue: played,
-  //     });
-  //   }
-  // }, [played]);
+  useEffect(() => {
+    if (played === 1) {
+      onProgressUpdate({
+        ...progressData,
+        progressValue: played,
+      });
+    }
+  }, [played]);
 
   return (
     <div

@@ -18,7 +18,7 @@ import { Label } from "@/components/ui/label";
 import { AuthContext } from "@/context/auth-context";
 import { StudentContext } from "@/context/student-context";
 import {
-//   checkCoursePurchaseInfoService,
+  checkCoursePurchaseInfoService,
   fetchStudentViewCourseListService,
 } from "@/services";
 // import { ArrowUpDownIcon } from "lucide-react";
@@ -53,7 +53,7 @@ function StudentViewCoursesPage() {
     setLoadingState,
   } = useContext(StudentContext);
   const navigate = useNavigate();
-//   const { auth } = useContext(AuthContext);
+  const { auth } = useContext(AuthContext);
 
   function handleFilterOnChange(getSectionId, getCurrentOption) {
     let cpyFilters = { ...filters };
@@ -94,20 +94,20 @@ function StudentViewCoursesPage() {
     }
   }
 
-//   async function handleCourseNavigate(getCurrentCourseId) {
-//     const response = await checkCoursePurchaseInfoService(
-//       getCurrentCourseId,
-//       auth?.user?._id
-//     );
+  async function handleCourseNavigate(getCurrentCourseId) {
+    const response = await checkCoursePurchaseInfoService(
+      getCurrentCourseId,
+      auth?.user?._id
+    );
 
-//     if (response?.success) {
-//       if (response?.data) {
-//         navigate(`/course-progress/${getCurrentCourseId}`);
-//       } else {
-//         navigate(`/course/details/${getCurrentCourseId}`);
-//       }
-//     }
-//   }
+    if (response?.success) {
+      if (response?.data) {
+        navigate(`/course-progress/${getCurrentCourseId}`);
+      } else {
+        navigate(`/course/details/${getCurrentCourseId}`);
+      }
+    }
+  }
 
   useEffect(() => {
     const buildQueryStringForFilters = createSearchParamsHelper(filters);
@@ -200,8 +200,8 @@ function StudentViewCoursesPage() {
             {studentViewCoursesList && studentViewCoursesList.length > 0 ? (
               studentViewCoursesList.map((courseItem) => (
                 <Card
-                  // onClick={() => handleCourseNavigate(courseItem?._i d)}
-                  onClick={() => navigate(`/course/details/${courseItem?._id}`)}
+                  onClick={() => handleCourseNavigate(courseItem?._id)}
+                  // onClick={() => navigate(`/course/details/${courseItem?._id}`)}
                   className="cursor-pointer"
                   key={courseItem?._id}
                 >
