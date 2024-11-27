@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
-// import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -9,19 +8,15 @@ import {
   DropdownMenuRadioItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { ArrowUpDownIcon } from "lucide-react";
-// import { Label } from "@/components/ui/label";
-// import { Skeleton } from "@/components/ui/skeleton";
 import { filterOptions, sortOptions } from "@/config";
 import { Label } from "@/components/ui/label";
-// import { Checkbox } from "@/components/ui/checkbox";
 import { AuthContext } from "@/context/auth-context";
 import { StudentContext } from "@/context/student-context";
 import {
   checkCoursePurchaseInfoService,
   fetchStudentViewCourseListService,
 } from "@/services";
-// import { ArrowUpDownIcon } from "lucide-react";
+import { ArrowUpDownIcon } from "lucide-react";
 import { useContext, useEffect, useState } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useSearchParams } from "react-router-dom";

@@ -1,19 +1,25 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Slider } from "@radix-ui/react-slider";
 import ReactPlayer from "react-player";
+import { Slider } from "../ui/slider";
 import { Button } from "../ui/button";
-import { Maximize, Minimize, Pause, Play, RotateCcw, RotateCw, Volume2, VolumeX } from "lucide-react";
+import {
+  Maximize,
+  Minimize,
+  Pause,
+  Play,
+  RotateCcw,
+  RotateCw,
+  Volume2,
+  VolumeX,
+} from "lucide-react";
 
-function VideoPlayer(
-    {
+function VideoPlayer({
   width = "100%",
   height = "100%",
   url,
   onProgressUpdate,
   progressData,
-}
-) 
-{
+}) {
   const [playing, setPlaying] = useState(false);
   const [volume, setVolume] = useState(0.5);
   const [muted, setMuted] = useState(false);
@@ -22,25 +28,12 @@ function VideoPlayer(
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [showControls, setShowControls] = useState(true);
 
-
-  // useref allows us to persist values between renders , it store a refereence toa dom element or component like video player 
-  // so that we can or maniplualate it directly later 
-  // it stores a mutable value that does cause re-render when updated ,it can be used to dom element directly 
-
-  // does not cause renders : if we tries to find out how many times our application renders using useState hook 
-  // we would could be caught in an infiinite loop since useState itself causes a re-render , to avoid this we use useRef hook
-  // useRef returns an object called current , useRef we set intial value is 0 or null
-//   useRef ka use kis liye hota hai?
-// Jab tumhe kisi cheez ko store karna ho jo rendering ko affect nahi karti, jaise:
-// DOM elements ko access karna (e.g., <input> ya <video> element)
-// Previous values ko store karna
-// Timers ya functions ko store karna
   const playerRef = useRef(null);
   const playerContainerRef = useRef(null);
   const controlsTimeoutRef = useRef(null);
 
   function handlePlayAndPause() {
-    setPlaying(!playing); //means agr true to false aur false to true
+    setPlaying(!playing);
   }
 
   function handleProgress(state) {
@@ -238,13 +231,7 @@ function VideoPlayer(
         </div>
       )}
     </div>
-
   );
 }
 
 export default VideoPlayer;
-
-
-
-
-  

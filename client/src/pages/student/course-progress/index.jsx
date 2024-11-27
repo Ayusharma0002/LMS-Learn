@@ -4,8 +4,8 @@ import {
   DialogContent,
   DialogDescription,
   DialogHeader,
-  // DialogOverlay,
-  // DialogPortal,
+  DialogOverlay,
+  DialogPortal,
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
@@ -16,16 +16,16 @@ import { AuthContext } from "@/context/auth-context";
 import { StudentContext } from "@/context/student-context";
 import {
   getCurrentCourseProgressService,
-  // markLectureAsViewedService,
-  // resetCourseProgressService,
+  markLectureAsViewedService,
+  resetCourseProgressService,
 } from "@/services";
 import { 
-  // Check
-  // , 
+  Check
+  , 
   ChevronLeft, 
   ChevronRight
-  // ,
-  //  Play
+  ,
+   Play
    } from "lucide-react";
 import { useContext, useEffect, useState } from "react";
 // import Confetti from "react-confetti/dist/types/Confetti";
@@ -88,47 +88,47 @@ function StudentViewCourseProgressPage() {
     }
   }
 
-//   async function updateCourseProgress() {
-//     if (currentLecture) {
-//       const response = await markLectureAsViewedService(
-//         auth?.user?._id,
-//         studentCurrentCourseProgress?.courseDetails?._id,
-//         currentLecture._id
-//       );
+  async function updateCourseProgress() {
+    if (currentLecture) {
+      const response = await markLectureAsViewedService(
+        auth?.user?._id,
+        studentCurrentCourseProgress?.courseDetails?._id,
+        currentLecture._id
+      );
 
-//       if (response?.success) {
-//         fetchCurrentCourseProgress();
-//       }
-//     }
-//   }
+      if (response?.success) {
+        fetchCurrentCourseProgress();
+      }
+    }
+  }
 
-//   async function handleRewatchCourse() {
-//     const response = await resetCourseProgressService(
-//       auth?.user?._id,
-//       studentCurrentCourseProgress?.courseDetails?._id
-//     );
+  async function handleRewatchCourse() {
+    const response = await resetCourseProgressService(
+      auth?.user?._id,
+      studentCurrentCourseProgress?.courseDetails?._id
+    );
 
-//     if (response?.success) {
-//       setCurrentLecture(null);
-//       setShowConfetti(false);
-//       setShowCourseCompleteDialog(false);
-//       fetchCurrentCourseProgress();
-//     }
-//   }
+    if (response?.success) {
+      setCurrentLecture(null);
+      setShowConfetti(false);
+      setShowCourseCompleteDialog(false);
+      fetchCurrentCourseProgress();
+    }
+  }
 
   useEffect(() => {
     fetchCurrentCourseProgress();
   }, [id]);
 
-//   useEffect(() => {
-//     if (currentLecture?.progressValue === 1) updateCourseProgress();
-//   }, [currentLecture]);
+  useEffect(() => {
+    if (currentLecture?.progressValue === 1) updateCourseProgress();
+  }, [currentLecture]);
 
   useEffect(() => {
     if (showConfetti) setTimeout(() => setShowConfetti(false), 15000);
   }, [showConfetti]);
 
-//   console.log(currentLecture, "currentLecture");
+  console.log(currentLecture, "currentLecture");
 
   return (
     <div className="flex flex-col h-screen bg-[#1c1d1f] text-white">
@@ -202,13 +202,13 @@ function StudentViewCourseProgressPage() {
                         className="flex items-center space-x-2 text-sm text-white font-bold cursor-pointer"
                         key={item._id}
                       >
-                        {/* {studentCurrentCourseProgress?.progress?.find(
+                        {studentCurrentCourseProgress?.progress?.find(
                           (progressItem) => progressItem.lectureId === item._id
                         )?.viewed ? (
                           <Check className="h-4 w-4 text-green-500" />
                         ) : (
                           <Play className="h-4 w-4 " />
-                        )} */}
+                        )}
                         <span>{item?.title}</span>
                       </div>
                     )
@@ -231,7 +231,7 @@ function StudentViewCourseProgressPage() {
       </div>
        
        <Dialog open={lockCourse}>
-         <DialogContent className="sm:w-[425px]">
+         <DialogContent showOverlay={false} className="sm:w-[425px]">
            <DialogHeader>
              <DialogTitle>You can't view this page</DialogTitle>
              <DialogDescription>
@@ -248,13 +248,13 @@ function StudentViewCourseProgressPage() {
                <Label>You have completed the course</Label>
                <div className="flex flex-row gap-3">
                  <Button 
-                //  onClick={() =>navigate("/student-courses")}
+                 onClick={() =>navigate("/student-courses")}
                   >
                    My Courses Page
                  </Button>
                  <Button 
-                //  onClick={handleRewatchCourse}
-                 Rewatch Course>
+                 onClick={handleRewatchCourse}>
+                 Rewatch Course
                  </Button>
                </div>
              </DialogDescription>
