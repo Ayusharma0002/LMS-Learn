@@ -30,6 +30,7 @@ const PORT=process.env.PORT || 5000;
 const allowedOrigins = [
   process.env.CLIENT_URL, // This resolves to http://localhost:5173 if set in .env
   "http://localhost:5173",
+  "http://localhost:5174",
   "http://127.0.0.1:5173" // Add this origin explicitly
 ];
 

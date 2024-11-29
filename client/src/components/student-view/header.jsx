@@ -17,13 +17,13 @@ function StudentViewCommonHeader() {
     <header className="flex items-center justify-between p-4 border-b relative">
       <div className="flex items-center space-x-4">
         <Link to="/home" className="flex items-center hover:text-black">
-          <GraduationCap className="h-8 w-8 mr-2 " />
+          <GraduationCap className="h-10 w-8 mr-2 " />
           {/* <span className="font-extrabold md:text-xl text-[14px]">
             UpSkillPRO
           </span> */}
           {/* <Link to={"/"} className="flex items-center justify-center"> */}
           {/* <GraduationCap className="h-10 w-8 mr-4" /> */}
-          <img className="font-extrabold text-xl h-10 w-full" src="/logo.png"></img>
+          <img className="font-extrabold text-md h-8 md:w-full w-2/3" src="/logo.png"></img>
         {/* </Link> */}
         </Link>
         <div className="flex items-center space-x-1">
@@ -35,7 +35,7 @@ function StudentViewCommonHeader() {
                 : navigate("/courses");
             }}
             // onClick={() => navigate("/courses")}
-            className="text-[14px] md:text-[16px] font-medium"
+            className="text-[14px] md:text-[16px] md:flex hidden font-medium"
           >
             Explore Courses
           </Button>
@@ -47,12 +47,13 @@ function StudentViewCommonHeader() {
             onClick={() => navigate("/student-courses")}
             className="flex cursor-pointer items-center gap-3"
           >
-            <span className="font-extrabold md:text-xl text-[14px]">
+            <span className="font-extrabold md:text-xl md:flex hidden text-[14px]">
               My Courses
             </span>
             <TvMinimalPlay className="w-8 h-8 cursor-pointer" />
           </div>
           <Button
+          className='h-8'
            onClick={handleLogout}
           >Sign Out</Button>
         </div>
