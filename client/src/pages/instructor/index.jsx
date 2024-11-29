@@ -33,7 +33,7 @@ export default function InstructorDashboardpage() {
       label: "Dashboard",
       value: "dashboard",
       component: <InstructorDashboard
-      // listOfCourses={instructorCoursesList}
+      listOfCourses={instructorCoursesList}
       />,
     },
     {

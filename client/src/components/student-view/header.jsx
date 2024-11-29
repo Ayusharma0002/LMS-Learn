@@ -17,10 +17,14 @@ function StudentViewCommonHeader() {
     <header className="flex items-center justify-between p-4 border-b relative">
       <div className="flex items-center space-x-4">
         <Link to="/home" className="flex items-center hover:text-black">
-          <GraduationCap className="h-8 w-8 mr-4 " />
-          <span className="font-extrabold md:text-xl text-[14px]">
-            LMS LEARN
-          </span>
+          <GraduationCap className="h-8 w-8 mr-2 " />
+          {/* <span className="font-extrabold md:text-xl text-[14px]">
+            UpSkillPRO
+          </span> */}
+          {/* <Link to={"/"} className="flex items-center justify-center"> */}
+          {/* <GraduationCap className="h-10 w-8 mr-4" /> */}
+          <img className="font-extrabold text-xl h-10 w-full" src="/logo.png"></img>
+        {/* </Link> */}
         </Link>
         <div className="flex items-center space-x-1">
           <Button
