@@ -58,7 +58,7 @@ function StudentHomePage() {
     <div className="min-h-screen student-home bg-white">
       <section className="flex flex-col lg:flex-row items-center justify-between md:py-4 sm:pt-4 px-4 lg:px-8">
         <div className="lg:w-1/2 lg:pr-12">
-          <h1 className="md:text-4xl text-3xl font-bold mb-2">Learning thet gets you</h1>
+          <h1 className="md:text-4xl text-3xl font-bold mb-2">Learning that gets you</h1>
           <p className="md:text-xl text-sm mb-4">
             Skills for your present and your future. Get Started with US
           </p>
