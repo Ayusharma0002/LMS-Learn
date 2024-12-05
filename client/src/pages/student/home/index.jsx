@@ -229,10 +229,10 @@ function StudentHomePage() {
     <div className="min-h-screen student-home bg-white">
       <section className="flex flex-col lg:flex-row items-center justify-between md:py-4 sm:pt-4 px-4 lg:px-8">
         <div className="lg:w-1/2 lg:pr-12">
-          <h1 className="md:text-4xl text-3xl font-bold mb-2">
+          <h1 className="md:text-4xl text-3xl font-bold mb-2 text-secondary">
             Learning that gets you
           </h1>
-          <p className="md:text-xl text-sm mb-4">
+          <p className="md:text-xl text-sm mb-4 text-secondary">
             Skills for your present and your future. Get Started with US
           </p>
         </div>
@@ -247,7 +247,7 @@ function StudentHomePage() {
       </section>
       <section className="py-8 px-4 lg:px-8 bg-gray-100">
         <div className="flex flex-col md:flex-row items-center justify-between mb-6">
-          <h2 className="text-2xl font-bold">Course Categories</h2>
+          <h2 className="text-2xl font-bold text-secondary">Course Categories</h2>
           {/* <input
             type="text"
             placeholder="Search courses..."
@@ -256,7 +256,7 @@ function StudentHomePage() {
             className="border rounded-md px-4 py-2 text-sm w-full md:w-1/2"
           /> */}
         </div>
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 text-primary sm:grid-cols-3 md:grid-cols-4 gap-4">
           {courseCategories.map((categoryItem) => (
             <Button
               className="justify-start"
@@ -270,7 +270,7 @@ function StudentHomePage() {
         </div>
       </section>
       <section className="py-12 px-4 lg:px-8">
-        <h2 className="text-2xl font-bold mb-6">Featured Courses</h2>
+        <h2 className="text-2xl font-bold mb-6  text-secondary">Featured Courses</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {filteredCourses && filteredCourses.length > 0 ? (
             filteredCourses.map((courseItem) => (

@@ -469,7 +469,7 @@ function StudentViewCoursesPage() {
 
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-4">All Courses</h1>
+      <h1 className="text-3xl font-bold mb-4 text-secondary">All Courses</h1>
       <div className="flex flex-col md:flex-row gap-4">
         <aside className="w-full md:w-64 space-y-4">
           <div>
@@ -480,7 +480,7 @@ function StudentViewCoursesPage() {
                   {filterOptions[ketItem].map((option) => (
                     <Label
                       key={option.id}
-                      className="flex font-medium items-center gap-3"
+                      className="flex text-primary font-medium items-center gap-3"
                     >
                       <Checkbox
                         checked={

@@ -81,3 +81,23 @@
     @apply bg-background text-foreground;
   }
 }
+
+
+/* .bg-primary{
+  @apply bg-[#773191];
+}
+.bg-secondary{
+  @apply bg-[#221C58];
+}*/
+.btn-primary{
+  @apply bg-[#D12026];
+}
+.btn-secondary{
+  @apply bg-[#F9A43F];
+}
+.text-primary{
+  @apply text-[#773191];
+}
+.text-secondary{
+  @apply text-[#221C58];
+}
