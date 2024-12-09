@@ -61,6 +61,25 @@ export async function mediaUploadService(formData
     return data;
   }
 
+//ye 9-12-24 ko add kiya file upload kai liye
+  export async function pdfUploadService(formData, onProgressCallback) {
+    try {
+      const { data } = await axiosInstance.post("/media/upload-pdf", formData, {
+        onUploadProgress: (progressEvent) => {
+          const percentCompleted = Math.round(
+            (progressEvent.loaded * 100) / progressEvent.total
+          );
+          onProgressCallback(percentCompleted);
+        },
+      });
+  
+      return data;
+    } catch (error) {
+      console.error("Error uploading PDF:", error);
+      throw error; // Optionally, handle errors here
+    }
+  }
+
 
   export async function fetchInstructorCourseListService() {
     const { data } = await axiosInstance.get(`/instructor/course/get`);

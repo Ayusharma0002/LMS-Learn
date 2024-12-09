@@ -4,6 +4,7 @@ const LectureSchema = new mongoose.Schema({
     title: String,
     videoUrl: String,
     public_id: String,
+    pdfUrl: String,  //ye 5-12-2024 ko add kiya pdf kai liye
     freePreview: Boolean,
   });
   
