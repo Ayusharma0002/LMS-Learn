@@ -62,24 +62,45 @@ export async function mediaUploadService(formData
   }
 
 //ye 9-12-24 ko add kiya file upload kai liye
-  export async function pdfUploadService(formData, onProgressCallback) {
+  // export async function pdfUploadService(formData, onProgressCallback) {
+  //   try {
+  //     const { data } = await axiosInstance.post("/media/upload-pdf", formData, {
+  //       onUploadProgress: (progressEvent) => {
+  //         const percentCompleted = Math.round(
+  //           (progressEvent.loaded * 100) / progressEvent.total
+  //         );
+  //         onProgressCallback(percentCompleted);
+  //       },
+  //     });
+  
+  //     return data;
+  //   } catch (error) {
+  //     console.error("Error uploading PDF:", error);
+  //     throw error; // Optionally, handle errors here
+  //   }
+  // }
+
+
+ export async function pdfUploadService (pdfFormData, progressCallback) {
     try {
-      const { data } = await axiosInstance.post("/media/upload-pdf", formData, {
+      const response = await axios.post("/media/upload-pdf", pdfFormData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
         onUploadProgress: (progressEvent) => {
-          const percentCompleted = Math.round(
-            (progressEvent.loaded * 100) / progressEvent.total
-          );
-          onProgressCallback(percentCompleted);
+          const percentage = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+          progressCallback(percentage);
         },
       });
-  
-      return data;
+      console.log("Pdf res : ",response.data);
+      
+      return response.data; // Ensure the API returns a `success` flag and `data.url`.
     } catch (error) {
-      console.error("Error uploading PDF:", error);
-      throw error; // Optionally, handle errors here
+      console.error("Error uploading media:", error);
+      throw error;
     }
-  }
-
+  };
+  
 
   export async function fetchInstructorCourseListService() {
     const { data } = await axiosInstance.get(`/instructor/course/get`);

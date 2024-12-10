@@ -11,7 +11,6 @@ const uploadMediaToCloudinary = async (filePath) => {
   try {
     const result = await cloudinary.uploader.upload(filePath, {
       resource_type: "auto",
-      // resource_type: "raw",
     });
 
     console.log("aayush sharma from cloudinary.js",filePath);

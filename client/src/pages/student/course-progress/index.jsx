@@ -25,6 +25,7 @@ import {
   ChevronLeft, 
   ChevronRight
   ,
+   Download,
    Play
    } from "lucide-react";
 import { useContext, useEffect, useState } from "react";
@@ -58,7 +59,7 @@ function StudentViewCourseProgressPage() {
           courseDetails: response?.data?.courseDetails,
           progress: response?.data?.progress,
         });
-
+        
         if (response?.data?.completed) {
           setCurrentLecture(response?.data?.courseDetails?.curriculum[0]);
           setShowCourseCompleteDialog(true);
@@ -210,7 +211,11 @@ function StudentViewCourseProgressPage() {
                         ) : (
                           <Play className="h-4 w-4 text-secondary" />
                         )}
+                        <div className="flex justify-between w-full p-4">
+
                         <span>{item?.title}</span>
+                        {item?.pdfUrl && <a href={item?.pdfUrl} download><Download/></a>}
+                        </div>
                       </div>
                     )
                   )}
