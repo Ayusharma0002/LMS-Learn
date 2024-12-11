@@ -67,7 +67,7 @@
 
 
 
-import { GraduationCap, Search, TvMinimalPlay } from "lucide-react";
+import { GraduationCap, Search, SearchXIcon, TvMinimalPlay } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "../ui/button";
 import { useContext, useState } from "react";
@@ -123,22 +123,22 @@ function StudentViewCommonHeader() {
             {/* Search Input */}
             <form
               onSubmit={handleSearchSubmit}
-              className="items-center hidden md:flex md:flex-row sm:space-x-2 sm:space-y-0"
+              className="items-center hidden md:flex md:flex-row border rounded-full px-4 sm:space-y-0"
             >
               <input
                 type="text"
-                placeholder="Search Courses"
+                placeholder="Search Courses..."
                 title="Search"
                 value={searchQuery}
                 onChange={handleSearchChange}
-                className="border p-2 rounded-md w-full sm:w-64"
+                className="outline-none p-2 rounded-md w-full sm:w-64"
               />
-              <Button
+              <button
                 type="submit"
                 className="h-10 text-md w-full sm:w-auto"
               >
-                Search
-              </Button>
+                <Search className="text-gray-500"/>
+              </button>
             </form>
 
             <div onClick={() => navigate("/student-courses")} className="flex cursor-pointer items-center gap-3">

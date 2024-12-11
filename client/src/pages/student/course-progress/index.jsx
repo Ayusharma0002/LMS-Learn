@@ -19,22 +19,23 @@ import {
   markLectureAsViewedService,
   resetCourseProgressService,
 } from "@/services";
-import { 
+import {
   Check
-  , 
-  ChevronLeft, 
+  ,
+  ChevronLeft,
   ChevronRight
   ,
-   Download,
-   Play
-   } from "lucide-react";
+  Download,
+  Play
+} from "lucide-react";
 import { useContext, useEffect, useState } from "react";
 // import Confetti from "react-confetti/dist/types/Confetti";
 import Confetti from "react-confetti";
-import { useNavigate
+import {
+  useNavigate
   ,
-   useParams
-   } from "react-router-dom";
+  useParams
+} from "react-router-dom";
 
 function StudentViewCourseProgressPage() {
   const navigate = useNavigate();
@@ -59,7 +60,7 @@ function StudentViewCourseProgressPage() {
           courseDetails: response?.data?.courseDetails,
           progress: response?.data?.progress,
         });
-        
+
         if (response?.data?.completed) {
           setCurrentLecture(response?.data?.courseDetails?.curriculum[0]);
           setShowCourseCompleteDialog(true);
@@ -81,7 +82,7 @@ function StudentViewCourseProgressPage() {
 
           setCurrentLecture(
             response?.data?.courseDetails?.curriculum[
-              lastIndexOfViewedAsTrue + 1
+            lastIndexOfViewedAsTrue + 1
             ]
           );
         }
@@ -133,36 +134,35 @@ function StudentViewCourseProgressPage() {
 
   return (
     <div className="flex flex-col h-screen bg-white">
-       {showConfetti && <Confetti />}
-       <div className="flex items-center justify-between p-4 bg-white border-b border-gray-100">
-         <div className="flex items-center space-x-4">
-           <Button
-             onClick={() => navigate("/student-courses")}
-             className="text-black"
-             variant="ghost"
-             size="sm"
+      {showConfetti && <Confetti />}
+      <div className="flex items-center justify-between p-4 bg-white border-b border-gray-100">
+        <div className="flex items-center space-x-4">
+          <Button
+            onClick={() => navigate("/student-courses")}
+            className="text-black"
+            variant="ghost"
+            size="sm"
           >
-             <ChevronLeft className="h-4 w-4 mr-2" />
-           </Button>
-           <h1 className="text-lg font-bold hidden md:block">
-             {studentCurrentCourseProgress?.courseDetails?.title}
-           </h1>
-         </div>
-         <Button
-         className=""
+            <ChevronLeft className="h-4 w-4 mr-2" />
+          </Button>
+          <h1 className="text-lg font-bold hidden md:block">
+            {studentCurrentCourseProgress?.courseDetails?.title}
+          </h1>
+        </div>
+        <Button
+          className=""
           onClick={() => setIsSideBarOpen(!isSideBarOpen)}>
-           {isSideBarOpen ? (
-             <ChevronRight className="h-5 w-5" />
-           ) : (
-             <ChevronLeft className="h-5 w-5" />
-           )}
-         </Button>
-       </div>
-       <div className="flex flex-1 overflow-hidden">
+          {isSideBarOpen ? (
+            <ChevronRight className="h-5 w-5" />
+          ) : (
+            <ChevronLeft className="h-5 w-5" />
+          )}
+        </Button>
+      </div>
+      <div className="flex flex-1 overflow-hidden">
         <div
-          className={`flex-1 ${
-            isSideBarOpen ? "mr-[400px]" : ""
-          } transition-all duration-300`}
+          className={`flex-1 ${isSideBarOpen ? "mr-[400px]" : ""
+            } transition-all duration-300`}
         >
           <VideoPlayer
             width="100%"
@@ -176,9 +176,8 @@ function StudentViewCourseProgressPage() {
           </div>
         </div>
         <div
-          className={`fixed top-[64px] right-0 bottom-0 w-[400px] bg-white text-black border-l border-gray-700 transition-all duration-300 ${
-            isSideBarOpen ? "translate-x-0" : "translate-x-full"
-          }`}
+          className={`fixed top-[64px] right-0 bottom-0 w-[400px] bg-white text-black border-l border-gray-700 transition-all duration-300 ${isSideBarOpen ? "translate-x-0" : "translate-x-full"
+            }`}
         >
           <Tabs defaultValue="content" className="h-full flex flex-col">
             <TabsList className="grid bg-gray-200 rounded-md w-full grid-cols-2 p-0 h-14">
@@ -213,8 +212,23 @@ function StudentViewCourseProgressPage() {
                         )}
                         <div className="flex justify-between w-full p-4">
 
-                        <span>{item?.title}</span>
-                        {item?.pdfUrl && <a href={item?.pdfUrl} download><Download/></a>}
+                          <span>{item?.title}</span>
+                          {item?.pdfUrl && (
+                            <a
+                              href={item?.pdfUrl}
+                              onClick={(e) => {
+                                e.preventDefault(); // Prevent the default anchor behavior
+                                window.open(
+                                  item.pdfUrl,
+                                  'PDFPopup',
+                                  'width=800,height=600,scrollbars=yes,resizable=yes'
+                                ); // Opens the PDF in a popup in the same tab
+                              }}
+                            >
+                              <Download />
+                            </a>
+                          )}
+
                         </div>
                       </div>
                     )
@@ -235,39 +249,39 @@ function StudentViewCourseProgressPage() {
           </Tabs>
         </div>
       </div>
-       
-       <Dialog open={lockCourse}>
-         <DialogContent showOverlay={false} className="sm:w-[425px]">
-           <DialogHeader>
-             <DialogTitle>You can't view this page</DialogTitle>
-             <DialogDescription>
-               Please purchase this course to get access
-             </DialogDescription>
-           </DialogHeader>
-         </DialogContent>
-       </Dialog>
-       <Dialog open={showCourseCompleteDialog}>
-         <DialogContent showOverlay={false} className="sm:w-[425px]">
-           <DialogHeader>
-             <DialogTitle>Congratulations!</DialogTitle>
-             <DialogDescription className="flex flex-col gap-3">
-               <Label>You have completed the course</Label>
-               <div className="flex flex-row gap-3">
-                 <Button 
-                 onClick={() =>navigate("/student-courses")}
-                  >
-                   My Courses Page
-                 </Button>
-                 <Button 
-                 onClick={handleRewatchCourse}>
-                 Rewatch Course
-                 </Button>
-               </div>
-             </DialogDescription>
-           </DialogHeader>
-         </DialogContent>
-       </Dialog>
-     </div>
+
+      <Dialog open={lockCourse}>
+        <DialogContent showOverlay={false} className="sm:w-[425px]">
+          <DialogHeader>
+            <DialogTitle>You can't view this page</DialogTitle>
+            <DialogDescription>
+              Please purchase this course to get access
+            </DialogDescription>
+          </DialogHeader>
+        </DialogContent>
+      </Dialog>
+      <Dialog open={showCourseCompleteDialog}>
+        <DialogContent showOverlay={false} className="sm:w-[425px]">
+          <DialogHeader>
+            <DialogTitle>Congratulations!</DialogTitle>
+            <DialogDescription className="flex flex-col gap-3">
+              <Label>You have completed the course</Label>
+              <div className="flex flex-row gap-3">
+                <Button
+                  onClick={() => navigate("/student-courses")}
+                >
+                  My Courses Page
+                </Button>
+                <Button
+                  onClick={handleRewatchCourse}>
+                  Rewatch Course
+                </Button>
+              </div>
+            </DialogDescription>
+          </DialogHeader>
+        </DialogContent>
+      </Dialog>
+    </div>
     //  </div>
   );
 }
