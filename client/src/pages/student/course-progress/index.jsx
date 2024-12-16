@@ -26,6 +26,8 @@ import {
   ChevronRight
   ,
   Download,
+  Files,
+  Folder,
   Play
 } from "lucide-react";
 import { useContext, useEffect, useState } from "react";
@@ -197,36 +199,68 @@ function StudentViewCourseProgressPage() {
             <TabsContent value="content">
               <ScrollArea className="h-full">
                 <div className="p-4  space-y-4 text-black">
+                  {console.log("Course --->  : ", studentCurrentCourseProgress)}
                   {studentCurrentCourseProgress?.courseDetails?.curriculum.map(
                     (item) => (
                       <div
                         className="flex border-b items-center space-x-2  text-sm text-black font-bold cursor-pointer"
                         key={item._id}
                       >
-                        {studentCurrentCourseProgress?.progress?.find(
-                          (progressItem) => progressItem.lectureId === item._id
-                        )?.viewed ? (
-                          <Check className="h-4 w-4 text-green-500" />
-                        ) : (
-                          <Play className="h-4 w-4 text-secondary" />
-                        )}
-                        <div className="flex justify-between w-full p-4">
+                        {item && (
+                          <>
+                            {item.videoUrl && (
+                              studentCurrentCourseProgress?.progress?.find(
+                                (progressItem) => progressItem.lectureId === item._id
+                              )?.viewed ? (
+                                <Check className="h-4 w-4 text-green-500" />
+                              ) : (
+                                <Play className="h-4 w-4 text-secondary" />
+                              )
+                            )}
 
+                            {!item.videoUrl && item.pdfUrl && (
+                              studentCurrentCourseProgress?.progress?.find(
+                                (progressItem) => progressItem.lectureId === item._id
+                              )?.viewed ? (
+                                <Check className="h-4 w-4 text-green-500" />
+                              ) : (
+                                <Folder className="h-4 w-4 text-secondary" />
+                              )
+                             // Assuming Files is an icon for PDF or similar
+                            )}
+                          </>
+                        )}
+
+                        <div className="flex justify-between w-full p-4 ">
                           <span>{item?.title}</span>
                           {item?.pdfUrl && (
                             <a
+                            className=""
                               href={item?.pdfUrl}
-                              onClick={(e) => {
+                              onClick={async (e) => {
                                 e.preventDefault(); // Prevent the default anchor behavior
                                 window.open(
                                   item.pdfUrl,
-                                  'PDFPopup',
-                                  'width=800,height=600,scrollbars=yes,resizable=yes'
+                                  "PDFPopup",
+                                  "width=800,height=600,scrollbars=yes,resizable=yes"
                                 ); // Opens the PDF in a popup in the same tab
+
+                                if (!item?.videoUrl && item?.pdfUrl) {
+                                  // If the lecture has only a PDF
+                                  await markLectureAsViewedService(
+                                    auth?.user?._id,
+                                    studentCurrentCourseProgress?.courseDetails?._id,
+                                    item._id
+                                  );
+
+                                  // Fetch progress to update the current lecture
+                                  await fetchCurrentCourseProgress();
+                                }
                               }}
                             >
                               <Download />
                             </a>
+
                           )}
 
                         </div>
