@@ -182,11 +182,13 @@
 
 
 
-import { GraduationCap, History, Search, TvMinimalPlay } from "lucide-react";
+import { CircleUserRound, GraduationCap, History, Search, TvMinimalPlay, User2Icon, UserIcon } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "../ui/button";
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState, useEffect, useRef } from "react";
 import { AuthContext } from "@/context/auth-context";
+import ProfileModal from "./ProfileModal";
+
 
 function StudentViewCommonHeader() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -194,7 +196,6 @@ function StudentViewCommonHeader() {
   const [suggestions, setSuggestions] = useState([]);
   const navigate = useNavigate();
   const { resetCredentials } = useContext(AuthContext);
-
   // Debounce logic
   useEffect(() => {
     const handler = setTimeout(() => {
@@ -323,26 +324,11 @@ function StudentViewCommonHeader() {
 
   return (
     <>
-      <header className="flex items-center justify-between p-4 border-b relative">
-        <div className="flex items-center space-x-4">
+      <header className="flex bg-[#FFFFFF] items-center justify-between p-4 border-b relative shadow-md">
+        <div className="flex items-center w-full space-x-4 justify-between">
           <Link to="/home" className="flex items-center hover:text-black">
-            <GraduationCap className="h-10 w-8 mr-2" />
             <img className="font-extrabold text-md h-8 md:w-full w-2/3" src="/logo.png" alt="Logo" />
           </Link>
-          <div className="flex items-center space-x-1">
-            <Button
-              variant="ghost"
-              onClick={() => {
-                location.pathname.includes("/courses") ? null : navigate("/courses");
-              }}
-              className="text-[14px] md:text-[16px] md:flex hidden font-medium"
-            >
-              Explore Courses
-            </Button>
-          </div>
-        </div>
-
-        <div className="flex items-center space-x-4">
           <div className="flex gap-4 items-center">
             {/* Search Input */}
             <form
@@ -381,13 +367,26 @@ function StudentViewCommonHeader() {
               )}
             </form>
 
-            <div onClick={() => navigate("/student-courses")} className="flex cursor-pointer items-center gap-3">
-              <span className="font-extrabold md:text-xl md:flex hidden text-[14px]">My Courses</span>
-              <TvMinimalPlay className="w-8 h-8 cursor-pointer" />
+          </div>
+          <div className="flex items-center gap-4">
+            <div className="flex items-center space-x-4 gap-4 pl-10">
+              <span
+                variant="ghost"
+                onClick={() => {
+                  location.pathname.includes("/courses") ? null : navigate("/courses");
+                }}
+                className=" cursor-pointer text-[14px] md:text-[16px] md:flex hidden"
+              >
+                Courses
+              </span>
+              <span className="cursor-pointer text-[14px] md:text-[16px] md:flex hidden">
+                Contact
+              </span>
             </div>
-            <Button className="h-8" onClick={handleLogout}>
-              Sign Out
-            </Button>
+            <UserDropdown
+              className='h-16 w-16 text-xl'
+              handleLogout={handleLogout}
+            />
           </div>
         </div>
       </header>
@@ -432,5 +431,75 @@ function StudentViewCommonHeader() {
     </>
   );
 }
+
+export const UserDropdown = ({ handleLogout }) => {
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
+  const navigate = useNavigate();
+  const [showProfileModal, setShowProfileModal] = useState(false);
+
+  const openProfileModal = () => {
+    setShowProfileModal(true);
+  };
+
+  const closeProfileModal = () => {
+    setShowProfileModal(false);
+  };
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  return (
+    <div className="relative" ref={dropdownRef}>
+      {/* User Icon */}
+      <div
+        className="cursor-pointer"
+        onClick={() => setIsDropdownOpen((prev) => !prev)}
+      >
+        <CircleUserRound />
+      </div>
+
+      {/* Dropdown */}
+      {isDropdownOpen && (
+        <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border z-10">
+          <div
+            onClick={openProfileModal}
+            className="px-4 py-2 text-[14px] cursor-pointer hover:bg-gray-100 rounded-md"
+          >
+            My Profile
+          </div>
+
+          <div
+            onClick={() => navigate("/student-courses")}
+            className="flex cursor-pointer items-center gap-3 px-4 py-2 hover:bg-gray-100"
+          >
+            <span className="md:flex text-[14px]">My Learning</span>
+          </div>
+          <div
+            className="px-4 py-2 text-[14px] cursor-pointer hover:bg-gray-100"
+            onClick={handleLogout}
+          >
+            Sign Out
+          </div>
+        </div>
+      )}
+       {showProfileModal && (
+          <ProfileModal onClose={closeProfileModal} />
+        )}
+    </div>
+  );
+};
+
 
 export default StudentViewCommonHeader;
