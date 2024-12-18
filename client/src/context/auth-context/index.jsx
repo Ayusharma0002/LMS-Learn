@@ -1,5 +1,6 @@
 import { Skeleton } from "@/components/ui/skeleton";
 import { initialSignInFormData, initialSignUpFormData ,initialOtpFormData} from "@/config";
+import { useToast } from "@/hooks/use-toast";
 import { checkAuthService, loginService, loginWithOtpService, registerService, sendLoginOtpService, sendOtpService, verifyOtpService } from "@/services"; // Ensure to import OTP services
 import { createContext, useEffect, useState } from "react";
 
@@ -14,6 +15,7 @@ export default function AuthProvider({ children }) {
   const [otp, setOtp] = useState("");
   const [otpSent, setOtpSent] = useState(false); // Track if OTP has been sent
   const [isVerified, setIsVerified] = useState(false); // Track if OTP is verified
+  const {toast} = useToast();
 
   async function handleRegisterUser(event) {
     event.preventDefault();
@@ -23,15 +25,42 @@ export default function AuthProvider({ children }) {
 
   async function handleLoginUser(event) {
     event.preventDefault();
-    const data = await loginService(signInFormData);
-    console.log("Login data : ", data);
-    if (data.success) {
-      sessionStorage.setItem('accessToken', JSON.stringify(data.data.accessToken));
-      setAuth({ authenticate: true, user: data.data.user });
-    } else {
+  
+    try {
+      // Attempt to call the login service
+      const data = await loginService(signInFormData);
+      console.log("Login data:", data);
+  
+      if (data.success) {
+        // On success, show a success toast
+        toast({
+          title: "Welcome to Enlighto",
+          description: "Logged In Successfully",
+          variant: "success",
+        });
+        sessionStorage.setItem('accessToken', JSON.stringify(data.data.accessToken));
+        setAuth({ authenticate: true, user: data.data.user });
+      } else {
+        // On failure, show an error toast with the message from the response
+        console.log("Error message from backend:", data.message); // Add logging to see the response message
+        toast({
+          title: data.message || "Login failed",
+          variant: "error",
+        });
+        setAuth({ authenticate: false, user: null });
+      }
+    } catch (error) {
+      // Handle any other errors (network, unexpected, etc.)
+      console.error("Error during login:", error);
+      toast({
+        title: "Error",
+        description: error.message,
+        variant: "error",
+      });
       setAuth({ authenticate: false, user: null });
     }
   }
+  
 
   async function handleOtpLoginUser(event) {
     event.preventDefault();

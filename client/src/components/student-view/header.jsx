@@ -188,6 +188,7 @@ import { Button } from "../ui/button";
 import { useContext, useState, useEffect, useRef } from "react";
 import { AuthContext } from "@/context/auth-context";
 import ProfileModal from "./ProfileModal";
+import { useToast } from "@/hooks/use-toast";
 
 
 function StudentViewCommonHeader() {
@@ -321,13 +322,19 @@ function StudentViewCommonHeader() {
     navigate(`/courses?search=${suggestion}`);
     setSuggestions([]); // Clear suggestions
   }
+  const {toast} = useToast();
+  const testingToast = () =>{
+      toast({ title: "Welcome to Enlighto",
+        variant: 'success'
+      })
+  }
 
   return (
     <>
       <header className="flex bg-[#FFFFFF] items-center justify-between p-4 border-b relative shadow-md">
         <div className="flex items-center w-full space-x-4 justify-between">
-          <Link to="/home" className="flex items-center hover:text-black">
-            <img className="font-extrabold text-md h-8 md:w-full w-2/3" src="/logo.png" alt="Logo" />
+          <Link to="/home"  className="flex items-center hover:text-black">
+            <img onClick={()=>testingToast()} className="font-extrabold text-md h-8 md:w-full w-2/3" src="/logo.png" alt="Logo" />
           </Link>
           <div className="flex gap-4 items-center">
             {/* Search Input */}
@@ -370,18 +377,17 @@ function StudentViewCommonHeader() {
           </div>
           <div className="flex items-center gap-4">
             <div className="flex items-center space-x-4 gap-4 pl-10">
-              <span
-                variant="ghost"
-                onClick={() => {
-                  location.pathname.includes("/courses") ? null : navigate("/courses");
-                }}
+              <Link
+                to='/courses'
                 className=" cursor-pointer text-[14px] md:text-[16px] md:flex hidden"
               >
                 Courses
-              </span>
-              <span className="cursor-pointer text-[14px] md:text-[16px] md:flex hidden">
+              </Link>
+              <Link
+                to='/contact'
+                className="cursor-pointer text-[14px] md:text-[16px] md:flex hidden">
                 Contact
-              </span>
+              </Link>
             </div>
             <UserDropdown
               className='h-16 w-16 text-xl'
@@ -494,9 +500,9 @@ export const UserDropdown = ({ handleLogout }) => {
           </div>
         </div>
       )}
-       {showProfileModal && (
-          <ProfileModal onClose={closeProfileModal} />
-        )}
+      {showProfileModal && (
+        <ProfileModal onClose={closeProfileModal} />
+      )}
     </div>
   );
 };

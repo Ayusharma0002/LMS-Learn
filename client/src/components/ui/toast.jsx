@@ -6,16 +6,35 @@ import { cva } from "class-variance-authority";
 import { cn } from "@/lib/utils"
 
 const ToastProvider = ToastPrimitives.Provider
+import { CheckCircle, XCircle, AlertTriangle, Info } from 'lucide-react';
+
+const getVariantIcon = (variant) => {
+  switch (variant) {
+    case "success":
+      return <CheckCircle className="h-5 w-5 text-green-500" />;
+    case "error":
+      return <XCircle className="h-5 w-5 text-red-500" />;
+    case "warning":
+      return <AlertTriangle className="h-5 w-5 text-yellow-500" />;
+    case "info":
+      return <Info className="h-5 w-5 text-blue-500" />;
+    default:
+      return null;
+  }
+};
+
+
 
 const ToastViewport = React.forwardRef(({ className, ...props }, ref) => (
   <ToastPrimitives.Viewport
     ref={ref}
     className={cn(
-      "fixed top-0 z-[100] flex max-h-screen w-full flex-col-reverse p-4 sm:bottom-0 sm:right-0 sm:top-auto sm:flex-col md:max-w-[420px]",
+      "fixed w-[320px] top-4 left-1/2 z-[100] flex max-h-screen -translate-x-1/2 flex-col-reverse p-4 sm:flex-col md:max-w-[420px]",
       className
     )}
     {...props} />
 ))
+
 ToastViewport.displayName = ToastPrimitives.Viewport.displayName
 
 const toastVariants = cva(
@@ -24,24 +43,39 @@ const toastVariants = cva(
     variants: {
       variant: {
         default: "border bg-background text-foreground",
-        destructive:
-          "destructive group border-destructive bg-destructive text-destructive-foreground",
+        destructive: "destructive group border-destructive bg-destructive text-destructive-foreground",
+        success: "border-green-500 bg-green-100 text-green-800",
+        error: "border-red-500 bg-red-100 text-red-800",
+        warning: "border-yellow-500 bg-yellow-100 text-yellow-800",
+        info: "border-blue-500 bg-blue-100 text-blue-800",
       },
     },
     defaultVariants: {
       variant: "default",
     },
   }
-)
+);
 
-const Toast = React.forwardRef(({ className, variant, ...props }, ref) => {
+
+const Toast = React.forwardRef(({ className, variant = "default", ...props }, ref) => {
   return (
-    (<ToastPrimitives.Root
+    <ToastPrimitives.Root
       ref={ref}
       className={cn(toastVariants({ variant }), className)}
-      {...props} />)
+      {...props}
+    >
+      <div className="flex items-center justify-between w-full space-x-2">
+        <div className="flex-1">
+          {/* Render the title and description */}
+          {props.children}
+        </div>
+        {getVariantIcon(variant)}
+      </div>
+    </ToastPrimitives.Root>
   );
-})
+});
+Toast.displayName = ToastPrimitives.Root.displayName;
+
 Toast.displayName = ToastPrimitives.Root.displayName
 
 const ToastAction = React.forwardRef(({ className, ...props }, ref) => (

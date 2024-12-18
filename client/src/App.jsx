@@ -16,67 +16,71 @@ import StudentCoursesPage from "./pages/student/student-courses";
 // import PaymentCancelPage from "./pages/student/payment-cancel";
 import PaymentCancelPage from "./pages/student/payment-cancel";
 import StudentViewCourseProgressPage from "./pages/student/course-progress";
+import Contact from "./components/contact/Contact";
+import { Toaster } from "./components/ui/toaster";
 
 function App() {
   const { auth } = useContext(AuthContext);
 
   return (
-    <Routes>
-      <Route
-        path="/auth"
-        element={
-          <RouteGuard
-            element={<AuthPage />}
-            authenticated={auth?.authenticate}
-            user={auth?.user}
-          />
-        }
-      />
-      <Route
-        path="/instructor"
-        element={
-          <RouteGuard
-            element={<InstructorDashboardPage />}
-            authenticated={auth?.authenticate}
-            user={auth?.user}
-          />
-        }
-      />
-      <Route
-        path="/instructor/create-new-course"
-        element={
-          <RouteGuard
-            element={<AddNewCoursePage />}
-            authenticated={auth?.authenticate}
-            user={auth?.user}
-          />
-        }
-      />
-      <Route
-        path="/instructor/edit-course/:courseId"
-        element={
-          <RouteGuard
-            element={<AddNewCoursePage />}
-            authenticated={auth?.authenticate}
-            user={auth?.user}
-          />
-        }
-      />
-      <Route
-        path="/"
-        element={
-          <RouteGuard
-            element={<StudentViewCommonLayout />}
-            authenticated={auth?.authenticate}
-            user={auth?.user}
-          />
-        }
-      >
-        <Route path="" element={<StudentHomePage />} />
-        <Route path="home" element={<StudentHomePage />} />
-        <Route path="courses" element={<StudentViewCoursesPage />} />
-        <Route path="course/details/:id" element={<StudentViewCourseDetailsPage />} />
-        {/* <Route
+    <>
+      <Routes>
+        <Route
+          path="/auth"
+          element={
+            <RouteGuard
+              element={<AuthPage />}
+              authenticated={auth?.authenticate}
+              user={auth?.user}
+            />
+          }
+        />
+        <Route
+          path="/instructor"
+          element={
+            <RouteGuard
+              element={<InstructorDashboardPage />}
+              authenticated={auth?.authenticate}
+              user={auth?.user}
+            />
+          }
+        />
+        <Route
+          path="/instructor/create-new-course"
+          element={
+            <RouteGuard
+              element={<AddNewCoursePage />}
+              authenticated={auth?.authenticate}
+              user={auth?.user}
+            />
+          }
+        />
+        <Route
+          path="/instructor/edit-course/:courseId"
+          element={
+            <RouteGuard
+              element={<AddNewCoursePage />}
+              authenticated={auth?.authenticate}
+              user={auth?.user}
+            />
+          }
+        />
+        <Route
+          path="/"
+          element={
+            <RouteGuard
+              element={<StudentViewCommonLayout />}
+              authenticated={auth?.authenticate}
+              user={auth?.user}
+            />
+          }
+        >
+          <Route path="" element={<StudentHomePage />} />
+          <Route path="home" element={<StudentHomePage />} />
+          <Route path="courses" element={<StudentViewCoursesPage />} />
+          <Route path="contact" element={<Contact />} />
+          <Route path="course/details/:id" element={<StudentViewCourseDetailsPage />} />
+          {/* <Route
           path="course/details/:id"
           element={<StudentViewCourseDetailsPage />}
         />
@@ -86,16 +90,18 @@ function App() {
           path="course-progress/:id"
           element={<StudentViewCourseProgressPage />}
         /> */}
-        {/* <Route path="payment-return" element={<PaypalPaymentReturnPage />} /> */}
-        {/* <Route path="/payment-cancel" component={PaymentCancelPage} /> */}
-        {/* <Route path="/payment-cancel" element={<PaymentCancelPage />} /> */}
-        <Route path="/payment-cancel/:courseId" element={<PaymentCancelPage />} />
+          {/* <Route path="payment-return" element={<PaypalPaymentReturnPage />} /> */}
+          {/* <Route path="/payment-cancel" component={PaymentCancelPage} /> */}
+          {/* <Route path="/payment-cancel" element={<PaymentCancelPage />} /> */}
+          <Route path="/payment-cancel/:courseId" element={<PaymentCancelPage />} />
 
-        <Route path="student-courses" element={<StudentCoursesPage />} />
-        <Route path="course-progress/:id" element={<StudentViewCourseProgressPage />} />
-      </Route>
-      <Route path="*" element={<NotFoundPage />} />
-    </Routes>
+          <Route path="student-courses" element={<StudentCoursesPage />} />
+          <Route path="course-progress/:id" element={<StudentViewCourseProgressPage />} />
+        </Route>
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
+      <Toaster />
+    </>
   );
 }
 

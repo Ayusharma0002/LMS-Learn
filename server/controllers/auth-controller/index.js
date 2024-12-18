@@ -51,17 +51,27 @@ const registerUser = async (req, res) => {
 };
 
 const loginUser = async (req, res) => {
-    console.log("Pass login req",req.body);
+    console.log("Pass login req", req.body);
     const { userEmail, password } = req.body;
     const checkUser = await User.findOne({ userEmail });
-    // console.log("User: ",userEmail,checkUser);
-    
-    if (!checkUser || !(bcrypt.compare(password, checkUser.password))) {
+    console.log("User: ", userEmail, checkUser);
+
+    if (!checkUser) {
         return res.status(401).json({
             success: false,
-            message: "Invalid credentials",
-        })
+            message: "User not found", // Message should be here
+        });
     }
+    
+    const isPasswordValid = await bcrypt.compare(password, checkUser.password);
+    
+    if (!isPasswordValid) {
+        return res.status(401).json({
+            success: false,
+            message: "Invalid credentials", // Message should be here
+        });
+    }
+    
 
     const accessToken = jwt.sign({
         _id: checkUser._id,
@@ -86,8 +96,8 @@ const loginUser = async (req, res) => {
 }
 const loginWithOtp = async (req, res) => {
 
-    console.log("Otp login req",req.body);
-    
+    console.log("Otp login req", req.body);
+
     const { userEmail, otp } = req.body;
 
     // Check and delete OTP after verifying
@@ -116,4 +126,4 @@ const loginWithOtp = async (req, res) => {
 };
 
 
-module.exports = { registerUser, loginUser,loginWithOtp }
+module.exports = { registerUser, loginUser, loginWithOtp }
