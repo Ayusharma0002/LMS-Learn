@@ -11,6 +11,10 @@ const studentViewCourseRoutes = require("./routes/student-routes/course-routes")
 const studentViewOrderRoutes = require("./routes/student-routes/order-routes");
 const studentCoursesRoutes = require("./routes/student-routes/student-courses-routes");
 const studentCourseProgressRoutes = require("./routes/student-routes/course-progress-routes");
+// const liveSessionRoutes = require("./routes/instructor-routes/live-session-routes");
+const liveSessionRoutes = require("./routes/instructor-routes/live-session-routes"); // Ensure the correct path
+
+
 
 
 
@@ -61,6 +65,7 @@ mongoose.connect('mongodb://localhost:27017/lmsportal', {
     console.error('MongoDB connection error:', err);
 });
 
+console.log("Setting up routes...");
 
 app.use("/otp", otpRoutes); 
 app.use('/auth',authRoutes);
@@ -70,7 +75,11 @@ app.use("/student/course", studentViewCourseRoutes);
 app.use("/student/order", studentViewOrderRoutes);
 app.use("/student/courses-bought",studentCoursesRoutes);
 app.use("/student/course-progress",studentCourseProgressRoutes );
+// app.use("/instructor/live-session", liveSessionRoutes);
+app.use("/instructor", liveSessionRoutes);
 
+
+console.log("Routes mounted at /instructor");
 
 
 app.use((err, req, res, next) => {
