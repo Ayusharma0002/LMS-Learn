@@ -17,6 +17,7 @@
   "dependencies": {
     "@azure/msal-browser": "^3.28.0",
     "@microsoft/microsoft-graph-client": "^3.0.7",
+    "axios": "^1.7.9",
     "bcryptjs": "^2.4.3",
     "cloudinary": "^2.5.1",
     "cors": "^2.8.5",
@@ -29,6 +30,7 @@
     "multer": "^1.4.5-lts.1",
     "nodemailer": "^6.9.16",
     "paypal-rest-sdk": "^1.8.1",
-    "razorpay": "^2.9.5"
+    "razorpay": "^2.9.5",
+    "uuid": "^11.0.3"
   }
 }
