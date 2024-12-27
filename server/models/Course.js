@@ -1,49 +1,49 @@
-const mongoose=require("mongoose");
+const mongoose = require("mongoose");
 
 const LectureSchema = new mongoose.Schema({
-    title: String,
-    videoUrl: String,
-    public_id: String,
-    pdfUrl: String,  //ye 5-12-2024 ko add kiya pdf kai liye
-    freePreview: Boolean,
-  });
-  const LiveSessionSchema = new mongoose.Schema({
-    sessionId: String,
-    title: String,
-    objective: String,
-    instructorName: String,
-    date: Date,
-    time: String,
-    duration: Number, 
-    platform: String, 
-    link: String, 
-    description: String,
-  });
+  title: String,
+  videoUrl: String,
+  public_id: String,
+  pdfUrl: String,  //ye 5-12-2024 ko add kiya pdf kai liye
+  freePreview: Boolean,
+});
+const LiveSessionSchema = new mongoose.Schema({
+  sessionId: String,
+  title: String,
+  objective: String,
+  instructorName: String,
+  startDateTime: Date,
+  endDateTime: Date,
+  duration: Number,
+  platform: String,
+  link: String,
+  description: String,
+});
 const CourseSchema = new mongoose.Schema({
-    instructorId: String,
-    instructorName: String,
-    date: Date,
-    title: String,
-    category: String,
-    level: String,
-    primaryLanguage: String,
-    subtitle: String,
-    description: String,
-    image: String,
-    welcomeMessage: String,
-    pricing: Number,
-    objectives: String,
-    students: [
-      {
-        studentId: String,
-        studentName: String,
-        studentEmail: String,
-        paidAmount: String,
-      },
-    ],
-    curriculum: [LectureSchema],
-    liveSession:[LiveSessionSchema],
-    isPublised: Boolean,
-  });
-  
-  module.exports = mongoose.model("Course", CourseSchema);
+  instructorId: String,
+  instructorName: String,
+  date: Date,
+  title: String,
+  category: String,
+  level: String,
+  primaryLanguage: String,
+  subtitle: String,
+  description: String,
+  image: String,
+  welcomeMessage: String,
+  pricing: Number,
+  objectives: String,
+  students: [
+    {
+      studentId: String,
+      studentName: String,
+      studentEmail: String,
+      paidAmount: String,
+    },
+  ],
+  curriculum: [LectureSchema],
+  liveSession: [LiveSessionSchema],
+  isPublised: Boolean,
+});
+
+module.exports = mongoose.model("Course", CourseSchema);
