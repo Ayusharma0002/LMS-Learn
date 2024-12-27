@@ -10,7 +10,7 @@
 // import { useContext, useRef } from "react";
 // import MediaProgressbar from "@/components/media-progress-bar";
 // import VideoPlayer from "@/components/video-player";
- 
+
 // function CourseCurriculum() {
 //   // Destructure context values
 //   const {
@@ -21,10 +21,10 @@
 //     mediaUploadProgressPercentage,
 //     setMediaUploadProgressPercentage,
 //   } = useContext(InstructorContext);
- 
- 
+
+
 //   const bulkUploadInputRef = useRef(null);
- 
+
 //   // Add Lecture function (just for demo purposes)
 //   function handleNewLecture() {
 //     setCourseCurriculumFormData([
@@ -41,29 +41,29 @@
 //       ...cpyCourseCurriculumFormData[currentIndex],
 //       title: event.target.value,
 //     };
- 
+
 //     setCourseCurriculumFormData(cpyCourseCurriculumFormData);
 //   }
- 
+
 //   function handleFreePreviewChange(currentValue, currentIndex) {
 //     let cpyCourseCurriculumFormData = [...courseCurriculumFormData];
 //     cpyCourseCurriculumFormData[currentIndex] = {
 //       ...cpyCourseCurriculumFormData[currentIndex],
 //       freePreview: currentValue,
 //     };
- 
+
 //     setCourseCurriculumFormData(cpyCourseCurriculumFormData);
 //   }
- 
- 
+
+
 //   async function handleSingleLectureUpload(event, currentIndex) {
 //     console.log(event.target.files);
 //     const selectedFile = event.target.files[0];
- 
+
 //     if (selectedFile) {
 //       const videoFormData = new FormData();
 //       videoFormData.append("file", selectedFile);
- 
+
 //       try {
 //         setMediaUploadProgress(true);
 //         const response = await mediaUploadService(
@@ -86,7 +86,7 @@
 //       }
 //     }
 //   }
- 
+
 //   function isCourseCurriculumFormDataValid() {
 //     return courseCurriculumFormData.every((item) => {
 //       return (
@@ -97,31 +97,31 @@
 //       );
 //     });
 //   }
- 
-  // async function handleReplaceVideo(currentIndex) {
-  //   let cpyCourseCurriculumFormData = [...courseCurriculumFormData];
-  //   const getCurrentVideoPublicId =
-  //     cpyCourseCurriculumFormData[currentIndex].public_id;
- 
-  //   const deleteCurrentMediaResponse = await mediaDeleteService(
-  //     getCurrentVideoPublicId
-  //   );
- 
-  //   if (deleteCurrentMediaResponse?.success) {
-  //     cpyCourseCurriculumFormData[currentIndex] = {
-  //       ...cpyCourseCurriculumFormData[currentIndex],
-  //       videoUrl: "",
-  //       public_id: "",
-  //     };
- 
-  //     setCourseCurriculumFormData(cpyCourseCurriculumFormData);
-  //   }
-  // }
- 
+
+// async function handleReplaceVideo(currentIndex) {
+//   let cpyCourseCurriculumFormData = [...courseCurriculumFormData];
+//   const getCurrentVideoPublicId =
+//     cpyCourseCurriculumFormData[currentIndex].public_id;
+
+//   const deleteCurrentMediaResponse = await mediaDeleteService(
+//     getCurrentVideoPublicId
+//   );
+
+//   if (deleteCurrentMediaResponse?.success) {
+//     cpyCourseCurriculumFormData[currentIndex] = {
+//       ...cpyCourseCurriculumFormData[currentIndex],
+//       videoUrl: "",
+//       public_id: "",
+//     };
+
+//     setCourseCurriculumFormData(cpyCourseCurriculumFormData);
+//   }
+// }
+
 //   function handleOpenBulkUploadDialog() {
 //     bulkUploadInputRef.current?.click();
 //   }
- 
+
 //   function areAllCourseCurriculumFormDataObjectsEmpty(arr) {
 //     return arr.every((obj) => {
 //       return Object.entries(obj).every(([key, value]) => {
@@ -131,15 +131,15 @@
 //       })
 //     })
 //   }
- 
+
 //   // pdf upload kai liye
 //   async function handlePdfUpload(event, currentIndex) {
 //     const selectedFile = event.target.files[0];
- 
+
 //     if (selectedFile) {
 //       const pdfFormData = new FormData();
 //       pdfFormData.append("file", selectedFile);
- 
+
 //       try {
 //         setMediaUploadProgress(true);
 //         const response = await mediaUploadService(
@@ -147,7 +147,7 @@
 //           setMediaUploadProgressPercentage
 //         );
 //         // const response = await pdfUploadService(pdfFormData, setMediaUploadProgressPercentage);
- 
+
 //         console.log("mai hoon aayush from course-currriculm pdf section",response);
 //         if (response.success) {
 //           let cpyCourseCurriculumFormData = [...courseCurriculumFormData];
@@ -166,15 +166,15 @@
 //     // Handle PDF Upload
 //     // async function handlePdfUpload(event, currentIndex) {
 //     //   const selectedFile = event.target.files[0];
- 
+
 //     //   if (selectedFile) {
 //     //     const pdfFormData = new FormData();
 //     //     pdfFormData.append("file", selectedFile);
- 
+
 //     //     try {
 //     //       setMediaUploadProgress(true);
 //     //       const response = await pdfUploadService(pdfFormData, setMediaUploadProgressPercentage);
- 
+
 //     //       if (response.success) {
 //     //         let cpyCourseCurriculumFormData = [...courseCurriculumFormData];
 //     //         cpyCourseCurriculumFormData[currentIndex] = {
@@ -189,22 +189,22 @@
 //     //     }
 //     //   }
 //     // }
- 
- 
- 
+
+
+
 //   async function handleMediaBulkUpload(event) {
 //     const selectedFiles = Array.from(event.target.files)
 //     const bulkFormData = new FormData()
 //     selectedFiles.forEach(fileItem => bulkFormData.append("files", fileItem))
- 
+
 //     try {
 //       setMediaUploadProgress(true);
 //       const response = await mediaBulkUploadService(bulkFormData, setMediaUploadProgressPercentage)
- 
+
 //       if (response?.success) {
 //         let cpyCourseCurriculumFormData = areAllCourseCurriculumFormDataObjectsEmpty(courseCurriculumFormData)
 //         ? [] : [...courseCurriculumFormData]
- 
+
 //         cpyCourseCurriculumFormData =[
 //           ...cpyCourseCurriculumFormData,
 //           ...response?.data.map((item,index)=>({
@@ -218,38 +218,38 @@
 //         setMediaUploadProgress(false);
 //         console.log("cpy :", cpyCourseCurriculumFormData);
 //         console.log("cc :", courseCurriculumFormData);
- 
+
 //       }
- 
- 
+
+
 //       console.log("bulk Upload Res : ", response);
- 
+
 //     }
 //     catch (e) {
 //       console.log(e);
 //     }
 //     console.log("Bulk Selected :", selectedFiles);
- 
+
 //   }
- 
-  // async function handleDeleteLecture(currentIndex) {
-  //   let cpyCourseCurriculumFormData = [...courseCurriculumFormData];
-  //   const getCurrentSelectedVideoPublicId =
-  //     cpyCourseCurriculumFormData[currentIndex].public_id;
- 
-  //   const response = await mediaDeleteService(getCurrentSelectedVideoPublicId);
- 
-  //   if (response?.success) {
-  //     cpyCourseCurriculumFormData = cpyCourseCurriculumFormData.filter(
-  //       (_, index) => index !== currentIndex
-  //     );
- 
-  //     setCourseCurriculumFormData(cpyCourseCurriculumFormData);
-  //   }
-  // }
- 
+
+// async function handleDeleteLecture(currentIndex) {
+//   let cpyCourseCurriculumFormData = [...courseCurriculumFormData];
+//   const getCurrentSelectedVideoPublicId =
+//     cpyCourseCurriculumFormData[currentIndex].public_id;
+
+//   const response = await mediaDeleteService(getCurrentSelectedVideoPublicId);
+
+//   if (response?.success) {
+//     cpyCourseCurriculumFormData = cpyCourseCurriculumFormData.filter(
+//       (_, index) => index !== currentIndex
+//     );
+
+//     setCourseCurriculumFormData(cpyCourseCurriculumFormData);
+//   }
+// }
+
 //   console.log(courseCurriculumFormData);
- 
+
 //   return (
 //     <Card>
 //       <CardHeader className="flex flex-row justify-between">
@@ -316,7 +316,7 @@
 //               </div>
 //               <div className="mt-6">
 //                 {courseCurriculumFormData[index]?.videoUrl ? (
-                  // <div className="flex gap-3">
+// <div className="flex gap-3">
 //                     <VideoPlayer
 //                       url={courseCurriculumFormData[index]?.videoUrl}
 //                       width="450px"
@@ -365,10 +365,10 @@
 //         </div>
 //       </CardContent>
 //     </Card>
- 
+
 //   );
 // }
- 
+
 // export default CourseCurriculum;
 
 
@@ -646,9 +646,9 @@
 //               </div>
 //             </div>
 //           ))}
-          
 
-          
+
+
 //       </div>
 //     </CardContent>
 //   </Card>
@@ -815,18 +815,18 @@
 //     let cpyCourseCurriculumFormData = [...courseCurriculumFormData];
 //     const getCurrentVideoPublicId =
 //       cpyCourseCurriculumFormData[currentIndex].public_id;
- 
+
 //     const deleteCurrentMediaResponse = await mediaDeleteService(
 //       getCurrentVideoPublicId
 //     );
- 
+
 //     if (deleteCurrentMediaResponse?.success) {
 //       cpyCourseCurriculumFormData[currentIndex] = {
 //         ...cpyCourseCurriculumFormData[currentIndex],
 //         videoUrl: "",
 //         public_id: "",
 //       };
- 
+
 //       setCourseCurriculumFormData(cpyCourseCurriculumFormData);
 //     }
 //   }
@@ -846,18 +846,18 @@
 //   //   let cpyCourseCurriculumFormData = [...courseCurriculumFormData];
 //   //   const getCurrentSelectedVideoPublicId =
 //   //     cpyCourseCurriculumFormData[currentIndex].public_id;
- 
+
 //   //   const response = await mediaDeleteService(getCurrentSelectedVideoPublicId);
- 
+
 //   //   if (response?.success) {
 //   //     cpyCourseCurriculumFormData = cpyCourseCurriculumFormData.filter(
 //   //       (_, index) => index !== currentIndex
 //   //     );
- 
+
 //   //     setCourseCurriculumFormData(cpyCourseCurriculumFormData);
 //   //   }
 //   // }
- 
+
 
 //   function isLectureValid(lecture) {
 //     return lecture.videoUrl.trim() !== "" || lecture.pdfUrl?.trim() !== "";
@@ -898,7 +898,7 @@
 //       console.error(error);
 //     }
 //   }
-  
+
 
 //   return (
 //     <Card>
@@ -959,7 +959,7 @@
 //                 </div>
 //               </div>
 //               <div className="flex gap-5 mt-4">
-        
+
 //               {curriculumItem.videoUrl ? (
 //                 <div className="flex gap-3">
 //                  <VideoPlayer url={curriculumItem.videoUrl} width="550px" height="200px" />
@@ -977,7 +977,7 @@
 //                     </Button>
 //                     </div>
 //                    ) : (
- 
+
 //                       !curriculumItem.videoUploaded && (
 //                        <Input
 //                          type="file"
@@ -987,7 +987,7 @@
 //                     )
 //                 )}
 
-                
+
 
 //                 {pdfUploadStatus[index] ? (
 //                   <span className="text-green-500">{pdfUploadStatus[index]}</span>
@@ -1000,14 +1000,14 @@
 //                 )}
 //               </div>
 
-             
+
 //             </div>
 //           ))}
 //         </div>
 //       </CardContent>
 //     </Card>
 //   );
-  
+
 // }
 
 
@@ -1021,9 +1021,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
-import { courseCurriculumInitialFormData } from "@/config";
+import { courseCurriculumInitialFormData, liveSessionFormControls } from "@/config";
 import { InstructorContext } from "@/context/instructor-context";
-import { mediaBulkUploadService, mediaDeleteService, mediaUploadService, pdfUploadService } from "@/services";
+import { mediaBulkUploadService, mediaDeleteService, mediaUploadService, pdfUploadService, addNewCourseService } from "@/services";
 import { Upload } from "lucide-react";
 import { useContext, useRef, useState } from "react";
 import MediaProgressbar from "@/components/media-progress-bar";
@@ -1037,6 +1037,9 @@ function CourseCurriculum() {
     setMediaUploadProgress,
     mediaUploadProgressPercentage,
     setMediaUploadProgressPercentage,
+    liveSessionFormData,
+    setLiveSessionFormData,
+    liveSessionInitialFormData,
   } = useContext(InstructorContext);
 
   const bulkUploadInputRef = useRef(null);
@@ -1151,22 +1154,22 @@ function CourseCurriculum() {
   async function handleDeleteLecture(currentIndex) {
     const updatedFormData = [...courseCurriculumFormData];
     const publicId = updatedFormData[currentIndex].public_id;
-  
+
     const deleteResponse = await mediaDeleteService(publicId);
-  
+
     if (deleteResponse?.success) {
       updatedFormData.splice(currentIndex, 1);
       setCourseCurriculumFormData(updatedFormData);
-  
+
       // Clear video and PDF upload statuses
       const updatedPdfStatus = [...pdfUploadStatus];
       updatedPdfStatus.splice(currentIndex, 1);
       setPdfUploadStatus(updatedPdfStatus);
-  
+
       const updatedVideoStatus = [...videoUploadStatus];
       updatedVideoStatus.splice(currentIndex, 1);
       setVideoUploadStatus(updatedVideoStatus);
-  
+
       // Re-enable the "Add Lecture" button if there's at least one lecture left
       if (updatedFormData.length === 0) {
         setCourseCurriculumFormData([
@@ -1178,7 +1181,7 @@ function CourseCurriculum() {
       }
     }
   }
-  
+
 
   async function handleMediaBulkUpload(event) {
     const selectedFiles = Array.from(event.target.files);
@@ -1212,6 +1215,34 @@ function CourseCurriculum() {
     }
   }
 
+  function handleNewLiveSession() {
+
+    setLiveSessionFormData([
+      ...liveSessionFormData,
+      {
+        ...liveSessionInitialFormData,
+        id: liveSessionFormData.length + 1, // Unique ID for each session
+      },
+    ]);
+  }
+
+  function handleLiveSessionChange(event, index) {
+    
+    
+    const { name, value } = event.target;
+    console.log("Form Data : ",name, " : ", value);
+    
+    const updatedSessions = [...liveSessionFormData];
+    updatedSessions[index] = { ...updatedSessions[index], [name]: value };
+    setLiveSessionFormData(updatedSessions);
+  }
+
+
+  function handleDeleteLiveSession(index) {
+    const updatedSessions = liveSessionFormData.filter((_, i) => i !== index);
+    setLiveSessionFormData(updatedSessions);
+  }
+
   return (
     <Card>
       <CardHeader className="flex flex-row justify-between">
@@ -1242,6 +1273,12 @@ function CourseCurriculum() {
           onClick={handleNewLecture}
         >
           Add Lecture
+        </Button>
+        <Button
+          className="ml-2"
+          onClick={handleNewLiveSession}
+        >
+          Add Live Session
         </Button>
         {mediaUploadProgress && (
           <MediaProgressbar
@@ -1283,8 +1320,8 @@ function CourseCurriculum() {
                     <Input
                       type="file"
                       accept="video/*"
-                       placeholder="Upload video"
-                   
+                      placeholder="Upload video"
+
                       onChange={(event) => handleSingleLectureUpload(event, index)}
                     />
                   )
@@ -1295,7 +1332,7 @@ function CourseCurriculum() {
                   <Input
                     type="file"
                     accept="application/pdf"
-                    
+
                     onChange={(event) => handlePdfUpload(event, index)}
                   />
                 )}
@@ -1303,692 +1340,51 @@ function CourseCurriculum() {
             </div>
           ))}
         </div>
-        
+        <div className="mt-4 space-y-4">
+          {/* Render Live Session Forms */}
+          {liveSessionFormData.length > 0 && liveSessionFormData.map((session, index) => (
+            <div key={index} className="border p-5 rounded-md">
+              <h3 className="font-semibold">Live Session {index + 1}</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                {liveSessionFormControls.map((control) => (
+                  <div key={control.name}>
+                    <label htmlFor={`${control.name}-${index}`} className="block font-medium mb-2">
+                      {control.label}
+                    </label>
+                    {control.componentType === "input" ? (
+                      <Input
+                        id={`${control.name}-${index}`}
+                        name={control.name}
+                        type={control.type}
+                        placeholder={control.placeholder}
+                        value={session[control.name]}
+                        onChange={(event) => handleLiveSessionChange(event, index)}
+                        className="w-full p-2 border rounded-md"
+                      />
+                    ) : control.componentType === "textarea" ? (
+                      <textarea
+                        id={`${control.name}-${index}`}
+                        name={control.name}
+                        placeholder={control.placeholder}
+                        value={session[control.name]}
+                        onChange={(event) => handleLiveSessionChange(event, index)}
+                        className="w-full p-2 border rounded-md"
+                      />
+                    ) : null}
+                  </div>
+                ))}
+              </div>
+              <div className="flex justify-end mt-4">
+                <Button onClick={() => handleDeleteLiveSession(index)} className="bg-red-500">
+                  Delete Session
+                </Button>
+              </div>
+            </div>
+          ))}
+        </div>
       </CardContent>
     </Card>
   );
 }
 
 export default CourseCurriculum;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// import { Button } from "@/components/ui/button";
-// import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-// import { Input } from "@/components/ui/input";
-// import { Label } from "@/components/ui/label";
-// import { Switch } from "@/components/ui/switch";
-// import { courseCurriculumInitialFormData } from "@/config";
-// import { InstructorContext } from "@/context/instructor-context";
-// import { mediaBulkUploadService, mediaDeleteService, mediaUploadService, pdfUploadService } from "@/services";
-// import { Upload } from "lucide-react";
-// import { useContext, useRef } from "react";
-// import MediaProgressbar from "@/components/media-progress-bar";
-// import VideoPlayer from "@/components/video-player";
-
-// export function CourseCurriculum() {
-//   const {
-//     courseCurriculumFormData,
-//     setCourseCurriculumFormData,
-//     mediaUploadProgress,
-//     setMediaUploadProgress,
-//     mediaUploadProgressPercentage,
-//     setMediaUploadProgressPercentage,
-//   } = useContext(InstructorContext);
-
-//   const bulkUploadInputRef = useRef(null);
-
-//   function handleNewLecture() {
-//     setCourseCurriculumFormData([
-//       ...courseCurriculumFormData,
-//       {
-//         ...courseCurriculumInitialFormData[0],
-//       },
-//     ]);
-//   }
-
-//   function handleCourseTitleChange(event, currentIndex) {
-//     const updatedFormData = [...courseCurriculumFormData];
-//     updatedFormData[currentIndex] = {
-//       ...updatedFormData[currentIndex],
-//       title: event.target.value,
-//     };
-//     setCourseCurriculumFormData(updatedFormData);
-//   }
-
-//   function handleFreePreviewChange(currentValue, currentIndex) {
-//     const updatedFormData = [...courseCurriculumFormData];
-//     updatedFormData[currentIndex] = {
-//       ...updatedFormData[currentIndex],
-//       freePreview: currentValue,
-//     };
-//     setCourseCurriculumFormData(updatedFormData);
-//   }
-
-//   async function handleSingleLectureUpload(event, currentIndex) {
-//     const selectedFile = event.target.files[0];
-
-//     if (selectedFile) {
-//       const formData = new FormData();
-//       formData.append("file", selectedFile);
-
-//       try {
-//         setMediaUploadProgress(true);
-//         const response = await mediaUploadService(formData, setMediaUploadProgressPercentage);
-//         if (response.success) {
-//           const updatedFormData = [...courseCurriculumFormData];
-//           updatedFormData[currentIndex] = {
-//             ...updatedFormData[currentIndex],
-//             videoUrl: response?.data?.url,  // Add video URL after successful upload
-//             public_id: response?.data?.public_id,
-//           };
-//           setCourseCurriculumFormData(updatedFormData);
-//           setMediaUploadProgress(false);
-//         }
-//       } catch (error) {
-//         console.error(error);
-//       }
-//     }
-//   }
-
-//   async function handlePdfUpload(event, currentIndex) {
-//     const selectedFile = event.target.files[0];
-
-//     if (selectedFile) {
-//       const formData = new FormData();
-//       formData.append("file", selectedFile);
-
-//       try {
-//         setMediaUploadProgress(true);
-//         const response = await mediaUploadService(formData, setMediaUploadProgressPercentage);
-//         if (response.success) {
-//           const updatedFormData = [...courseCurriculumFormData];
-//           updatedFormData[currentIndex] = {
-//             ...updatedFormData[currentIndex],
-//             pdfUrl: response?.data?.url,
-//           };
-//           setCourseCurriculumFormData(updatedFormData);
-//         }
-//         setMediaUploadProgress(false);
-//       } catch (error) {
-//         console.error(error);
-//       }
-//     }
-//   }
-
-//   async function handleReplaceVideo(event, currentIndex) {
-//     const selectedFile = event.target.files[0];
-//     if (!selectedFile) return;
-
-//     const updatedFormData = [...courseCurriculumFormData];
-//     const publicId = updatedFormData[currentIndex].public_id;
-
-//     try {
-//       setMediaUploadProgress(true);
-
-//       // Delete old video
-//       const deleteResponse = await mediaDeleteService(publicId);
-//       if (!deleteResponse?.success) {
-//         setMediaUploadProgress(false);
-//         return;
-//       }
-
-//       // Upload new video
-//       const formData = new FormData();
-//       formData.append("file", selectedFile);
-
-//       const uploadResponse = await mediaUploadService(formData, setMediaUploadProgressPercentage);
-//       if (uploadResponse.success) {
-//         updatedFormData[currentIndex] = {
-//           ...updatedFormData[currentIndex],
-//           videoUrl: uploadResponse?.data?.url,  // Update with new video URL
-//           public_id: uploadResponse?.data?.public_id,
-//         };
-//         setCourseCurriculumFormData(updatedFormData);
-//       }
-//       setMediaUploadProgress(false);
-//     } catch (error) {
-//       console.error(error);
-//       setMediaUploadProgress(false);
-//     }
-//   }
-
-//   async function handleDeleteLecture(currentIndex) {
-//     const updatedFormData = [...courseCurriculumFormData];
-//     const publicId = updatedFormData[currentIndex].public_id;
-
-//     try {
-//       // Confirm deletion of media
-//       const deleteResponse = await mediaDeleteService(publicId);
-//       if (deleteResponse?.success) {
-//         updatedFormData.splice(currentIndex, 1); // Remove the lecture
-//         setCourseCurriculumFormData(updatedFormData);
-//       }
-//     } catch (error) {
-//       console.error(error);
-//     }
-//   }
-
-//   function isLectureValid(lecture) {
-//     return lecture.videoUrl.trim() !== "" || lecture.pdfUrl?.trim() !== "";
-//   }
-
-//   function isCourseCurriculumFormDataValid() {
-//     return courseCurriculumFormData.some(isLectureValid);
-//   }
-
-//   async function handleMediaBulkUpload(event) {
-//     const selectedFiles = Array.from(event.target.files);
-//     const bulkFormData = new FormData();
-//     selectedFiles.forEach((file) => bulkFormData.append("files", file));
-
-//     try {
-//       setMediaUploadProgress(true);
-//       const response = await mediaBulkUploadService(bulkFormData, setMediaUploadProgressPercentage);
-
-//       if (response?.success) {
-//         let updatedFormData = courseCurriculumFormData.some(isLectureValid)
-//           ? [...courseCurriculumFormData]
-//           : [];
-
-//         updatedFormData = [
-//           ...updatedFormData,
-//           ...response?.data.map((item, index) => ({
-//             videoUrl: item?.url,  // Add video URL after successful bulk upload
-//             public_id: item?.public_id,
-//             title: `Lecture ${updatedFormData.length + (index + 1)}`,
-//             freePreview: false,
-//           })),
-//         ];
-
-//         setCourseCurriculumFormData(updatedFormData);
-//         setMediaUploadProgress(false);
-//       }
-//     } catch (error) {
-//       console.error(error);
-//     }
-//   }
-
-//   return (
-//     <Card>
-//       <CardHeader className="flex flex-row justify-between">
-//         <CardTitle>Create Course Curriculum</CardTitle>
-//         <div>
-//           <Input
-//             type="file"
-//             ref={bulkUploadInputRef}
-//             accept="video/*"
-//             multiple
-//             className="hidden"
-//             id="bulk-media-upload"
-//             onChange={handleMediaBulkUpload}
-//           />
-//           <Button
-//             as="label"
-//             htmlFor="bulk-media-upload"
-//             variant="outline"
-//             className="cursor-pointer"
-//           >
-//             <Upload className="w-4 h-5 mr-2" />
-//             Bulk Upload
-//           </Button>
-//         </div>
-//       </CardHeader>
-//       <CardContent>
-//         <Button
-//           disabled={!isCourseCurriculumFormDataValid() || mediaUploadProgress}
-//           onClick={handleNewLecture}
-//         >
-//           Add Lecture
-//         </Button>
-//         {mediaUploadProgress && (
-//           <MediaProgressbar
-//             isMediaUploading={mediaUploadProgress}
-//             progress={mediaUploadProgressPercentage}
-//           />
-//         )}
-//         <div className="mt-4 space-y-4">
-//           {courseCurriculumFormData.map((curriculumItem, index) => (
-//             <div key={index} className="border p-5 rounded-md">
-//               <div className="flex gap-5 items-center">
-//                 <h3 className="font-semibold">Lecture {index + 1}</h3>
-//                 <Input
-//                   name={`title-${index + 1}`}
-//                   placeholder="Enter lecture title"
-//                   className="max-w-96"
-//                   onChange={(event) => handleCourseTitleChange(event, index)}
-//                   value={curriculumItem.title}
-//                 />
-//                 <div className="flex items-center space-x-2">
-//                   <Label>Free Preview</Label>
-//                   <Switch
-//                     checked={curriculumItem.freePreview}
-//                     onCheckedChange={(value) => handleFreePreviewChange(value, index)}
-//                   />
-//                 </div>
-//               </div>
-//               <div className="flex gap-5 mt-4">
-//                 <Input
-//                   type="file"
-//                   accept="video/*"
-//                   onChange={(event) => handleSingleLectureUpload(event, index)}
-//                 />
-//                 <Input
-//                   type="file"
-//                   accept="application/pdf"
-//                   onChange={(event) => handlePdfUpload(event, index)}
-//                 />
-//               </div>
-
-//               {/* Video player section */}
-//               {curriculumItem.videoUrl && <VideoPlayer url={curriculumItem.videoUrl} width="450px" height="200px" />}
-//               <div className="mt-2 flex space-x-4">
-               
-//               </div>
-//             </div>
-//           ))}
-//         </div>
-//       </CardContent>
-//     </Card>
-//   );
-// }
-
-// export default CourseCurriculum;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-{/* <Button variant="outline">
-<input
-  type="file"
-  accept="video/*"
-  className="hidden"
-  onChange={(event) => handleReplaceVideo(event, index)}
-/>
-<label className="cursor-pointer">Replace Video</label>
-</Button>
-<Button variant="outline" color="red" onClick={() => handleDeleteLecture(index)}>
-Delete Lecture
-</Button> */}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

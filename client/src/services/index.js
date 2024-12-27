@@ -108,9 +108,11 @@ export async function mediaUploadService(formData
     return data;
   }
 
+  
   export async function addNewCourseService(formData) {
     const { data } = await axiosInstance.post(`/instructor/course/add`, formData);
-  
+    console.log("course data new : ",data);
+    
     return data;
   }
   

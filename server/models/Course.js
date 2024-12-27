@@ -7,7 +7,18 @@ const LectureSchema = new mongoose.Schema({
     pdfUrl: String,  //ye 5-12-2024 ko add kiya pdf kai liye
     freePreview: Boolean,
   });
-
+  const LiveSessionSchema = new mongoose.Schema({
+    sessionId: String,
+    title: String,
+    objective: String,
+    instructorName: String,
+    date: Date,
+    time: String,
+    duration: Number, 
+    platform: String, 
+    link: String, 
+    description: String,
+  });
 const CourseSchema = new mongoose.Schema({
     instructorId: String,
     instructorName: String,
@@ -31,6 +42,7 @@ const CourseSchema = new mongoose.Schema({
       },
     ],
     curriculum: [LectureSchema],
+    liveSession:[LiveSessionSchema],
     isPublised: Boolean,
   });
   

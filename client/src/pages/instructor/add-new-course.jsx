@@ -592,6 +592,7 @@ export default function AddNewCoursePage() {
   const {
     courseLandingFormData,
     courseCurriculumFormData,
+    liveSessionFormData,
     setCourseLandingFormData,
     setCourseCurriculumFormData,
     currentEditedCourseId,
@@ -641,6 +642,7 @@ export default function AddNewCoursePage() {
       ...courseLandingFormData,
       students: [],
       curriculum: courseCurriculumFormData,
+      liveSession:liveSessionFormData,
       isPublised: true,
     };
 
