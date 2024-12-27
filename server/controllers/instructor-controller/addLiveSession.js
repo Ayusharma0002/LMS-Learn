@@ -135,9 +135,9 @@ const { v4: uuidv4 } = require('uuid');
 async function addLiveSession(req, res) {
   try {
     // Get the access token
-    const { title, objective, instructorName, userId} = req.body;
+    const { title, objective, instructorName } = req.body;
     const accessToken = await getAccessToken();
-
+    const userId =  process.env.AZURE_USER_ID;
     // Generate unique meeting details
     const now = new Date();
     const startDateTime = new Date(now.getTime() + 5 * 60 * 1000).toISOString(); // 5 minutes from now
@@ -156,6 +156,7 @@ async function addLiveSession(req, res) {
           }
         ],
       },
+      recordAutomatically: true,
     };
 
 
