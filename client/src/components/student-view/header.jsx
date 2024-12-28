@@ -181,6 +181,7 @@
 // export default StudentViewCommonHeader;
 
 
+import { User, BookOpen, LogOut } from "lucide-react"; // Import lucide-react icons
 
 import { CircleUserRound, GraduationCap, History, Search, TvMinimalPlay, User2Icon, UserIcon } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
@@ -478,27 +479,37 @@ export const UserDropdown = ({ handleLogout }) => {
 
       {/* Dropdown */}
       {isDropdownOpen && (
-        <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border z-10">
+
+        <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border z-50">
           <div
             onClick={openProfileModal}
             className="px-4 py-2 text-[14px] cursor-pointer hover:bg-gray-100 rounded-md"
           >
-            My Profile
+            <div className="flex items-center gap-3">
+              <User className="text-gray-600 h-8 w-6" /> {/* User icon */}
+              <span>My Profile</span>
+            </div>
           </div>
-
+        
           <div
             onClick={() => navigate("/student-courses")}
-            className="flex cursor-pointer items-center gap-3 px-4 py-2 hover:bg-gray-100"
+            className="flex my-learning cursor-pointer items-center gap-3 px-4 py-2 hover:bg-gray-100"
           >
+            <BookOpen className="text-gray-600 h-8 w-6" /> {/* Book icon */}
             <span className="md:flex text-[14px]">My Learning</span>
           </div>
+        
           <div
             className="px-4 py-2 text-[14px] cursor-pointer hover:bg-gray-100"
             onClick={handleLogout}
           >
-            Sign Out
+            <div className="flex items-center gap-3">
+              <LogOut className="text-gray-600 h-8 w-6" /> {/* Log out icon */}
+              <span>Sign Out</span>
+            </div>
           </div>
         </div>
+        
       )}
       {showProfileModal && (
         <ProfileModal onClose={closeProfileModal} />
