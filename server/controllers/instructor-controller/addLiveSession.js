@@ -67,6 +67,8 @@ async function addLiveSession(req, res) {
       objective, 
       instructorName,
       sessionId,
+      startDateTime,
+      endDateTime,
       date,
       time,
       duration,

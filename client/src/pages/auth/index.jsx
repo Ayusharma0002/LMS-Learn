@@ -29,6 +29,9 @@ function AuthPage() {
     handleSendOtpForLogin
   } = useContext(AuthContext);
 
+ 
+
+
   function handleTabChange(value) {
     setActiveTab(value);
   }
@@ -178,3 +181,4 @@ function AuthPage() {
 }
 
 export default AuthPage;
+

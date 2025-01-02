@@ -2,7 +2,7 @@
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { Facebook, Twitter, Instagram, Linkedin, Mail, Phone, MapPin } from 'lucide-react'
-import Logo from "@/assets/logo.png";
+import Logo1 from "@/assets/logo1.png";
 const footerVariants = {
   hidden: { opacity: 0, y: 20 },
   visible: { 
@@ -34,7 +34,7 @@ export default function Footer() {
           {/* Company Info */}
           <motion.div variants={itemVariants}>
             <h3 className="text-2xl font-bold mb-4">
-                <img src={Logo} alt="" />
+                <img src={Logo1} alt="" />
             </h3>
             <p className="text-gray-400 mb-4">Empowering careers through expert-led online learning and industry-recognized certifications.</p>
             <div className="flex space-x-4">

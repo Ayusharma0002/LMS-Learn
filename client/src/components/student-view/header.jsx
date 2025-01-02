@@ -190,6 +190,7 @@ import { useContext, useState, useEffect, useRef } from "react";
 import { AuthContext } from "@/context/auth-context";
 import ProfileModal from "./ProfileModal";
 import { useToast } from "@/hooks/use-toast";
+import Logo1 from "@/assets/logo1.png";
 
 
 function StudentViewCommonHeader() {
@@ -335,7 +336,9 @@ function StudentViewCommonHeader() {
       <header className="flex bg-[#FFFFFF] items-center justify-between p-4 border-b relative shadow-md">
         <div className="flex items-center w-full space-x-4 justify-between">
           <Link to="/home"  className="flex items-center hover:text-black">
-            <img onClick={()=>testingToast()} className="font-extrabold text-md h-8 md:w-full w-2/3" src="/logo.png" alt="Logo" />
+            <img onClick={()=>testingToast()} className="font-extrabold text-md h-8 md:w-full w-2/3"
+            //  src="/logo1.png" alt="Logo" />
+               src={Logo1} alt="" />
           </Link>
           <div className="flex gap-4 items-center">
             {/* Search Input */}
