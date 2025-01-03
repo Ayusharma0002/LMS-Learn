@@ -22,7 +22,7 @@ const itemVariants = {
 
 export default function Footer() {
   return (
-    <footer className="bg-gray-900 text-white py-12">
+    <footer className="bg-gray-700 text-white py-12">
       <div className="container mx-auto px-4">
         <motion.div 
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
@@ -33,7 +33,7 @@ export default function Footer() {
         >
           {/* Company Info */}
           <motion.div variants={itemVariants}>
-            <h3 className="text-2xl font-bold mb-4">
+            <h3 className="text-2xl font-bold mb-4 h-12 w-2/3 ">
                 <img src={Logo1} alt="" />
             </h3>
             <p className="text-gray-400 mb-4">Empowering careers through expert-led online learning and industry-recognized certifications.</p>

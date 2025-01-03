@@ -336,7 +336,7 @@ function StudentViewCommonHeader() {
       <header className="flex bg-[#FFFFFF] items-center justify-between p-4 border-b relative shadow-md">
         <div className="flex items-center w-full space-x-4 justify-between">
           <Link to="/home"  className="flex items-center hover:text-black">
-            <img onClick={()=>testingToast()} className="font-extrabold text-md h-8 md:w-full w-2/3"
+            <img onClick={()=>testingToast()} className="font-extrabold text-md h-12 md:w-full w-2/3"
             //  src="/logo1.png" alt="Logo" />
                src={Logo1} alt="" />
           </Link>
