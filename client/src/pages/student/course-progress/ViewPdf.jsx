@@ -48,7 +48,9 @@ const ViewPdf = ({ currentLecture, markLectureAsViewedService, fetchCurrentCours
     return (
         <div
             ref={pdfViewerRef}
-            className="h-[550px] overflow-auto bg-red-400 relative mr-[-10px]"
+            className="h-[550px] 
+            overflow-auto bg-red-400 relative mr-[-10px]
+            "
         
         >
             <iframe

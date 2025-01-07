@@ -871,9 +871,9 @@ import ViewPdf from "./ViewPdf";
 function StudentViewCourseProgressPage() {
 
   const navigate = useNavigate();
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const openModal = () => setIsModalOpen(true);
-  const closeModal = () => setIsModalOpen(false);
+  // const [isModalOpen, setIsModalOpen] = useState(false);
+  // const openModal = () => setIsModalOpen(true);
+  // const closeModal = () => setIsModalOpen(false);
   const { auth } = useContext(AuthContext);
   const pdfViewerRef = useRef(null);
   const { studentCurrentCourseProgress, setStudentCurrentCourseProgress } =
@@ -886,6 +886,19 @@ function StudentViewCourseProgressPage() {
   const [isSideBarOpen, setIsSideBarOpen] = useState(true);
   const { id } = useParams();
   const [isScrolledToBottom, setIsScrolledToBottom] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+const [selectedSession, setSelectedSession] = useState(null);
+
+const openModal = (session) => {
+  setSelectedSession(session);
+  setIsModalOpen(true);
+};
+
+const closeModal = () => {
+  setSelectedSession(null);
+  setIsModalOpen(false);
+};
+
 
   async function fetchCurrentCourseProgress() {
     const response = await getCurrentCourseProgressService(auth?.user?._id, id);
@@ -972,6 +985,233 @@ function StudentViewCourseProgressPage() {
 
   console.log(currentLecture, "currentLecture");
 
+  return (
+    <div className="flex flex-col h-screen bg-white  ">
+      {showConfetti && <Confetti />}
+      <div className="flex items-center justify-between p-4 bg-white border-b border-gray-100">
+        <div className="flex items-center space-x-4">
+          <Button
+            onClick={() => navigate("/student-courses")}
+            className="text-black"
+            variant="ghost"
+            size="sm"
+          >
+            <ChevronLeft className="h-4 w-4 mr-2" />
+          </Button>
+          <h1 className="text-lg font-bold hidden md:block">
+            {studentCurrentCourseProgress?.courseDetails?.title}
+          </h1>
+        </div>
+        <Button
+          className=""
+          onClick={() => setIsSideBarOpen(!isSideBarOpen)}
+        >
+          {isSideBarOpen ? (
+            <ChevronRight className="h-5 w-5" />
+          ) : (
+            <ChevronLeft className="h-5 w-5" />
+          )}
+        </Button>
+      </div>
+      <div className="p-4 bg-white border-b border-gray-100">
+        <div className="inline-flex items-center space-x-24 w-full">
+          <h2 className="text-2xl font-bold">{currentLecture?.title}</h2>
+        
+        </div>
+      </div>
+
+     
+
+      <div className="flex flex-1 overflow-hidden">
+
+        <div
+          className={`flex-1 ${isSideBarOpen ? "mr-[400px]" : ""} transition-all duration-300`}
+        >
+          {currentLecture?.videoUrl ? (
+            <VideoPlayer
+              width="100%"
+              height="500px"
+              url={currentLecture?.videoUrl}
+              onProgressUpdate={setCurrentLecture}
+              progressData={currentLecture}
+            />
+          ) : currentLecture?.pdfUrl ? (
+            <ViewPdf
+            currentLecture={currentLecture}
+            markLectureAsViewedService={markLectureAsViewedService}
+            fetchCurrentCourseProgress={fetchCurrentCourseProgress}
+            auth={auth}
+            studentCurrentCourseProgress={studentCurrentCourseProgress}
+          />
+          
+
+
+          ) : null}
+
+
+        </div>
+        <div
+          className={`fixed top-[64px] right-0 bottom-0 w-[400px] bg-white text-black border-l border-gray-700 transition-all duration-300 ${isSideBarOpen ? "translate-x-0" : "translate-x-full"
+            }`}
+        >
+          <Tabs defaultValue="content" className="h-full flex flex-col">
+            <TabsList className="grid bg-gray-200 rounded-md w-full grid-cols-2 p-0 h-14">
+              <TabsTrigger
+                value="content"
+                className=" text-black rounded-none h-full"
+              >
+                Course Content
+              </TabsTrigger>
+              <TabsTrigger
+                value="overview"
+                className=" text-black rounded-none h-full"
+              >
+                Live Sessions
+
+              </TabsTrigger>
+            </TabsList>
+            <TabsContent value="content">
+              <ScrollArea className="h-full">
+                <div className="p-4 space-y-4 text-black">
+                  {studentCurrentCourseProgress?.courseDetails?.curriculum.map(
+                    (item) => (
+                      <div
+                        className="flex border-b items-center space-x-2 text-sm text-black font-bold cursor-pointer"
+                        key={item._id}
+                      >
+                        {item && (
+                          <>
+                            {item.videoUrl && (
+                              studentCurrentCourseProgress?.progress?.find(
+                                (progressItem) => progressItem.lectureId === item._id
+                              )?.viewed ? (
+                                <Check className="h-4 w-4 text-green-500" />
+                              ) : (
+                                <Play className="h-4 w-4 text-secondary" />
+                              )
+                            )}
+
+                            {!item.videoUrl && item.pdfUrl && (
+                              studentCurrentCourseProgress?.progress?.find(
+                                (progressItem) => progressItem.lectureId === item._id
+                              )?.viewed ? (
+                                <Check className="h-4 w-4 text-green-500" />
+                              ) : (
+                                <Folder className="h-4 w-4 text-secondary" />
+                              )
+                            )}
+                          </>
+                        )}
+
+                        <div className="flex justify-between w-full p-4 ">
+                          <span>{item?.title}</span>
+                          {item?.pdfUrl && (
+                            <a
+                              className=""
+                              href={item?.pdfUrl}
+                              onClick={async (e) => {
+                                e.preventDefault();
+                                window.open(
+                                  item.pdfUrl,
+                                  "PDFPopup",
+                                  "width=800,height=600,scrollbars=yes,resizable=yes"
+                                );
+                              }}
+                            >
+                              <Download />
+                            </a>
+                          )}
+                        </div>
+                      </div>
+                    )
+                  )}
+                </div>
+              </ScrollArea>
+            </TabsContent>
+            {/* <TabsContent value="overview" className="flex-1 overflow-hidden">
+              <ScrollArea className="h-full">
+                <div className="p-4">
+                  <h2 className="text-xl font-bold mb-4">About this course</h2>
+                  <p className="text-gray-400">
+                    {studentCurrentCourseProgress?.courseDetails?.overview}
+                  </p>
+                </div>
+              </ScrollArea>
+            </TabsContent> */}
+            <TabsContent value="overview" className="flex-1 overflow-hidden">
+  <ScrollArea className="h-full">
+    <div className="p-4">
+      {/* <h3 className="text-lg font-semibold mb-4">Live Sessions</h3> */}
+      <div className="space-y-2">
+        {studentCurrentCourseProgress?.courseDetails?.liveSession
+          ?.sort((a, b) => a.title.localeCompare(b.title)) // Sort by title
+          ?.map((session, index) => (
+            <div key={index} className="p-2 border-b border-gray-300 flex justify-between items-center">
+              <h4 className="text-md font-medium">{index + 1}. {session.title}</h4>
+              <Button
+                onClick={() => openModal(session)} // Pass the specific session to the modal
+                className="bg-blue-500 text-white hover:bg-blue-600 rounded-md"
+              >
+                Join Live Session
+              </Button>
+            </div>
+          ))}
+      </div>
+    </div>
+
+    {isModalOpen && selectedSession && (
+      <LiveSession
+        onClose={closeModal}
+        session={selectedSession} // Pass the selected session to the LiveSession component
+      />
+    )}
+  </ScrollArea>
+</TabsContent>
+
+
+          </Tabs>
+        </div>
+      </div>
+
+      {showCourseCompleteDialog && (
+        <Dialog open={showCourseCompleteDialog} onOpenChange={setShowCourseCompleteDialog}>
+          <DialogOverlay />
+          <DialogPortal>
+            <DialogContent className="w-[350px] bg-white border border-gray-100 rounded-lg shadow-lg">
+              <DialogHeader>
+                <DialogTitle className="text-lg font-bold">Course Completed!</DialogTitle>
+                <DialogDescription className="text-sm">
+                  Congratulations, you have completed the course. Would you like to rewatch it?
+                </DialogDescription>
+              </DialogHeader>
+              <div className="flex justify-between space-x-4 mt-4">
+                <Button onClick={handleRewatchCourse}>Rewatch</Button>
+                <Button
+                  onClick={() => navigate("/student-courses")}
+                >
+                  Next Course
+                </Button>
+              </div>
+            </DialogContent>
+          </DialogPortal>
+        </Dialog>
+      )}
+    </div>
+  );
+}
+
+export default StudentViewCourseProgressPage;
+
+
+
+
+
+
+
+
+
+
+
 
 
   //Pdf Scroll code---------------------------------------------------
@@ -1022,69 +1262,34 @@ function StudentViewCourseProgressPage() {
 
 
 
+  // {/* <Button
+  //                 variant="outline"
+  //                 onClick={() => setShowCourseCompleteDialog(false)}
+  //               >
+  //                 Close
+  //               </Button> */}
 
 
 
-  return (
-    <div className="flex flex-col h-screen bg-white  ">
-      {showConfetti && <Confetti />}
-      <div className="flex items-center justify-between p-4 bg-white border-b border-gray-100">
-        <div className="flex items-center space-x-4">
-          <Button
-            onClick={() => navigate("/student-courses")}
-            className="text-black"
-            variant="ghost"
-            size="sm"
-          >
-            <ChevronLeft className="h-4 w-4 mr-2" />
-          </Button>
-          <h1 className="text-lg font-bold hidden md:block">
-            {studentCurrentCourseProgress?.courseDetails?.title}
-          </h1>
-        </div>
-        <Button
-          className=""
-          onClick={() => setIsSideBarOpen(!isSideBarOpen)}
-        >
-          {isSideBarOpen ? (
-            <ChevronRight className="h-5 w-5" />
-          ) : (
-            <ChevronLeft className="h-5 w-5" />
-          )}
-        </Button>
-      </div>
-      <div className="p-4 bg-white border-b border-gray-100">
-        <div className="inline-flex items-center space-x-24 w-full">
-          <h2 className="text-2xl font-bold">{currentLecture?.title}</h2>
-          <Button
-            onClick={openModal}
-            className="bg-blue-500 text-white hover:bg-blue-600 rounded-md"
-          >
-            Join Live Session
-          </Button>
-        </div>
-      </div>
 
-      {isModalOpen && <LiveSession
-        onClose={closeModal}
-        studentCurrentCourseProgress={studentCurrentCourseProgress}
-      />}
 
-      <div className="flex flex-1 overflow-hidden">
 
-        <div
-          className={`flex-1 ${isSideBarOpen ? "mr-[400px]" : ""} transition-all duration-300`}
-        >
-          {currentLecture?.videoUrl ? (
-            <VideoPlayer
-              width="100%"
-              height="500px"
-              url={currentLecture?.videoUrl}
-              onProgressUpdate={setCurrentLecture}
-              progressData={currentLecture}
-            />
-          ) : currentLecture?.pdfUrl ? (
 
+ // if (!item?.videoUrl && item?.pdfUrl) {
+                                //   await markLectureAsViewedService(
+                                //     auth?.user?._id,
+                                //     studentCurrentCourseProgress?.courseDetails?._id,
+                                //     item._id
+                                //   );
+
+                                //   await fetchCurrentCourseProgress();
+                                // }
+
+
+
+
+
+                                
 
             // <div
             //   className="h-[500px] overflow-auto bg-red-400 scroll-bottom"
@@ -1094,155 +1299,3 @@ function StudentViewCourseProgressPage() {
             //     <Viewer fileUrl={currentLecture?.pdfUrl} />
             //   </Worker>
             // </div>
-            <ViewPdf
-            currentLecture={currentLecture}
-            markLectureAsViewedService={markLectureAsViewedService}
-            fetchCurrentCourseProgress={fetchCurrentCourseProgress}
-            auth={auth}
-            studentCurrentCourseProgress={studentCurrentCourseProgress}
-          />
-          
-
-
-          ) : null}
-
-
-        </div>
-        <div
-          className={`fixed top-[64px] right-0 bottom-0 w-[400px] bg-white text-black border-l border-gray-700 transition-all duration-300 ${isSideBarOpen ? "translate-x-0" : "translate-x-full"
-            }`}
-        >
-          <Tabs defaultValue="content" className="h-full flex flex-col">
-            <TabsList className="grid bg-gray-200 rounded-md w-full grid-cols-2 p-0 h-14">
-              <TabsTrigger
-                value="content"
-                className=" text-black rounded-none h-full"
-              >
-                Course Content
-              </TabsTrigger>
-              <TabsTrigger
-                value="overview"
-                className=" text-black rounded-none h-full"
-              >
-                Overview
-              </TabsTrigger>
-            </TabsList>
-            <TabsContent value="content">
-              <ScrollArea className="h-full">
-                <div className="p-4 space-y-4 text-black">
-                  {studentCurrentCourseProgress?.courseDetails?.curriculum.map(
-                    (item) => (
-                      <div
-                        className="flex border-b items-center space-x-2 text-sm text-black font-bold cursor-pointer"
-                        key={item._id}
-                      >
-                        {item && (
-                          <>
-                            {item.videoUrl && (
-                              studentCurrentCourseProgress?.progress?.find(
-                                (progressItem) => progressItem.lectureId === item._id
-                              )?.viewed ? (
-                                <Check className="h-4 w-4 text-green-500" />
-                              ) : (
-                                <Play className="h-4 w-4 text-secondary" />
-                              )
-                            )}
-
-                            {!item.videoUrl && item.pdfUrl && (
-                              studentCurrentCourseProgress?.progress?.find(
-                                (progressItem) => progressItem.lectureId === item._id
-                              )?.viewed ? (
-                                <Check className="h-4 w-4 text-green-500" />
-                              ) : (
-                                <Folder className="h-4 w-4 text-secondary" />
-                              )
-                            )}
-                          </>
-                        )}
-
-                        <div className="flex justify-between w-full p-4 ">
-                          <span>{item?.title}</span>
-                          {item?.pdfUrl && (
-                            <a
-                              className=""
-                              href={item?.pdfUrl}
-                              onClick={async (e) => {
-                                e.preventDefault();
-                                window.open(
-                                  item.pdfUrl,
-                                  "PDFPopup",
-                                  "width=800,height=600,scrollbars=yes,resizable=yes"
-                                );
-
-                                // if (!item?.videoUrl && item?.pdfUrl) {
-                                //   await markLectureAsViewedService(
-                                //     auth?.user?._id,
-                                //     studentCurrentCourseProgress?.courseDetails?._id,
-                                //     item._id
-                                //   );
-
-                                //   await fetchCurrentCourseProgress();
-                                // }
-                              }}
-                            >
-                              <Download />
-                            </a>
-                          )}
-                        </div>
-                      </div>
-                    )
-                  )}
-                </div>
-              </ScrollArea>
-            </TabsContent>
-            <TabsContent value="overview" className="flex-1 overflow-hidden">
-              <ScrollArea className="h-full">
-                <div className="p-4">
-                  <h2 className="text-xl font-bold mb-4">About this course</h2>
-                  <p className="text-gray-400">
-                    {studentCurrentCourseProgress?.courseDetails?.overview}
-                  </p>
-                </div>
-              </ScrollArea>
-            </TabsContent>
-          </Tabs>
-        </div>
-      </div>
-
-      {showCourseCompleteDialog && (
-        <Dialog open={showCourseCompleteDialog} onOpenChange={setShowCourseCompleteDialog}>
-          <DialogOverlay />
-          <DialogPortal>
-            <DialogContent className="w-[350px] bg-white border border-gray-100 rounded-lg shadow-lg">
-              <DialogHeader>
-                <DialogTitle className="text-lg font-bold">Course Completed!</DialogTitle>
-                <DialogDescription className="text-sm">
-                  Congratulations, you have completed the course. Would you like to rewatch it?
-                </DialogDescription>
-              </DialogHeader>
-              <div className="flex justify-between space-x-4 mt-4">
-                {/* <Button
-                  variant="outline"
-                  onClick={() => setShowCourseCompleteDialog(false)}
-                >
-                  Close
-                </Button> */}
-                <Button onClick={handleRewatchCourse}>Rewatch</Button>
-                <Button
-                  onClick={() => navigate("/student-courses")}
-                >
-                  Next Course
-                </Button>
-              </div>
-            </DialogContent>
-          </DialogPortal>
-        </Dialog>
-      )}
-    </div>
-  );
-}
-
-export default StudentViewCourseProgressPage;
-
-
-

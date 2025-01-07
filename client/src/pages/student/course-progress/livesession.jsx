@@ -1,7 +1,9 @@
 
 import {useRef,useState} from 'react';
 
-const LiveSession = ({ onClose, studentCurrentCourseProgress }) => {
+// const LiveSession = ({ onClose, studentCurrentCourseProgress }) => {
+const LiveSession = ({ onClose, session }) => {
+// const LiveSession = ({ onClose, title }) => {
     const modalRef = useRef(null);
     const [errorMessage, setErrorMessage] = useState(null);
   
@@ -22,7 +24,9 @@ const LiveSession = ({ onClose, studentCurrentCourseProgress }) => {
   // };
   
     // Test data for the session: 3rd Jan 2025, 3:20 PM to 4:20 PM UTC
-    const liveSession = studentCurrentCourseProgress?.courseDetails?.liveSession?.[0];
+    // const liveSession = studentCurrentCourseProgress?.courseDetails?.liveSession?.[0];
+    console.log(session.title,"tosession hai");
+    const liveSession=session;
   
     // Format start and end times in UTC
     const startDate = liveSession?.startDateTime ? new Date(liveSession.startDateTime) : null;
