@@ -200,14 +200,7 @@ export const courseLandingInitialFormData = {
   image: "",
 };
 
-export const courseCurriculumInitialFormData = [
-  {
-    title: "",
-    videoUrl: "",
-    freePreview: false,
-    public_id: "",
-  },
-];
+
 
 export const sortOptions = [
   { id: "price-lowtohigh", label: "Price: Low to High" },
@@ -223,6 +216,54 @@ export const filterOptions = {
 };
 
 
+
+
+// export const liveSessionFormControls = [
+//   {
+//     name: "title",
+//     label: "Session Title",
+//     placeholder: "Enter the session title",
+//     type: "text",
+//     componentType: "input",
+//   },
+//   {
+//     name: "instructorName",
+//     label: "Instructor Name",
+//     placeholder: "Enter instructor name",
+//     type: "text",
+//     componentType: "input",
+//   },
+//   {
+//     name: "startDateTime",
+//     label: "Start Date & Time",
+//     placeholder: "Select start date and time",
+//     type: "datetime-local",
+//     componentType: "input",
+//   },
+//   {
+//     name: "endDateTime",
+//     label: "End Date & Time",
+//     placeholder: "Select end date and time",
+//     type: "datetime-local",
+//     componentType: "input",
+//   },
+//   {
+//     name: "description",
+//     label: "Description",
+//     placeholder: "Enter a brief description of the session",
+//     type: "textarea",
+//     componentType: "textarea",
+//   },
+// ];
+
+// export const liveSessionInitialFormData = [{
+//   title: "",
+//   objective: "",
+//   instructorName: "",
+//   startDateTime: "",
+//   endDateTime: "",
+//   description: ""
+// }];
 
 
 export const liveSessionFormControls = [
@@ -262,12 +303,20 @@ export const liveSessionFormControls = [
     componentType: "textarea",
   },
 ];
-
-export const liveSessionInitialFormData = [{
+export const liveSessionInitialFormData = {
   title: "",
-  objective: "",
   instructorName: "",
   startDateTime: "",
   endDateTime: "",
-  description: ""
-}];
+  description: "",
+};
+
+export const courseCurriculumInitialFormData = [
+  {
+    title: "",
+    videoUrl: "",
+    freePreview: false,
+    public_id: "",
+    liveSession: { ...liveSessionInitialFormData },
+  },
+];

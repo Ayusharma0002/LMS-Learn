@@ -6,6 +6,8 @@ const { v4: uuidv4 } = require('uuid');
 async function addLiveSession(req, res) {
   try {
     // Get the access token
+    console.log("Live Req :",req);
+    
     const sessionData = req.body.liveSession;
     const { 
       title, 
@@ -18,7 +20,7 @@ async function addLiveSession(req, res) {
       platform,
       link,
       description
-    } = sessionData[0];
+    } = sessionData;
 
 
     console.log("Fronted data: ",sessionData);

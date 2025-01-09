@@ -15,7 +15,7 @@ import {
       courseCurriculumInitialFormData
     );
     const [liveSessionFormData, setLiveSessionFormData] = useState(
-      liveSessionInitialFormData // Live session form data state
+      [liveSessionInitialFormData] // Live session form data state
     );
   
     const [mediaUploadProgress, setMediaUploadProgress] = useState(false);

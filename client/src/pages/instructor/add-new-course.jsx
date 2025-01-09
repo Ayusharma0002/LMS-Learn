@@ -54,19 +54,21 @@ export default function AddNewCoursePage() {
         return false;
       }
     }
-    for (const session of liveSessionFormData) {
-      if (isEmpty(session.instructorName) ||
-        isEmpty(session.title) ||
-        isEmpty(session.startDateTime)|| 
-        isEmpty(session.endDateTime)) {
-        return false;
-      }
-    }
+    // for (const session of liveSessionFormData) {
+    //   if (isEmpty(session.instructorName) ||
+    //     isEmpty(session.title) ||
+    //     isEmpty(session.startDateTime)|| 
+    //     isEmpty(session.endDateTime)) {
+    //     return false;
+    //   }
+    // }
 
     return hasVideoOrPdf;
   }
 
   async function handleCreateCourse() {
+    console.log("Final Form Data :", courseCurriculumFormData);
+    
     const courseFinalFormData = {
       instructorId: auth?.user?._id, // Ensure `auth` is uncommented and working
       instructorName: auth?.user?.userName,
@@ -74,7 +76,7 @@ export default function AddNewCoursePage() {
       ...courseLandingFormData,
       students: [],
       curriculum: courseCurriculumFormData,
-      liveSession: liveSessionFormData,
+      // liveSession: liveSessionFormData,
       isPublised: true,
     };
 

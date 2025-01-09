@@ -35,6 +35,7 @@ function CourseCurriculum() {
       ...courseCurriculumFormData,
       {
         ...courseCurriculumInitialFormData[0],
+        liveSessions: [],
       },
     ]);
   }
@@ -137,33 +138,31 @@ function CourseCurriculum() {
     const updatedFormData = [...courseCurriculumFormData];
     const publicId = updatedFormData[currentIndex].public_id;
 
-    const deleteResponse = await mediaDeleteService(publicId);
-
-    if (deleteResponse?.success) {
-      updatedFormData.splice(currentIndex, 1);
-      setCourseCurriculumFormData(updatedFormData);
-
-      // Clear video and PDF upload statuses
-      const updatedPdfStatus = [...pdfUploadStatus];
-      updatedPdfStatus.splice(currentIndex, 1);
-      setPdfUploadStatus(updatedPdfStatus);
-
-      const updatedVideoStatus = [...videoUploadStatus];
-      updatedVideoStatus.splice(currentIndex, 1);
-      setVideoUploadStatus(updatedVideoStatus);
-
-      // Re-enable the "Add Lecture" button if there's at least one lecture left
-      if (updatedFormData.length === 0) {
-        setCourseCurriculumFormData([
-          ...updatedFormData,
-          {
-            ...courseCurriculumInitialFormData[0],
-          },
-        ]);
+    // Delete video if present
+    if (publicId) {
+      const deleteResponse = await mediaDeleteService(publicId);
+      if (deleteResponse?.success) {
+        updatedFormData[currentIndex] = {
+          ...updatedFormData[currentIndex],
+          videoUrl: "",
+          public_id: "",
+        };
       }
     }
-  }
 
+    // Clear media statuses
+    const updatedPdfStatus = [...pdfUploadStatus];
+    updatedPdfStatus.splice(currentIndex, 1);
+    setPdfUploadStatus(updatedPdfStatus);
+
+    const updatedVideoStatus = [...videoUploadStatus];
+    updatedVideoStatus.splice(currentIndex, 1);
+    setVideoUploadStatus(updatedVideoStatus);
+
+    // Remove the lecture
+    updatedFormData.splice(currentIndex, 1);
+    setCourseCurriculumFormData(updatedFormData);
+  }
 
   async function handleMediaBulkUpload(event) {
     const selectedFiles = Array.from(event.target.files);
@@ -197,33 +196,33 @@ function CourseCurriculum() {
     }
   }
 
-  function handleNewLiveSession() {
+  function handleNewLiveSession(index) {
+    const updatedFormData = [...courseCurriculumFormData];
 
-    setLiveSessionFormData([
-      ...liveSessionFormData,
-      {
-        ...liveSessionInitialFormData,
-        id: liveSessionFormData.length + 1, // Unique ID for each session
-      },
-    ]);
+    // Ensure liveSession is initialized as an empty object if it's undefined
+    if (!updatedFormData[index].liveSession) {
+      updatedFormData[index].liveSession = { ...liveSessionInitialFormData };
+    }
+
+    // Update the liveSession with the initial form data, including an ID
+    updatedFormData[index].liveSession = { ...liveSessionInitialFormData, id: updatedFormData[index].liveSession.length + 1 };
+
+    setCourseCurriculumFormData(updatedFormData);
   }
+
 
   function handleLiveSessionChange(event, index) {
-    
-    
-    const { name, value } = event.target;
-    console.log("Form Data : ",name, " : ", value);
-    
-    const updatedSessions = [...liveSessionFormData];
-    updatedSessions[index] = { ...updatedSessions[index], [name]: value };
-    setLiveSessionFormData(updatedSessions);
+    const updatedFormData = [...courseCurriculumFormData];
+    updatedFormData[index].liveSession[event.target.name] = event.target.value;
+    setCourseCurriculumFormData(updatedFormData);
   }
 
-
-  function handleDeleteLiveSession(index) {
-    const updatedSessions = liveSessionFormData.filter((_, i) => i !== index);
-    setLiveSessionFormData(updatedSessions);
+  function handleDeleteLiveSession(index, sessionIndex) {
+    const updatedFormData = [...courseCurriculumFormData];
+    updatedFormData[index].liveSessions.splice(sessionIndex, 1); // Remove live session
+    setCourseCurriculumFormData(updatedFormData);
   }
+
   function formatDateTimeForInput(date) {
     if (!date) return "";
     const dateObj = new Date(date);
@@ -255,17 +254,7 @@ function CourseCurriculum() {
         </div>
       </CardHeader>
       <CardContent>
-        <Button
-          onClick={handleNewLecture}
-        >
-          Add Lecture
-        </Button>
-        <Button
-          className="ml-2"
-          onClick={handleNewLiveSession}
-        >
-          Add Live Session
-        </Button>
+        <Button onClick={handleNewLecture}>Add Lecture</Button>
         {mediaUploadProgress && (
           <MediaProgressbar
             isMediaUploading={mediaUploadProgress}
@@ -297,7 +286,10 @@ function CourseCurriculum() {
                   <div className="flex gap-3">
                     <VideoPlayer url={curriculumItem.videoUrl} width="550px" height="200px" />
                     <Button onClick={() => handleReplaceVideo(index)}>Replace Video</Button>
-                    <Button onClick={() => handleDeleteLecture(index)} className="bg-red-900">
+                    <Button
+                      onClick={() => handleDeleteLecture(index)}
+                      className="bg-red-900"
+                    >
                       Delete Lecture
                     </Button>
                   </div>
@@ -307,7 +299,6 @@ function CourseCurriculum() {
                       type="file"
                       accept="video/*"
                       placeholder="Upload video"
-
                       onChange={(event) => handleSingleLectureUpload(event, index)}
                     />
                   )
@@ -318,62 +309,80 @@ function CourseCurriculum() {
                   <Input
                     type="file"
                     accept="application/pdf"
-
                     onChange={(event) => handlePdfUpload(event, index)}
                   />
                 )}
               </div>
-            </div>
-          ))}
-        </div>
-        <div className="mt-4 space-y-4">
-          {/* Render Live Session Forms */}
-          {liveSessionFormData.length > 0 && liveSessionFormData.map((session, index) => (
-            <div key={index} className="border p-5 rounded-md">
-              <h3 className="font-semibold">Live Session {index + 1}</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-                {liveSessionFormControls.map((control) => (
-                  <div key={control.name}>
-                    <label htmlFor={`${control.name}-${index}`} className="block font-medium mb-2">
-                      {control.label}
-                    </label>
-                    {control.componentType === "input" ? (
-                      <Input
-                        id={`${control.name}-${index}`}
-                        name={control.name}
-                        type={control.type}
-                        placeholder={control.placeholder}
-                        value={
-                          control.type === "datetime-local"
-                            ? formatDateTimeForInput(session[control.name])
-                            : session[control.name]
-                        }
-                        onChange={(event) => handleLiveSessionChange(event, index)}
-                        className="w-full p-2 border rounded-md"
-                      />
-                    ) : control.componentType === "textarea" ? (
-                      <textarea
-                        id={`${control.name}-${index}`}
-                        name={control.name}
-                        placeholder={control.placeholder}
-                        value={session[control.name]}
-                        onChange={(event) => handleLiveSessionChange(event, index)}
-                        className="w-full p-2 border rounded-md"
-                      />
-                    ) : null}
-                  </div>
-                ))}
-              </div>
-              <div className="flex justify-end mt-4">
-                <Button onClick={() => handleDeleteLiveSession(index)} className="bg-red-500">
-                  Delete Session
+              {/* Live Sessions for Each Lecture */}
+              <div className="mt-4 space-y-4">
+                <Button
+                  onClick={() => handleNewLiveSession(index)}
+                  className="text-black"
+                >
+                  Add Live Session
                 </Button>
+
+                {/* Render the single liveSession for each curriculum item */}
+                {curriculumItem.liveSession && (
+                  <div key={index} className="border p-5 rounded-md mt-4">
+                    <h4 className="font-semibold">Live Session</h4>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                      {liveSessionFormControls.map((control) => (
+                        <div key={control.name}>
+                          <label
+                            htmlFor={`${control.name}-${index}`}
+                            className="block font-medium mb-2"
+                          >
+                            {control.label}
+                          </label>
+                          {control.componentType === "input" ? (
+                            <Input
+                              id={`${control.name}-${index}`}
+                              name={control.name}
+                              type={control.type}
+                              placeholder={control.placeholder}
+                              value={
+                                control.type === "datetime-local"
+                                  ? formatDateTimeForInput(curriculumItem.liveSession[control.name])
+                                  : curriculumItem.liveSession[control.name]
+                              }
+                              onChange={(event) =>
+                                handleLiveSessionChange(event, index)  // Adjusted to handle the single liveSession
+                              }
+                              className="w-full p-2 border rounded-md"
+                            />
+                          ) : control.componentType === "textarea" ? (
+                            <textarea
+                              id={`${control.name}-${index}`}
+                              name={control.name}
+                              placeholder={control.placeholder}
+                              value={curriculumItem.liveSession[control.name]}
+                              onChange={(event) =>
+                                handleLiveSessionChange(event, index)  // Adjusted to handle the single liveSession
+                              }
+                              className="w-full p-2 border rounded-md"
+                            />
+                          ) : null}
+                        </div>
+                      ))}
+                    </div>
+                    <div className="flex justify-end mt-4">
+                      <Button
+                        onClick={() => handleDeleteLiveSession(index)}
+                        className="bg-red-500"
+                      >
+                        Delete Session
+                      </Button>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           ))}
         </div>
       </CardContent>
     </Card>
+
   );
 }
 
