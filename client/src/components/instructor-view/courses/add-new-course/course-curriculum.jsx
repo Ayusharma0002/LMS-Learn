@@ -217,9 +217,10 @@ function CourseCurriculum() {
     setCourseCurriculumFormData(updatedFormData);
   }
 
-  function handleDeleteLiveSession(index, sessionIndex) {
+  function handleDeleteLiveSession(index) {
     const updatedFormData = [...courseCurriculumFormData];
-    updatedFormData[index].liveSessions.splice(sessionIndex, 1); // Remove live session
+    console.log(updatedFormData, "up");
+    updatedFormData[index].liveSession = null;
     setCourseCurriculumFormData(updatedFormData);
   }
 
@@ -228,10 +229,168 @@ function CourseCurriculum() {
     const dateObj = new Date(date);
     return dateObj.toISOString().slice(0, 16); // Formats to YYYY-MM-DDTHH:MM
   }
+  const [expandedLectureIndex, setExpandedLectureIndex] = useState(null);
+
+  const toggleLecture = (index) => {
+    setExpandedLectureIndex(expandedLectureIndex === index ? null : index);
+  };
   return (
+    // <Card>
+    //   <CardHeader className="flex flex-row justify-between">
+    //     <CardTitle>Create Course Curriculum</CardTitle>
+    //     <div>
+    //       <Input
+    //         type="file"
+    //         ref={bulkUploadInputRef}
+    //         accept="video/*"
+    //         multiple
+    //         className="hidden"
+    //         id="bulk-media-upload"
+    //         onChange={handleMediaBulkUpload}
+    //       />
+    //       <Button
+    //         as="label"
+    //         htmlFor="bulk-media-upload"
+    //         variant="outline"
+    //         className="cursor-pointer"
+    //       >
+    //         <Upload className="w-4 h-5 mr-2" />
+    //         Bulk Upload
+    //       </Button>
+    //     </div>
+    //   </CardHeader>
+    //   <CardContent>
+    //     <Button onClick={handleNewLecture}>Add Lecture</Button>
+    //     {mediaUploadProgress && (
+    //       <MediaProgressbar
+    //         isMediaUploading={mediaUploadProgress}
+    //         progress={mediaUploadProgressPercentage}
+    //       />
+    //     )}
+    //     <div className="mt-4 space-y-4">
+    //       {courseCurriculumFormData.map((curriculumItem, index) => (
+    //         <div key={index} className="border p-5 rounded-md">
+    //           <div className="flex gap-5 items-center">
+    //             <h3 className="font-semibold">Lecture {index + 1}</h3>
+    //             <Input
+    //               name={`title-${index + 1}`}
+    //               placeholder="Enter lecture title"
+    //               className="max-w-96"
+    //               onChange={(event) => handleCourseTitleChange(event, index)}
+    //               value={curriculumItem.title}
+    //             />
+    //             <div className="flex items-center space-x-2">
+    //               <Label>Free Preview</Label>
+    //               <Switch
+    //                 checked={curriculumItem.freePreview}
+    //                 onCheckedChange={(value) => handleFreePreviewChange(value, index)}
+    //               />
+    //             </div>
+    //           </div>
+    //           <div className="flex gap-5 mt-4">
+    //             {curriculumItem.videoUrl ? (
+    //               <div className="flex gap-3">
+    //                 <VideoPlayer url={curriculumItem.videoUrl} width="550px" height="200px" />
+    //                 <Button onClick={() => handleReplaceVideo(index)}>Replace Video</Button>
+    //                 <Button
+    //                   onClick={() => handleDeleteLecture(index)}
+    //                   className="bg-red-900"
+    //                 >
+    //                   Delete Lecture
+    //                 </Button>
+    //               </div>
+    //             ) : (
+    //               !curriculumItem.videoUploaded && (
+    //                 <Input
+    //                   type="file"
+    //                   accept="video/*"
+    //                   placeholder="Upload video"
+    //                   onChange={(event) => handleSingleLectureUpload(event, index)}
+    //                 />
+    //               )
+    //             )}
+    //             {pdfUploadStatus[index] ? (
+    //               <span className="text-green-500">{pdfUploadStatus[index]}</span>
+    //             ) : (
+    //               <Input
+    //                 type="file"
+    //                 accept="application/pdf"
+    //                 onChange={(event) => handlePdfUpload(event, index)}
+    //               />
+    //             )}
+    //           </div>
+    //           {/* Live Sessions for Each Lecture */}
+    //           <div className="mt-4 space-y-4">
+    //             <Button
+    //               onClick={() => handleNewLiveSession(index)}
+    //               className="text-white"
+    //             >
+    //               Add Live Session
+    //             </Button>
+
+    //             {/* Render the single liveSession for each curriculum item */}
+    //             {curriculumItem.liveSession && (
+    //               <div key={index} className="border p-5 rounded-md mt-4">
+    //                 <h4 className="font-semibold">Live Session</h4>
+    //                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+    //                   {liveSessionFormControls.map((control) => (
+    //                     <div key={control.name}>
+    //                       <label
+    //                         htmlFor={`${control.name}-${index}`}
+    //                         className="block font-medium mb-2"
+    //                       >
+    //                         {control.label}
+    //                       </label>
+    //                       {control.componentType === "input" ? (
+    //                         <Input
+    //                           id={`${control.name}-${index}`}
+    //                           name={control.name}
+    //                           type={control.type}
+    //                           placeholder={control.placeholder}
+    //                           value={
+    //                             control.type === "datetime-local"
+    //                               ? formatDateTimeForInput(curriculumItem.liveSession[control.name])
+    //                               : curriculumItem.liveSession[control.name]
+    //                           }
+    //                           onChange={(event) =>
+    //                             handleLiveSessionChange(event, index)  // Adjusted to handle the single liveSession
+    //                           }
+    //                           className="w-full p-2 border rounded-md"
+    //                         />
+    //                       ) : control.componentType === "textarea" ? (
+    //                         <textarea
+    //                           id={`${control.name}-${index}`}
+    //                           name={control.name}
+    //                           placeholder={control.placeholder}
+    //                           value={curriculumItem.liveSession[control.name]}
+    //                           onChange={(event) =>
+    //                             handleLiveSessionChange(event, index)  // Adjusted to handle the single liveSession
+    //                           }
+    //                           className="w-full p-2 border rounded-md"
+    //                         />
+    //                       ) : null}
+    //                     </div>
+    //                   ))}
+    //                 </div>
+    //                 <div className="flex justify-end mt-4">
+    //                   <Button
+    //                     onClick={() => handleDeleteLiveSession(index)}
+    //                     className="bg-red-500"
+    //                   >
+    //                     Delete Session
+    //                   </Button>
+    //                 </div>
+    //               </div>
+    //             )}
+    //           </div>
+    //         </div>
+    //       ))}
+    //     </div>
+    //   </CardContent>
+    // </Card>
     <Card>
-      <CardHeader className="flex flex-row justify-between">
-        <CardTitle>Create Course Curriculum</CardTitle>
+      <CardHeader className="flex flex-row justify-between items-center">
+        <CardTitle className="md:text-xl">Create Course Curriculum</CardTitle>
         <div>
           <Input
             type="file"
@@ -263,126 +422,169 @@ function CourseCurriculum() {
         )}
         <div className="mt-4 space-y-4">
           {courseCurriculumFormData.map((curriculumItem, index) => (
-            <div key={index} className="border p-5 rounded-md">
-              <div className="flex gap-5 items-center">
-                <h3 className="font-semibold">Lecture {index + 1}</h3>
-                <Input
-                  name={`title-${index + 1}`}
-                  placeholder="Enter lecture title"
-                  className="max-w-96"
-                  onChange={(event) => handleCourseTitleChange(event, index)}
-                  value={curriculumItem.title}
-                />
-                <div className="flex items-center space-x-2">
-                  <Label>Free Preview</Label>
-                  <Switch
-                    checked={curriculumItem.freePreview}
-                    onCheckedChange={(value) => handleFreePreviewChange(value, index)}
-                  />
-                </div>
-              </div>
-              <div className="flex gap-5 mt-4">
-                {curriculumItem.videoUrl ? (
-                  <div className="flex gap-3">
-                    <VideoPlayer url={curriculumItem.videoUrl} width="550px" height="200px" />
-                    <Button onClick={() => handleReplaceVideo(index)}>Replace Video</Button>
-                    <Button
-                      onClick={() => handleDeleteLecture(index)}
-                      className="bg-red-900"
-                    >
-                      Delete Lecture
-                    </Button>
-                  </div>
-                ) : (
-                  !curriculumItem.videoUploaded && (
-                    <Input
-                      type="file"
-                      accept="video/*"
-                      placeholder="Upload video"
-                      onChange={(event) => handleSingleLectureUpload(event, index)}
-                    />
-                  )
-                )}
-                {pdfUploadStatus[index] ? (
-                  <span className="text-green-500">{pdfUploadStatus[index]}</span>
-                ) : (
-                  <Input
-                    type="file"
-                    accept="application/pdf"
-                    onChange={(event) => handlePdfUpload(event, index)}
-                  />
-                )}
-              </div>
-              {/* Live Sessions for Each Lecture */}
-              <div className="mt-4 space-y-4">
-                <Button
-                  onClick={() => handleNewLiveSession(index)}
-                  className="text-white"
-                >
-                  Add Live Session
+            <div key={index} className="border rounded-md">
+              {/* Accordion Header */}
+              <div
+                className="flex justify-between items-center p-2 bg-gray-200 cursor-pointer"
+                onClick={() => toggleLecture(index)}
+              >
+                <h3 className="font-semibold">
+                  Lecture {index + 1}: {curriculumItem.title || "Untitled"}
+                </h3>
+                <Button variant="ghost">
+                  {expandedLectureIndex === index ? "Hide" : "Expand"}
                 </Button>
+              </div>
 
-                {/* Render the single liveSession for each curriculum item */}
-                {curriculumItem.liveSession && (
-                  <div key={index} className="border p-5 rounded-md mt-4">
-                    <h4 className="font-semibold">Live Session</h4>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-                      {liveSessionFormControls.map((control) => (
-                        <div key={control.name}>
-                          <label
-                            htmlFor={`${control.name}-${index}`}
-                            className="block font-medium mb-2"
-                          >
-                            {control.label}
-                          </label>
-                          {control.componentType === "input" ? (
-                            <Input
-                              id={`${control.name}-${index}`}
-                              name={control.name}
-                              type={control.type}
-                              placeholder={control.placeholder}
-                              value={
-                                control.type === "datetime-local"
-                                  ? formatDateTimeForInput(curriculumItem.liveSession[control.name])
-                                  : curriculumItem.liveSession[control.name]
-                              }
-                              onChange={(event) =>
-                                handleLiveSessionChange(event, index)  // Adjusted to handle the single liveSession
-                              }
-                              className="w-full p-2 border rounded-md"
-                            />
-                          ) : control.componentType === "textarea" ? (
-                            <textarea
-                              id={`${control.name}-${index}`}
-                              name={control.name}
-                              placeholder={control.placeholder}
-                              value={curriculumItem.liveSession[control.name]}
-                              onChange={(event) =>
-                                handleLiveSessionChange(event, index)  // Adjusted to handle the single liveSession
-                              }
-                              className="w-full p-2 border rounded-md"
-                            />
-                          ) : null}
-                        </div>
-                      ))}
-                    </div>
-                    <div className="flex justify-end mt-4">
-                      <Button
-                        onClick={() => handleDeleteLiveSession(index)}
-                        className="bg-red-500"
-                      >
-                        Delete Session
-                      </Button>
+              {/* Accordion Content */}
+              {expandedLectureIndex === index && (
+                <div className="p-5 space-y-4">
+                  <div className="flex gap-5 items-center">
+                    <Input
+                      name={`title-${index + 1}`}
+                      placeholder="Enter lecture title"
+                      className="max-w-96"
+                      onChange={(event) => handleCourseTitleChange(event, index)}
+                      value={curriculumItem.title}
+                    />
+                    <div className="flex items-center space-x-2">
+                      <Label>Free Preview</Label>
+                      <Switch
+                        checked={curriculumItem.freePreview}
+                        onCheckedChange={(value) =>
+                          handleFreePreviewChange(value, index)
+                        }
+                      />
                     </div>
                   </div>
-                )}
-              </div>
+                  <div className="flex gap-5 mt-4">
+                    {curriculumItem.videoUrl ? (
+                      <div className="flex gap-3">
+                        <VideoPlayer
+                          url={curriculumItem.videoUrl}
+                          width="450px"
+                          height="200px"
+                        />
+                        <Button onClick={() => handleReplaceVideo(index)}>
+                          Replace Video
+                        </Button>
+                        <Button
+                          onClick={() => handleDeleteLecture(index)}
+                          className="bg-red-900"
+                        >
+                          Delete Lecture
+                        </Button>
+                      </div>
+                    ) : (
+                      !curriculumItem.videoUploaded && (
+                        <div>
+                          <span className="font-bold tex-md my-2">Add Video Material</span>
+                          <Input
+                            type="file"
+                            accept="video/*"
+                            placeholder="Upload video"
+                            onChange={(event) =>
+                              handleSingleLectureUpload(event, index)
+                            }
+                          />
+                        </div>
+                      )
+                    )}
+                    {pdfUploadStatus[index] ? (
+                      <span className="text-green-500">
+                        {pdfUploadStatus[index]}
+                      </span>
+                    ) : (
+                      <div>
+                        <span className="font-bold tex-md my-2">Add Pdf Material</span>
+                        <Input
+                          type="file"
+                          accept="application/pdf"
+                          onChange={(event) => handlePdfUpload(event, index)}
+                        />
+                      </div>
+                    )}
+                  </div>
+                  {/* Live Sessions */}
+                  <div className="mt-4 space-y-4">
+                    <Button
+                      onClick={() => handleNewLiveSession(index)}
+                      className="text-white"
+                    >
+                      Add Live Session
+                    </Button>
+                    {curriculumItem.liveSession && (
+                      <div
+                        key={index}
+                        className="border p-5 rounded-md mt-4"
+                      >
+                        <h4 className="font-semibold">Live Session</h4>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                          {liveSessionFormControls.map((control) => (
+                            <div key={control.name}>
+                              <label
+                                htmlFor={`${control.name}-${index}`}
+                                className="block font-medium mb-2"
+                              >
+                                {control.label}
+                              </label>
+                              {control.componentType === "input" ? (
+                                <Input
+                                  id={`${control.name}-${index}`}
+                                  name={control.name}
+                                  type={control.type}
+                                  placeholder={control.placeholder}
+                                  value={
+                                    control.type === "datetime-local"
+                                      ? formatDateTimeForInput(
+                                        curriculumItem.liveSession[
+                                        control.name
+                                        ]
+                                      )
+                                      : curriculumItem.liveSession[
+                                      control.name
+                                      ]
+                                  }
+                                  onChange={(event) =>
+                                    handleLiveSessionChange(event, index)
+                                  }
+                                  className="w-full p-2 border rounded-md"
+                                />
+                              ) : control.componentType === "textarea" ? (
+                                <textarea
+                                  id={`${control.name}-${index}`}
+                                  name={control.name}
+                                  placeholder={control.placeholder}
+                                  value={
+                                    curriculumItem.liveSession[control.name]
+                                  }
+                                  onChange={(event) =>
+                                    handleLiveSessionChange(event, index)
+                                  }
+                                  className="w-full p-2 border rounded-md"
+                                />
+                              ) : null}
+                            </div>
+                          ))}
+                        </div>
+                        <div className="flex justify-end mt-2">
+                          <Button
+                            onClick={() => handleDeleteLiveSession(index)}
+                            className="bg-red-500"
+                          >
+                            Delete Live Session
+                          </Button>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
             </div>
           ))}
         </div>
       </CardContent>
     </Card>
-
   );
 }
 

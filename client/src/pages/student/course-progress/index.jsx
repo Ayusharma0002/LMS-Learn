@@ -322,43 +322,6 @@
 
 // export default StudentViewCourseProgressPage;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // import { Button } from "@/components/ui/button";
 // import {
 //   Dialog,
@@ -400,7 +363,6 @@
 //   const navigate = useNavigate();
 //   const [isPdfScrolledToEnd, setIsPdfScrolledToEnd] = useState(false);
 
-
 //   const { auth } = useContext(AuthContext);
 //   const { studentCurrentCourseProgress, setStudentCurrentCourseProgress } =
 //     useContext(StudentContext);
@@ -431,7 +393,6 @@
 //   },);
 //   // }, [setIsPdfScrolledToEnd]);
 
-
 //   //mark lecture as viewsd
 //   const markLectureAsViewed = useCallback(async () => {
 //     console.log("markLectureAsViewed aayush sharma");
@@ -449,7 +410,6 @@
 //       }
 //     }
 //   }, [isPdfScrolledToEnd, currentLecture]);
-
 
 //   async function fetchCurrentCourseProgress() {
 //     const response = await getCurrentCourseProgressService(auth?.user?._id, id);
@@ -530,7 +490,6 @@
 //     if (showConfetti) setTimeout(() => setShowConfetti(false), 15000);
 //   }, [showConfetti]);
 
-
 // useEffect(() => {
 //   // console.log("markLectureAsViewed aayush sharma");
 //   if (isPdfScrolledToEnd && currentLecture?.pdfUrl) {
@@ -590,8 +549,8 @@
 //                    >
 //               {/* <Worker workerUrl={`https://unpkg.com/pdfjs-dist@${"2.10.377"}/build/pdf.worker.min.js`}> */}
 //               <Worker workerUrl={`https://unpkg.com/pdfjs-dist@${"3.11.174"}/build/pdf.worker.min.js`}>
-//                 <Viewer 
-//                 fileUrl={currentLecture?.pdfUrl} 
+//                 <Viewer
+//                 fileUrl={currentLecture?.pdfUrl}
 
 //                 />
 //               </Worker>
@@ -599,7 +558,6 @@
 //             </div>
 
 //           ) : null}
-
 
 //         </div>
 //         <div
@@ -738,31 +696,6 @@
 
 // export default StudentViewCourseProgressPage;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // Handle PDF scroll event
 // const handlePdfScroll = useCallback(() => {
 //   console.log("handlePdfScroll aayush sharma");
@@ -786,46 +719,6 @@
 // }, []);
 
 // Add scroll listener as a fallback
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 import { Button } from "@/components/ui/button";
 import {
@@ -859,17 +752,14 @@ import {
 } from "lucide-react";
 import { useContext, useEffect, useState, useRef, useCallback } from "react";
 import Confetti from "react-confetti";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { Worker, Viewer } from "@react-pdf-viewer/core"; // PDF viewer
 import "@react-pdf-viewer/core/lib/styles/index.css";
 import { set } from "react-hook-form";
 import LiveSession from "./livesession";
 import ViewPdf from "./ViewPdf";
 
-
-
 function StudentViewCourseProgressPage() {
-
   const navigate = useNavigate();
   // const [isModalOpen, setIsModalOpen] = useState(false);
   // const openModal = () => setIsModalOpen(true);
@@ -887,18 +777,17 @@ function StudentViewCourseProgressPage() {
   const { id } = useParams();
   const [isScrolledToBottom, setIsScrolledToBottom] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-const [selectedSession, setSelectedSession] = useState(null);
+  const [selectedSession, setSelectedSession] = useState(null);
 
-const openModal = (session) => {
-  setSelectedSession(session);
-  setIsModalOpen(true);
-};
+  const openModal = (session) => {
+    setSelectedSession(session);
+    setIsModalOpen(true);
+  };
 
-const closeModal = () => {
-  setSelectedSession(null);
-  setIsModalOpen(false);
-};
-
+  const closeModal = () => {
+    setSelectedSession(null);
+    setIsModalOpen(false);
+  };
 
   async function fetchCurrentCourseProgress() {
     const response = await getCurrentCourseProgressService(auth?.user?._id, id);
@@ -975,7 +864,6 @@ const closeModal = () => {
   }, [id]);
 
   useEffect(() => {
-
     if (currentLecture?.progressValue === 1) updateCourseProgress();
   }, [currentLecture]);
 
@@ -1002,10 +890,7 @@ const closeModal = () => {
             {studentCurrentCourseProgress?.courseDetails?.title}
           </h1>
         </div>
-        <Button
-          className=""
-          onClick={() => setIsSideBarOpen(!isSideBarOpen)}
-        >
+        <Button className="" onClick={() => setIsSideBarOpen(!isSideBarOpen)}>
           {isSideBarOpen ? (
             <ChevronRight className="h-5 w-5" />
           ) : (
@@ -1016,16 +901,13 @@ const closeModal = () => {
       <div className="p-4 bg-white border-b border-gray-100">
         <div className="inline-flex items-center space-x-24 w-full">
           <h2 className="text-2xl font-bold">{currentLecture?.title}</h2>
-        
         </div>
       </div>
 
-     
-
       <div className="flex flex-1 overflow-hidden">
-
         <div
-          className={`flex-1 ${isSideBarOpen ? "mr-[400px]" : ""} transition-all duration-300`}
+          className={`flex-1 ${isSideBarOpen ? "mr-[400px]" : ""
+            } transition-all duration-300`}
         >
           {currentLecture?.videoUrl ? (
             <VideoPlayer
@@ -1037,18 +919,13 @@ const closeModal = () => {
             />
           ) : currentLecture?.pdfUrl ? (
             <ViewPdf
-            currentLecture={currentLecture}
-            markLectureAsViewedService={markLectureAsViewedService}
-            fetchCurrentCourseProgress={fetchCurrentCourseProgress}
-            auth={auth}
-            studentCurrentCourseProgress={studentCurrentCourseProgress}
-          />
-          
-
-
+              currentLecture={currentLecture}
+              markLectureAsViewedService={markLectureAsViewedService}
+              fetchCurrentCourseProgress={fetchCurrentCourseProgress}
+              auth={auth}
+              studentCurrentCourseProgress={studentCurrentCourseProgress}
+            />
           ) : null}
-
-
         </div>
         <div
           className={`fixed top-[64px] right-0 bottom-0 w-[400px] bg-white text-black border-l border-gray-700 transition-all duration-300 ${isSideBarOpen ? "translate-x-0" : "translate-x-full"
@@ -1066,12 +943,11 @@ const closeModal = () => {
                 value="overview"
                 className=" text-black rounded-none h-full"
               >
-                Live Sessions
-
+                Overview
               </TabsTrigger>
             </TabsList>
             <TabsContent value="content">
-              <ScrollArea className="h-full">
+              <ScrollArea className="h-[80vh] overflow-y-auto">
                 <div className="p-4 space-y-4 text-black">
                   {studentCurrentCourseProgress?.courseDetails?.curriculum.map(
                     (item) => (
@@ -1081,25 +957,26 @@ const closeModal = () => {
                       >
                         {item && (
                           <>
-                            {item.videoUrl && (
-                              studentCurrentCourseProgress?.progress?.find(
-                                (progressItem) => progressItem.lectureId === item._id
+                            {item.videoUrl &&
+                              (studentCurrentCourseProgress?.progress?.find(
+                                (progressItem) =>
+                                  progressItem.lectureId === item._id
                               )?.viewed ? (
                                 <Check className="h-4 w-4 text-green-500" />
                               ) : (
                                 <Play className="h-4 w-4 text-secondary" />
-                              )
-                            )}
+                              ))}
 
-                            {!item.videoUrl && item.pdfUrl && (
-                              studentCurrentCourseProgress?.progress?.find(
-                                (progressItem) => progressItem.lectureId === item._id
+                            {!item.videoUrl &&
+                              item.pdfUrl &&
+                              (studentCurrentCourseProgress?.progress?.find(
+                                (progressItem) =>
+                                  progressItem.lectureId === item._id
                               )?.viewed ? (
                                 <Check className="h-4 w-4 text-green-500" />
                               ) : (
                                 <Folder className="h-4 w-4 text-secondary" />
-                              )
-                            )}
+                              ))}
                           </>
                         )}
 
@@ -1119,16 +996,19 @@ const closeModal = () => {
                               }}
                             >
                               <Download />
-                            </a>
+                            </a> 
+                           
                           )}
                         </div>
+
+                        {item.liveSession?.link && <Link to={item.liveSession.link} target="_blank" className="text-blue-500 underline pl-2 text-md">Live</Link>}
                       </div>
                     )
                   )}
                 </div>
               </ScrollArea>
             </TabsContent>
-            {/* <TabsContent value="overview" className="flex-1 overflow-hidden">
+            <TabsContent value="overview" className="flex-1 overflow-hidden">
               <ScrollArea className="h-full">
                 <div className="p-4">
                   <h2 className="text-xl font-bold mb-4">About this course</h2>
@@ -1137,58 +1017,31 @@ const closeModal = () => {
                   </p>
                 </div>
               </ScrollArea>
-            </TabsContent> */}
-            <TabsContent value="overview" className="flex-1 overflow-hidden">
-  <ScrollArea className="h-full">
-    <div className="p-4">
-      {/* <h3 className="text-lg font-semibold mb-4">Live Sessions</h3> */}
-      <div className="space-y-2">
-        {studentCurrentCourseProgress?.courseDetails?.liveSession
-          ?.sort((a, b) => a.title.localeCompare(b.title)) // Sort by title
-          ?.map((session, index) => (
-            <div key={index} className="p-2 border-b border-gray-300 flex justify-between items-center">
-              <h4 className="text-md font-medium">{index + 1}. {session.title}</h4>
-              <Button
-                onClick={() => openModal(session)} // Pass the specific session to the modal
-                className="bg-blue-500 text-white hover:bg-blue-600 rounded-md"
-              >
-                Join Live Session
-              </Button>
-            </div>
-          ))}
-      </div>
-    </div>
-
-    {isModalOpen && selectedSession && (
-      <LiveSession
-        onClose={closeModal}
-        session={selectedSession} // Pass the selected session to the LiveSession component
-      />
-    )}
-  </ScrollArea>
-</TabsContent>
-
-
+            </TabsContent>
           </Tabs>
         </div>
       </div>
 
       {showCourseCompleteDialog && (
-        <Dialog open={showCourseCompleteDialog} onOpenChange={setShowCourseCompleteDialog}>
+        <Dialog
+          open={showCourseCompleteDialog}
+          onOpenChange={setShowCourseCompleteDialog}
+        >
           <DialogOverlay />
           <DialogPortal>
             <DialogContent className="w-[350px] bg-white border border-gray-100 rounded-lg shadow-lg">
               <DialogHeader>
-                <DialogTitle className="text-lg font-bold">Course Completed!</DialogTitle>
+                <DialogTitle className="text-lg font-bold">
+                  Course Completed!
+                </DialogTitle>
                 <DialogDescription className="text-sm">
-                  Congratulations, you have completed the course. Would you like to rewatch it?
+                  Congratulations, you have completed the course. Would you like
+                  to rewatch it?
                 </DialogDescription>
               </DialogHeader>
               <div className="flex justify-between space-x-4 mt-4">
                 <Button onClick={handleRewatchCourse}>Rewatch</Button>
-                <Button
-                  onClick={() => navigate("/student-courses")}
-                >
+                <Button onClick={() => navigate("/student-courses")}>
                   Next Course
                 </Button>
               </div>
@@ -1202,100 +1055,70 @@ const closeModal = () => {
 
 export default StudentViewCourseProgressPage;
 
+//Pdf Scroll code---------------------------------------------------
 
+// console.log("pdfref:",pdfViewerRef);
 
+// useEffect(() => {
+//   const handleScroll = () => {
+//     const scrollableElement = pdfViewerRef.current?.querySelector(".h-[500px]"); // Targeting the scrollable div
+//     if (scrollableElement) {
+//       const { scrollTop, scrollHeight, clientHeight } = scrollableElement;
+//       const scrollPercentage = (scrollTop + clientHeight) / scrollHeight;
+//       const isAtBottom = scrollPercentage >= 0.9;
+//       setIsScrolledToBottom(isAtBottom);
 
+//       if (isAtBottom) {
+//         console.log("At bottom");
+//         updateCourseProgress();
+//       }
+//     }
+//   };
 
+//   // Log the current ref to inspect the DOM structure
+//   console.log("pdfViewerRef.current:", pdfViewerRef.current);
 
+//   let element;
+//   setTimeout(() => {
+//     element = pdfViewerRef.current?.querySelector(".h-[500px]"); // Targeting the scrollable div
 
+//     // Log to see if the targeted element is found
+//     console.log("Target scrollable element:", element);
 
+//     if (element) {
+//       element.addEventListener("scroll", handleScroll);
+//     }
+//   }, 500); // Add a delay to ensure the PDF is loaded
 
+//   return () => {
+//     if (element) {
+//       element.removeEventListener("scroll", handleScroll);
+//     }
+//   };
+// }, [currentLecture]);
 
+// {/* <Button
+//                 variant="outline"
+//                 onClick={() => setShowCourseCompleteDialog(false)}
+//               >
+//                 Close
+//               </Button> */}
 
+// if (!item?.videoUrl && item?.pdfUrl) {
+//   await markLectureAsViewedService(
+//     auth?.user?._id,
+//     studentCurrentCourseProgress?.courseDetails?._id,
+//     item._id
+//   );
 
+//   await fetchCurrentCourseProgress();
+// }
 
-  //Pdf Scroll code---------------------------------------------------
-
-  // console.log("pdfref:",pdfViewerRef);
-
-
-  // useEffect(() => {
-  //   const handleScroll = () => {
-  //     const scrollableElement = pdfViewerRef.current?.querySelector(".h-[500px]"); // Targeting the scrollable div
-  //     if (scrollableElement) {
-  //       const { scrollTop, scrollHeight, clientHeight } = scrollableElement;
-  //       const scrollPercentage = (scrollTop + clientHeight) / scrollHeight;
-  //       const isAtBottom = scrollPercentage >= 0.9;
-  //       setIsScrolledToBottom(isAtBottom);
-
-  //       if (isAtBottom) {
-  //         console.log("At bottom");
-  //         updateCourseProgress();
-  //       }
-  //     }
-  //   };
-
-  //   // Log the current ref to inspect the DOM structure
-  //   console.log("pdfViewerRef.current:", pdfViewerRef.current);
-
-  //   let element;
-  //   setTimeout(() => {
-  //     element = pdfViewerRef.current?.querySelector(".h-[500px]"); // Targeting the scrollable div
-
-  //     // Log to see if the targeted element is found
-  //     console.log("Target scrollable element:", element);
-
-  //     if (element) {
-  //       element.addEventListener("scroll", handleScroll);
-  //     }
-  //   }, 500); // Add a delay to ensure the PDF is loaded
-
-  //   return () => {
-  //     if (element) {
-  //       element.removeEventListener("scroll", handleScroll);
-  //     }
-  //   };
-  // }, [currentLecture]);
-
-
-
-
-
-
-  // {/* <Button
-  //                 variant="outline"
-  //                 onClick={() => setShowCourseCompleteDialog(false)}
-  //               >
-  //                 Close
-  //               </Button> */}
-
-
-
-
-
-
-
- // if (!item?.videoUrl && item?.pdfUrl) {
-                                //   await markLectureAsViewedService(
-                                //     auth?.user?._id,
-                                //     studentCurrentCourseProgress?.courseDetails?._id,
-                                //     item._id
-                                //   );
-
-                                //   await fetchCurrentCourseProgress();
-                                // }
-
-
-
-
-
-                                
-
-            // <div
-            //   className="h-[500px] overflow-auto bg-red-400 scroll-bottom"
-            //   ref={pdfViewerRef}
-            // >
-            //   <Worker workerUrl={`https://unpkg.com/pdfjs-dist@${"3.11.174"}/build/pdf.worker.min.js`}>
-            //     <Viewer fileUrl={currentLecture?.pdfUrl} />
-            //   </Worker>
-            // </div>
+// <div
+//   className="h-[500px] overflow-auto bg-red-400 scroll-bottom"
+//   ref={pdfViewerRef}
+// >
+//   <Worker workerUrl={`https://unpkg.com/pdfjs-dist@${"3.11.174"}/build/pdf.worker.min.js`}>
+//     <Viewer fileUrl={currentLecture?.pdfUrl} />
+//   </Worker>
+// </div>
