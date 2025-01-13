@@ -6,13 +6,13 @@ const { v4: uuidv4 } = require('uuid');
 async function addLiveSession(req, res) {
   try {
     // Get the access token
-    console.log("Live Req :",req);
-    
+    console.log("Live Req :", req);
+
     const sessionData = req.body.liveSession;
-    const { 
-      title, 
+    const {
+      title,
       sessionId,
-      objective, 
+      objective,
       instructorName,
       date,
       time,
@@ -23,8 +23,27 @@ async function addLiveSession(req, res) {
     } = sessionData;
 
 
-    console.log("Fronted data: ",sessionData);
-    
+    console.log("Fronted data: ", sessionData);
+    function validateSessionData(data) {
+      const requiredFields = ['title', 'instructorName', 'startDateTime', 'endDateTime'];
+
+      // Check if any of the required fields is blank
+      const hasBlankField = requiredFields.some(field => !data[field] || data[field].trim() === '');
+
+      // Return null if any required field is blank
+      return hasBlankField ? null : data;
+    }
+
+    const result = validateSessionData(sessionData);
+    console.log("Link : ",link);
+  
+    if (!result) {
+      
+      console.log('Validation failed. Returning null.');
+      return null;
+    }
+
+    console.log("Validated Data: ", result); // Output: null
     const accessToken = await getAccessToken();
     const userId = process.env.AZURE_USER_ID;
     // Generate unique meeting details
@@ -63,10 +82,10 @@ async function addLiveSession(req, res) {
     );
 
     // console.log("meeting url :",response.data);
-    
+
     const liveSession = {
-      title, 
-      objective, 
+      title,
+      objective,
       instructorName,
       sessionId,
       startDateTime,

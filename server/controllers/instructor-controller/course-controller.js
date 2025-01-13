@@ -101,7 +101,7 @@ const addNewCourse = async (req, res) => {
 
         // If the lecture includes a live session, add it
         console.log("Live SS Data : ", lecture.liveSession);
-        if (lecture.liveSession) {
+        if (lecture.liveSession && lecture.liveSession.link == undefined) {
           
           const liveSession = await addLiveSession({
             body: lecture, // Passing live session data to the existing addLiveSession logic
@@ -213,7 +213,7 @@ const updateCourseByID = async (req, res) => {
     // Check if the course contains liveSession data, and process it if present
     if (updatedCourseData.curriculum && updatedCourseData.curriculum.length > 0) {
       for (let lecture of updatedCourseData.curriculum) {
-        if (lecture.liveSession) {
+        if (lecture.liveSession && lecture.liveSession.link == undefined) {
           // Process the live session data by passing the lecture to addLiveSession
           const liveSession = await addLiveSession({
             body: lecture, // Passing the lecture with liveSession data

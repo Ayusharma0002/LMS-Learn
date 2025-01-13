@@ -317,7 +317,7 @@ function CourseCurriculum() {
               <div className="mt-4 space-y-4">
                 <Button
                   onClick={() => handleNewLiveSession(index)}
-                  className="text-black"
+                  className="text-white"
                 >
                   Add Live Session
                 </Button>
