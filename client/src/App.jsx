@@ -125,7 +125,7 @@ import StudentCoursesPage from "./pages/student/student-courses";
 import PaymentCancelPage from "./pages/student/payment-cancel";
 import StudentViewCourseProgressPage from "./pages/student/course-progress";
 import Contact from "./components/contact/Contact";
-
+import { Toaster } from "./components/ui/toaster";
 // Import ToastContainer from react-toastify
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; // Import the CSS for react-toastify
@@ -197,9 +197,9 @@ function App() {
         </Route>
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
-
+      <Toaster />
       {/* Add the ToastContainer to show toast notifications globally */}
-      <ToastContainer />
+      {/* <ToastContainer /> */}
     </>
   );
 }

@@ -324,21 +324,21 @@ function StudentViewCommonHeader() {
     navigate(`/courses?search=${suggestion}`);
     setSuggestions([]); // Clear suggestions
   }
-  const {toast} = useToast();
-  const testingToast = () =>{
-      toast({ title: "Welcome to Enlighto",
-        variant: 'success'
-      })
+  const { toast } = useToast();
+  const testingToast = () => {
+    toast({
+      title: "Welcome to Enlighto",
+      variant: 'success'
+    })
   }
 
   return (
     <>
       <header className="flex bg-[#FFFFFF] items-center justify-between p-4 border-b relative shadow-md">
         <div className="flex items-center w-full space-x-4 justify-between">
-          <Link to="/home"  className="flex items-center hover:text-black">
-            <img onClick={()=>testingToast()} className="font-extrabold text-md h-12 md:w-full w-2/3"
-            //  src="/logo1.png" alt="Logo" />
-               src={Logo1} alt="" />
+          <Link to="/home" className="flex items-center hover:text-black">
+            <img onClick={() => testingToast()} className="font-extrabold text-md h-12 md:w-full w-2/3"
+              src={Logo1} alt="" />
           </Link>
           <div className="flex gap-4 items-center">
             {/* Search Input */}
@@ -493,7 +493,7 @@ export const UserDropdown = ({ handleLogout }) => {
               <span>My Profile</span>
             </div>
           </div>
-        
+
           <div
             onClick={() => navigate("/student-courses")}
             className="flex my-learning cursor-pointer items-center gap-3 px-4 py-2 hover:bg-gray-100"
@@ -501,7 +501,7 @@ export const UserDropdown = ({ handleLogout }) => {
             <BookOpen className="text-gray-600 h-8 w-6" /> {/* Book icon */}
             <span className="md:flex text-[14px]">My Learning</span>
           </div>
-        
+
           <div
             className="px-4 py-2 text-[14px] cursor-pointer hover:bg-gray-100"
             onClick={handleLogout}
@@ -512,7 +512,7 @@ export const UserDropdown = ({ handleLogout }) => {
             </div>
           </div>
         </div>
-        
+
       )}
       {showProfileModal && (
         <ProfileModal onClose={closeProfileModal} />

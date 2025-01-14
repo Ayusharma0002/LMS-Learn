@@ -120,7 +120,7 @@ export default function Footer() {
           className="mt-8 pt-8 border-t border-gray-800 text-center text-gray-400"
           variants={itemVariants}
         >
-          <p>&copy; {new Date().getFullYear()} LearnHub. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} Enlighto. All rights reserved.</p>
         </motion.div>
       </div>
     </footer>

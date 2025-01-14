@@ -300,24 +300,20 @@ import Footer from "./Footer";
 
 const categoryIcons = {
   "web-development": (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
-      fill="#4CAF50"
-      className="w-6 h-6"
-    >
-      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93s3.05-7.44 7-7.93v15.86zM13 4.07v15.86c3.95-.49 7-3.85 7-7.93s-3.05-7.44-7-7.93z" />
+    <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-code">
+      <polyline points="16 18 22 12 16 6"></polyline>
+      <polyline points="8 6 2 12 8 18"></polyline>
     </svg>
+
   ),
   "mobile-development": (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
-      fill="#FF9800"
-      className="w-6 h-6"
-    >
-      <path d="M17 1H7c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-2-2-2zm0 20H7V3h10v18zm-5-2c-.83 0-1.5-.67-1.5-1.5S11.17 16 12 16s1.5.67 1.5 1.5S12.83 19 12 19z" />
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-server">
+      <rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect>
+      <rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect>
+      <line x1="6" y1="6" x2="6.01" y2="6"></line>
+      <line x1="6" y1="18" x2="6.01" y2="18"></line>
     </svg>
+
   ),
   "data-science": (
     <svg
@@ -442,8 +438,8 @@ function StudentHomePage() {
       <section className="py-16 px-4 lg:px-8 bg-white">
         <div className="container mx-auto ">
           <div className="flex items-center justify-center mb-8">
-          <h2 className="text-3xl md:text-4xl font-bold text-center text-[#1a237e]">Featured Courses</h2>
-          {/* <div className="relative">
+            <h2 className="text-3xl md:text-4xl font-bold text-center text-[#1a237e]">Featured Courses</h2>
+            {/* <div className="relative">
               <Input
                 type="text"
                 placeholder="Search courses..."
@@ -488,12 +484,21 @@ function StudentHomePage() {
               </div>
             )}
           </div>
+          <div className="flex justify-center mt-10 items-center">
+            <Button
+              variant="outline"
+              className="text-black border-black bg-white 
+             hover:bg-[#2e9ba9] hover:text-white"
+            >
+              Load More
+            </Button>
+          </div>
         </div>
       </section>
       <CoreOfferings />
       {/* Testimonials */}
-      <TestimonialsSection/>
-      <Footer/>
+      <TestimonialsSection />
+      <Footer />
     </div>
   )
 };
