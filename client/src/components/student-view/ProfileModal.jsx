@@ -1,4 +1,8 @@
-import React, { useRef } from "react";
+import React, { useRef, useContext } from "react";
+// import { AuthContext } from "@/context/AuthProvider"; // Import AuthContext
+
+import { AuthContext } from "@/context/auth-context";
+
 
 const userData = {
     name: "Aayush Sharma",
@@ -9,6 +13,7 @@ const userData = {
     image: "/User.png",
 };
 
+
 const ProfileModal = ({ onClose }) => {
     const modalRef = useRef(null);
     const handleOutsideClick = (e) => {
@@ -16,6 +21,9 @@ const ProfileModal = ({ onClose }) => {
             onClose();
         }
     };
+    const { auth } = useContext(AuthContext); 
+    console.log("auth profievali cheez=",auth);
+
     return (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
             onClick={handleOutsideClick}>
@@ -42,8 +50,10 @@ const ProfileModal = ({ onClose }) => {
                         className="w-24 h-24 rounded-full object-cover"
                     />
                     {/* Name and Title */}
-                    <h3 className="text-xl font-semibold">{userData.name}</h3>
-                    <p className="text-gray-500 text-sm">{userData.title}</p>
+                    {/* <h3 className="text-xl font-semibold">{userData.name}</h3> */}
+                    <h3 className="text-xl font-semibold">{auth.user.userName}</h3>
+                    {/* <h3 className="text-xl font-semibold">Role - {auth.user.role}</h3> */}
+                    {/* <p className="text-gray-500 text-sm">{auth.user.title}</p> */}
 
 
                     {/* Contact Details */}
@@ -51,14 +61,16 @@ const ProfileModal = ({ onClose }) => {
                         <div className="flex items-center gap-2">
                             📧{" "}
                             <a
-                                href={`mailto:${userData.email}`}
+                                // href={`mailto:${userData.email}`}
+                                href={`mailto:${auth.user.userEmail}`}
                                 className="text-blue-500 hover:underline"
                             >
-                                {userData.email}
+                                {auth.user.userEmail}
                             </a>
                         </div>
-                        <div className="flex items-center gap-2">📞 {userData.phone}</div>
-                        <div className="flex items-center gap-2">📍 {userData.location}</div>
+                        {/* <div className="flex items-center gap-2">📞 {userData.phone}</div> */}
+                        {/* <div className="flex items-center gap-2">📞 {auth.user.phoneNumber}</div> */}
+                        {/* <div className="flex items-center gap-2">📍 {userData.location}</div> */}
                     </div>
                 </div>
             </div>

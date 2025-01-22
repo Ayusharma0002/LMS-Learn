@@ -20,7 +20,7 @@ export default function AuthProvider({ children }) {
   async function handleRegisterUser(event) {
     event.preventDefault();
     const data = await registerService(signUpFormData);
-    console.log("Reg data : ", data);
+    console.log("AayushReg data : ", data);
   }
 
   async function handleLoginUser(event) {

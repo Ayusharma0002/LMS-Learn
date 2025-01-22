@@ -3,52 +3,159 @@ const Otp = require("../../models/Otp");
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
+// const registerUser = async (req, res) => {
+//     console.log("Registration data:", req.body);
+//     const { userName, userEmail, password, role, OTP } = req.body;
+
+//     // Check if a user with the same userName or userEmail already exists
+//      // Enhanced password validation
+//      if (password.length < 6) {
+//         return res.status(400).json({
+//             success: false,
+//             message: "Password must be at least 6 characters long."
+//         });
+//     }
+
+//     const allowedCharacters = /^[a-zA-Z0-9!@#$%^&*()_+={}:;"'<>,.?/\\|-]+$/; // Letters, numbers, and special symbols
+//     if (!allowedCharacters.test(password)) {
+//         return res.status(400).json({
+//             success: false,
+//             message: "Password can only contain letters, numbers, or special symbols."
+//         });
+//     }
+    
+//     const existingUser = await User.findOne({
+//         $or: [{ userEmail }, { userName }]
+//     });
+
+//     if (existingUser) {
+//         return res.status(400).json({
+//             success: false,
+//             message: "Username or email already exists"
+//         });
+//     }
+
+//     // Verify the OTP
+//     const otpRecord = await Otp.findOneAndDelete({ email: userEmail, otp: OTP });
+
+//     if (!otpRecord) {
+//         return res.status(400).json({
+//             success: false,
+//             message: "Invalid or expired OTP"
+//         });
+//     }
+
+//     // Hash the password
+//     const hashPassword = await bcrypt.hash(password, 10);
+
+//     // Create a new user with the provided fields
+//     const newUser = new User({
+//         userName,
+//         userEmail,
+//         role,
+//         password: hashPassword
+//     });
+
+//     // Save the new user
+//     await newUser.save();
+
+//     // Respond with success
+//     res.status(201).json({
+//         success: true,
+//         message: "User registered successfully"
+//     });
+// };
+
+
 const registerUser = async (req, res) => {
-    console.log("Registration data:", req.body);
-    const { userName, userEmail, password, role, OTP } = req.body;
-
-    // Check if a user with the same userName or userEmail already exists
-    const existingUser = await User.findOne({
-        $or: [{ userEmail }, { userName }]
-    });
-
-    if (existingUser) {
+    try {
+      console.log("Registration data received:", req.body);
+  
+      const { userName, userEmail, password,
+        // phoneNumber ,
+        //  title, 
+         role, OTP } = req.body;
+  
+      if (!userName || !userEmail || !password || !OTP 
+        //  !phoneNumber ||
+          // !title
+        ) {
         return res.status(400).json({
-            success: false,
-            message: "Username or email already exists"
+          success: false,
+          message: "All fields are required",
         });
-    }
-
-    // Verify the OTP
-    const otpRecord = await Otp.findOneAndDelete({ email: userEmail, otp: OTP });
-
-    if (!otpRecord) {
+      }
+  
+      if (password.length < 6) {
         return res.status(400).json({
-            success: false,
-            message: "Invalid or expired OTP"
+          success: false,
+          message: "Password must be at least 6 characters long.",
         });
-    }
-
-    // Hash the password
-    const hashPassword = await bcrypt.hash(password, 10);
-
-    // Create a new user with the provided fields
-    const newUser = new User({
+      }
+  
+      const allowedCharacters = /^[a-zA-Z0-9!@#$%^&*()_+={}:;"'<>,.?/\\|-]+$/;
+      if (!allowedCharacters.test(password)) {
+        return res.status(400).json({
+          success: false,
+          message: "Password can only contain letters, numbers, or special symbols.",
+        });
+      }
+  
+      // Check if user exists
+      const existingUser = await User.findOne({
+        $or: [{ userEmail }, { userName }],
+      });
+  
+      if (existingUser) {
+        return res.status(400).json({
+          success: false,
+          message: "Username or email already exists.",
+        });
+      }
+  
+      // Verify OTP
+      const otpRecord = await Otp.findOneAndDelete({ email: userEmail, otp: OTP });
+      if (!otpRecord) {
+        return res.status(400).json({
+          success: false,
+          message: "Invalid or expired OTP.",
+        });
+      }
+  
+      // Hash password
+      const hashPassword = await bcrypt.hash(password, 10);
+  
+      // Create user
+      // const newUser = new User({
+      //   userName,
+      //   userEmail,
+      //   password: hashPassword,
+      //   role,
+      // });
+      const newUser = new User({
         userName,
         userEmail,
+        password: hashPassword,
+        // title,
+        // phoneNumber,
         role,
-        password: hashPassword
-    });
-
-    // Save the new user
-    await newUser.save();
-
-    // Respond with success
-    res.status(201).json({
+      });
+  
+      await newUser.save();
+  
+      return res.status(201).json({
         success: true,
-        message: "User registered successfully"
-    });
-};
+        message: "User registered successfully.",
+      });
+    } catch (error) {
+      console.error("Error during user registration:", error);
+      res.status(500).json({
+        success: false,
+        message: "Internal server error.",
+      });
+    }
+  };
+  
 
 const loginUser = async (req, res) => {
     console.log("Pass login req", req.body);
@@ -73,12 +180,20 @@ const loginUser = async (req, res) => {
     }
     
 
+    // const accessToken = jwt.sign({
+    //     _id: checkUser._id,
+    //     userName: checkUser.userName,
+    //     userEmail: checkUser.userEmail,
+    //     role: checkUser.role
+    // }, 'JWT_SECRET', { expiresIn: '120m' })
     const accessToken = jwt.sign({
-        _id: checkUser._id,
-        userName: checkUser.userName,
-        userEmail: checkUser.userEmail,
-        role: checkUser.role
-    }, 'JWT_SECRET', { expiresIn: '120m' })
+      _id: checkUser._id,
+      userName: checkUser.userName,
+      userEmail: checkUser.userEmail,
+      // phoneNumber:checkUser.phoneNumber,
+      // title:checkUser.title,
+      role: checkUser.role
+  }, 'JWT_SECRET', { expiresIn: '120m' })
 
     res.status(200).json({
         success: true,
@@ -89,6 +204,8 @@ const loginUser = async (req, res) => {
                 _id: checkUser._id,
                 userName: checkUser.userName,
                 userEmail: checkUser.userEmail,
+                // phoneNumber:checkUser.phoneNumber,
+                // title:checkUser.title,
                 role: checkUser.role
             }
         }
@@ -114,14 +231,24 @@ const loginWithOtp = async (req, res) => {
 
     // Generate a JWT token upon successful OTP verification
     const accessToken = jwt.sign(
-        { _id: user._id, userName: user.userName, userEmail: user.userEmail, role: user.role },
+        { _id: user._id, userName: user.userName, userEmail: user.userEmail, role: user.role 
+          // , 
+          // phoneNumber:user.phoneNumber
+          // ,
+      // title:user.title
+     },
         'JWT_SECRET', { expiresIn: '120m' }
     );
 
     res.status(200).json({
         success: true,
         message: "Logged in successfully with OTP",
-        data: { accessToken, user: { _id: user._id, userName: user.userName, userEmail: user.userEmail, role: user.role } }
+        data: { accessToken, user: { _id: user._id, userName: user.userName, userEmail: user.userEmail, role: user.role 
+          // ,
+          // phoneNumber:user.phoneNumber
+          // ,
+      // title:user.title 
+    } }
     });
 };
 

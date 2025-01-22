@@ -363,6 +363,7 @@ function StudentHomePage() {
   const { auth } = useContext(AuthContext);
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredCourses, setFilteredCourses] = useState([]);
+  const [visibleCoursesCount, setVisibleCoursesCount] = useState(8);
   const navigate = useNavigate();
 
   const handleNavigateToCoursesPage = (getCurrentId) => {
@@ -382,6 +383,10 @@ function StudentHomePage() {
     if (response?.success) {
       navigate(response?.data ? `/course-progress/${getCurrentCourseId}` : `/course/details/${getCurrentCourseId}`);
     }
+  };
+
+  const handleLoadMore = () => {
+    setVisibleCoursesCount((prevCount) => prevCount + 8); // Increase the count by 12
   };
 
   useEffect(() => {
@@ -439,20 +444,10 @@ function StudentHomePage() {
         <div className="container mx-auto ">
           <div className="flex items-center justify-center mb-8">
             <h2 className="text-3xl md:text-4xl font-bold text-center text-[#1a237e]">Featured Courses</h2>
-            {/* <div className="relative">
-              <Input
-                type="text"
-                placeholder="Search courses..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10 pr-4 py-2 w-64"
-              />
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-            </div> */}
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
             {filteredCourses && filteredCourses.length > 0 ? (
-              filteredCourses.map((courseItem) => (
+              filteredCourses.slice(0, visibleCoursesCount).map((courseItem) => (
                 <motion.div
                   key={courseItem.id}
                   whileHover={{ y: -5 }}
@@ -484,18 +479,20 @@ function StudentHomePage() {
               </div>
             )}
           </div>
-          <div className="flex justify-center mt-10 items-center">
-            <Button
-              variant="outline"
-              className="text-black border-black bg-white 
-             hover:bg-[#2e9ba9] hover:text-white"
-            >
-              Load More
-            </Button>
-          </div>
+          {visibleCoursesCount < filteredCourses.length && (
+            <div className="flex justify-center mt-10 items-center">
+              <Button
+                variant="outline"
+                className="text-black border-black bg-white hover:bg-[#2e9ba9] hover:text-white"
+                onClick={handleLoadMore}
+              >
+                Load More
+              </Button>
+            </div>
+          )}
         </div>
       </section>
-      <CoreOfferings />
+            <CoreOfferings />
       {/* Testimonials */}
       <TestimonialsSection />
       <Footer />
@@ -503,3 +500,138 @@ function StudentHomePage() {
   )
 };
 export default StudentHomePage;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// <section className="py-16 px-4 lg:px-8 bg-white">
+//         <div className="container mx-auto ">
+//           <div className="flex items-center justify-center mb-8">
+//             <h2 className="text-3xl md:text-4xl font-bold text-center text-[#1a237e]">Featured Courses</h2>
+//             {/* <div className="relative">
+//               <Input
+//                 type="text"
+//                 placeholder="Search courses..."
+//                 value={searchTerm}
+//                 onChange={(e) => setSearchTerm(e.target.value)}
+//                 className="pl-10 pr-4 py-2 w-64"
+//               />
+//               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+//             </div> */}
+//           </div>
+//           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+//             {filteredCourses && filteredCourses.length > 0 ? (
+//               filteredCourses.map((courseItem) => (
+//                 <motion.div
+//                   key={courseItem.id}
+//                   whileHover={{ y: -5 }}
+//                   onClick={() => handleCourseNavigate(courseItem?._id)}
+//                   className="bg-white rounded-xl overflow-hidden shadow-lg cursor-pointer transition-all duration-300 hover:shadow-xl"
+//                 >
+//                   <div className="relative">
+//                     <img
+//                       src={courseItem?.image}
+//                       alt={courseItem?.title}
+//                       className="w-full h-48 object-cover"
+//                     />
+//                   </div>
+//                   <div className="p-6">
+//                     <h3 className="font-bold text-xl mb-2 text-gray-800">{courseItem?.title}</h3>
+//                     <p className="text-sm text-gray-600 mb-4">{courseItem?.instructorName}</p>
+//                     <div className="flex justify-between items-center">
+//                       <p className="font-bold text-2xl text-[#26c6da]">₹{courseItem?.pricing}</p>
+//                       <Button variant="outline" className="text-[#26c6da] border-[#26c6da] hover:bg-[#2e9ba9] hover:text-white">
+//                         Enroll Now
+//                       </Button>
+//                     </div>
+//                   </div>
+//                 </motion.div>
+//               ))
+//             ) : (
+//               <div className="col-span-full text-center text-gray-500 text-xl">
+//                 No Courses Found
+//               </div>
+//             )}
+//           </div>
+//           <div className="flex justify-center mt-10 items-center">
+//             <Button
+//               variant="outline"
+//               className="text-black border-black bg-white 
+//              hover:bg-[#2e9ba9] hover:text-white"
+//             >
+//               Load More
+//             </Button>
+//           </div>
+//         </div>
+//       </section>

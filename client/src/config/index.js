@@ -21,10 +21,17 @@ export const signUpFormControls = [
     componentType: "input",
   },
   // {
-  //   name: "phone",
-  //   label: "Phone",
-  //   placeholder: "Enter your phone",
-  //   type: "tel",
+  //   name: "phoneNumber",
+  //   label: "Phone Number",
+  //   placeholder: "Enter your Phone Number",
+  //   type: "number",
+  //   componentType: "input",
+  // },
+  // {
+  //   name: "title",
+  //   label: "title",
+  //   placeholder: "Enter your title",
+  //   type: "text",
   //   componentType: "input",
   // },
   {
@@ -33,8 +40,33 @@ export const signUpFormControls = [
     placeholder: "Enter your password",
     type: "password",
     componentType: "input",
+    validation: (password) => {
+      if (password.length < 6) {
+        return "Password must be at least 6 characters long.";
+      }
+      const allowedCharacters = /^[a-zA-Z0-9!@#$%^&*()_+={}:;"'<>,.?/\\|-]+$/;
+      if (!allowedCharacters.test(password)) {
+        return "Password can only contain letters, numbers, or special symbols.";
+      }
+      return null; // No errors
+   
+    },
   },
 ];
+ // {
+  //   name: "phone",
+  //   label: "Phone",
+  //   placeholder: "Enter your phone",
+  //   type: "tel",
+  //   componentType: "input",
+  // },
+  // {
+  //   name: "password",
+  //   label: "Create Password",
+  //   placeholder: "Enter your password",
+  //   type: "password",
+  //   componentType: "input",
+  // },
 
 export const signInFormControls = [
   {
@@ -62,7 +94,9 @@ export const initialSignUpFormData = {
   userName: "",
   userEmail: "",
   password: "",
-  OTP: ""
+  OTP: "",
+  // title:"",
+  // phoneNumber:"",  
 };
 export const otpFormControls = [
   {
